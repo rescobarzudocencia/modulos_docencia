@@ -1,4 +1,6 @@
 # INTRODUCCIÓN A PYTHON
+![logo de python](img/logo_python.png)
+
 [1.- Introducción.](#1-introducción)
 
 [2.- Instalación de Python.](#2-instalación-de-python)
