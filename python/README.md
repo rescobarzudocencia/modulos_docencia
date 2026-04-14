@@ -1,4 +1,5 @@
 # INTRODUCCIÓN A PYTHON
+---
 ![logo de python](img/logo_python.png)
 
 [1.- Introducción.](#1-introducción)
@@ -52,3 +53,12 @@ print(type(x)) #<class 'float'>
 ``` 
 
 # 2. Instalación de Python
+La forma más recomendable es la instalación desde la página oficial de Python, aunque muchas distribuciones Linux ya vienen con la versión 3 instalada.
+
+La página oficial es la siguiente: [Instalacion de python](https://www.python.org/downloads/) donde elegirémos el SO donde vamos a realizar la instalación.
+
+Una vez instalado comprobamos si está bién instalado con el siguiente comando, que nos mostrarà la versión instalada:
+
+```bash
+python3 -V
+```
