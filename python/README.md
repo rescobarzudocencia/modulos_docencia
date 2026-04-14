@@ -1,7 +1,7 @@
 # INTRODUCCIÓN A PYTHON
-[1.- Introducción.](#1-Introducción)
+[1.- Introducción.](#1-introducción)
 
-[2.- Instalación de Python.](#2-Instalación-de-Python)
+[2.- Instalación de Python.](#2-instalación-de-python)
 
 
 
@@ -9,7 +9,7 @@
 ---
 
 
-# 1.- Introducción
+# 1. Introducción
 Python es uno de los lenguajes de programación mas utilizado en el mundo. Según el índice
 TIOBE Python está a la cabeza del ranking como podemos ver en la siguiente imagen:
 
@@ -49,4 +49,4 @@ print(x) #3.5
 print(type(x)) #<class 'float'> 
 ``` 
 
-# 2.- Instalación de Python
+# 2. Instalación de Python
