@@ -1,6 +1,7 @@
 # INTRODUCCIÓN A PYTHON
-[1.- Introducción.](#1.-Introducción)
+[1.- Introducción.](#1-Introducción)
 
+[2.- Instalación de Python.](#2-Instalación-de-Python)
 
 
 
@@ -47,3 +48,5 @@ x = funcion(x)
 print(x) #3.5
 print(type(x)) #<class 'float'> 
 ``` 
+
+# 2.- Instalación de Python
