@@ -2,20 +2,23 @@
 ---
 ![logo de python](img/logo_python.png)
 
-[1.- Introducción.](#1-introducción)
-
-[2.- Instalación de Python.](#2-instalación-de-python)
-
-[3.- Sintaxis de Python.](#3-sintaxis-de-python)
-
-[3.1 Entradas y salida de datos](#31-entrada-y-salida-de-datos)
-
-[4.- Tipos de datos y operadores](#4-tipos-de-datos-y-operadores)
-
-[4.1 Tipos de datos](#41-tipos-de-datos)
-
-[4.1.1. Enteros](#411-enteros)
-
+- [INTRODUCCIÓN A PYTHON](#introducción-a-python)
+- [1. Introducción](#1-introducción)
+- [2. Instalación de Python](#2-instalación-de-python)
+- [3. Sintaxis de Python](#3-sintaxis-de-python)
+  - [3.1 Entrada y salida de datos](#31-entrada-y-salida-de-datos)
+- [4. Tipos de datos y operadores](#4-tipos-de-datos-y-operadores)
+  - [4.1 Tipos de datos](#41-tipos-de-datos)
+    - [4.1.1 Enteros](#411-enteros)
+    - [4.1.2 Booleanos](#412-booleanos)
+    - [4.1.3 Float](#413-float)
+    - [4.1.4 Cadenas o strings](#414-cadenas-o-strings)
+    - [4.1.5 Listas](#415-listas)
+    - [4.1.6 Set](#416-set)
+    - [4.1.7 Tupla](#417-tupla)
+    - [4.1.8 Diccionario](#418-diccionario)
+  - [4.2 Tipos de operadores](#42-tipos-de-operadores)
+    - [4.2.1 De asignación](#421-de-asignación)
 
 
 ---
@@ -211,3 +214,36 @@ print("Hola me llamo {} {} y mi correo es {}".format(nombre, apellidos, correo))
 # 4. Tipos de datos y operadores
 ## 4.1 Tipos de datos
 ### 4.1.1 Enteros
+Python no tiene el problema de otros lenguajes que dependiendo del valor del entero a representar teníamos que  definir un tipo u otro, Python se encarga de asignar mas o menos memoria al número y podemos representar practicamente cualquier número.
+
+```python
+i = 12
+print(i)          #12
+print(type(i)) #<class 'int'>
+```
+Convertir a **int**
+```python
+b = int(1.6)
+print(b) #1
+```
+### 4.1.2 Booleanos
+
+Al igual que en otros lenguajes de programación, en Python existe el tipo bool o booleano. Es un tipo de dato que permite almacenar dos valores **True** o **False**.
+```python
+x = True
+y = False
+```
+Un valor booleano también puede ser el resultado de evaluar una expresión. Ciertos operadores como el mayor que, menor que o igual que devuelven un valor bool.
+```python
+print(1 > 0)  #True
+print(1 <= 0) #False
+print(9 == 9) #True
+```
+### 4.1.3 Float
+### 4.1.4 Cadenas o strings
+### 4.1.5 Listas
+### 4.1.6 Set
+### 4.1.7 Tupla
+### 4.1.8 Diccionario
+## 4.2 Tipos de operadores
+### 4.2.1 De asignación
