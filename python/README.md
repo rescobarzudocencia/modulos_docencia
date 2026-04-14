@@ -37,7 +37,7 @@ Tal vez algunos de estos conceptos puedan resultarte extraños si estás empezan
 
 Algunas cosas curiosidad que en otros lenguajes no pasan. La función acepta un parámetro entrada pero no se especifica su tipo. La x almacena primero una cadena, luego un float y luego un integer. La función funcion() es llamada con un int, pero su valor se divide entre 2 y el resultado es convertido automáticamente en un float.
 
-```
+```python
 def funcion(entrada): 
     return entrada/2 
 x = "Hola" 
