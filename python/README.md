@@ -3,7 +3,7 @@
 ![logo de python](img/logo_python.png)
 
 
-- [1. Introducción, Instlación y Tipos de datos](Ut1/README.md)
+- [1. Introducción, Instalación , Tipos de datos y Operadores](Ut1/README.md)
   
 
 
