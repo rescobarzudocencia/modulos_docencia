@@ -798,7 +798,29 @@ print(d1) #{'a': 0, 'b': 2, 'd': 400}
 ```
 
 ## 4.2 Tipos de operadores
+
 ### 4.2.1 De asignación
+
+
+Anteriormente hemos visto los operadores aritméticos, que usaban dos números para calcular una operación aritmética (como suma o resta) y devolver su resultado. En este caso, los operadores de asignación o assignment operators nos permiten realizar una operación y almacenar su resultado en la variable inicial. Podemos ver como realmente el único operador nuevo es el ***=***. El resto son abreviaciones de otros operadores que habíamos visto con anterioridad. Ponemos un ejemplo con x=7
+
+![operadores de asignacion](../img/operadores_asignacion.png)
+```python
+a=7; b=2
+print("Operadores de asignación")
+x=a; x+=b;  print("x+=", x)  # 9
+x=a; x-=b;  print("x-=", x)  # 5
+x=a; x*=b;  print("x*=", x)  # 14
+x=a; x/=b;  print("x/=", x)  # 3.5
+x=a; x%=b;  print("x%=", x)  # 1
+x=a; x//=b; print("x//=", x) # 3
+x=a; x**=b; print("x**=", x) # 49
+x=a; x&=b;  print("x&=", x)  # 2
+x=a; x|=b;  print("x|=", x)  # 7
+x=a; x^=b; print("x^=", x)   # 5
+x=a; x>>=b; print("x>>=", x) # 1
+x=a; x<<=b; print("x<<=", x) # 28
+```
 ### 4.2.2 Aritméticos
 ### 4.2.3 Relacionales
 ### 4.2.4 Lógicos
