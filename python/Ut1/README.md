@@ -841,9 +841,9 @@ x//=3
  # de la división
 print(x) # 1
 ```
-+ ***Operador **=***
++ ***Operador \*\*=***
   
-El operador **= realiza la operación exponente del primer número elevado al segundo, y almacena el resultado en la primera variable. El equivalente de x**=2 sería x=x**2.
+El operador \*\*= realiza la operación exponente del primer número elevado al segundo, y almacena el resultado en la primera variable. El equivalente de x**=2 sería x=x**2.
 ```python
 x=5
  # Eleva el número al cuadrado
@@ -910,6 +910,38 @@ x<<=1
 print(x) # 20
 ```
 ### 4.2.2 Aritméticos
+
+![operadores aritmeticos](../img/operadores_aritmeticos.png)
+```python
+x = 10; y = 3
+print("Operadores aritméticos")
+print("x+y =", x+y) #13
+print("x-y =", x-y) #7
+print("x*y =", x*y) #30
+print("x/y =", x/y) #3.3333333333333335
+print("x%y =", x%y) #1
+print("x**y =", x**y) #1000
+print("x//y =", x//y) #3
+```
+> **Orden de aplicación**
+
+En los ejemplos anteriores simplemente hemos aplicado un operador a dos números sin mezclarlos entre ellos. También es posible tener varios operadores en la misma línea de código, y en este caso es muy importante tener en cuenta las prioridades de cada operador y cual se aplica primero. Ante la duda siempre podemos usar paréntesis, ya que todo lo que está dentro de un paréntesis se evaluará conjuntamente, pero es importante saber las prioridades.
+El orden de prioridad sería el siguiente para los peradores aritméticos, siendo el primero el de mayor prioridad:
+
++ () Paréntesis
++ ** Exponente
++ -x Negación
++ \* / // Multiplicación, División, Cociente, Módulo
++ \+ - Suma, Resta
+```python
+print(10*(5+3)) # Con paréntesis se realiza primero la suma # 80
+print(10*5+3) # Sin paréntesis se realiza primero la multiplicación # 53
+print(3*3+2/5+5%4) # Primero se multiplica y divide, después se suma #10.4
+print(-2**4)
+ # Primero se hace la potencia, después se aplica el signo
+#-16
+```
+
 ### 4.2.3 Relacionales
 ### 4.2.4 Lógicos
 ### 4.2.5 A nivel de Bit
