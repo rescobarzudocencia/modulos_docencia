@@ -821,6 +821,94 @@ x=a; x^=b; print("x^=", x)   # 5
 x=a; x>>=b; print("x>>=", x) # 1
 x=a; x<<=b; print("x<<=", x) # 28
 ```
++ ***Operador %=***
+
+El operador %= equivale a hacer el módulo de la división de dos variables y almacenar su resultado en la primera. Calculamos el resto de la división.
+```python
+x = 3
+x%=2
+print(x) # 1
+```
+
++ ***Operador //=***
+  
+El operador //= realiza la operación cociente entre dos variables y almacena el resultado en la
+primera. El equivalente de x//=2 sería x=x//2.
+```python
+x=5
+ # El resultado es el cociente
+x//=3
+ # de la división
+print(x) # 1
+```
++ ***Operador **=***
+  
+El operador **= realiza la operación exponente del primer número elevado al segundo, y almacena el resultado en la primera variable. El equivalente de x**=2 sería x=x**2.
+```python
+x=5
+ # Eleva el número al cuadrado
+x**=2
+ # y guarda el resultado en la misma
+print(x) # 25
+```
+Otro ejemplo similar, sería empleando un exponente negativo, algo que es totalmente válido y equivale matemáticamente al inverso del número elevado al exponente en positivo. Dicho de otra forma, x−2 equivale a 1/x2.
+```python
+x=5
+ # Elevar 5 a -2 equivale a dividir
+x**=-2 # uno entre 25.
+print(x) # 0.04
+```
++ ***Operador &=***
+
+El operador &= realiza la comparación & bit a bit entre dos variables y almacena su resultado en la primera. El equivalente de x&=1 sería x=x&1
+```python
+a = 0b101010
+a&= 0b111111
+print(bin(a))# 0b101010
+```
+
++ ****Operador |=****
+
+El operador |= realiza el operador | elemento a elemento entre dos variables y almacena su resultado en la primera. El equivalente de x|=2 sería x=x|2
+```python
+a = 0b101010
+a|= 0b111111
+print(bin(a))# 0b111111
+```
++ ***Operador ^=***
+
+El operador ^= realiza el operador ^ elemento a elemento entre dos variables y almacena su resultado en la primera. El equivalente de x^=2 sería x=x^2
+```python
+a = 0b101010
+a^= 0b111111
+print(bin(a))# 0b10101
+```
++ ***Operador »=***
+
+El operador >>= es similar al operador >> pero permite almacenar el resultado en la primera variable. Por lo tanto x>>=3 sería equivalente a x=x>>3. Desplazamiento de bits a la derecha.
+```python
+x = 10
+x>>=1
+print(x) # 5
+```
+Es importante tener cuidado y saber el tipo de la variable x antes de aplicar este operador, ya que se podría dar el caso de que x fuera una variable tipo float. En ese caso, tendríamos un error porque el operador >> no esta definido para float.
+```python
+x=10.0
+ # Si la x es float
+print(type(x)) # <class 'float'>
+#x>>=1  # ERROR! TypeError
+ ```
++ ***Operador «=***
+
+Muy similar al anterior, <<= aplica el operador << y almacena su contenido en la primera variable.
+El equivalente de x<<=1 sería x=x<<1. Desplazamiento de bits a la izquierda
+```python
+x=10
+ # Inicializamos a 10
+x<<=1
+ # Desplazamos 1 a la izquierda
+print(x) # 20
+```
 ### 4.2.2 Aritméticos
 ### 4.2.3 Relacionales
 ### 4.2.4 Lógicos
