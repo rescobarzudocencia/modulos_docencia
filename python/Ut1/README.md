@@ -804,7 +804,26 @@ print(d1) #{'a': 0, 'b': 2, 'd': 400}
 
 Anteriormente hemos visto los operadores aritméticos, que usaban dos números para calcular una operación aritmética (como suma o resta) y devolver su resultado. En este caso, los operadores de asignación o assignment operators nos permiten realizar una operación y almacenar su resultado en la variable inicial. Podemos ver como realmente el único operador nuevo es el ***=***. El resto son abreviaciones de otros operadores que habíamos visto con anterioridad. Ponemos un ejemplo con x=7
 
-![operadores de asignacion](../img/operadores_asignacion.png)
+
+
+| Operador | Ejemplo | Equivalente|
+|:--------:|:------:|:---------:|
+| = | x=7 | x=7|
+| +=| x+=2  | x=x+2 |
+| -=| x-=2  | x=x-2 |
+| *=| x*=2  | x=x*2 |
+| /=| x/=2  | x=x/2 |
+| %=| x%=2  | x=x%2 |
+| //=| x//=2  | x=x//2 |
+| **=| x**=2  | x=x**2 |
+| &=| x&=2  | x=x&2 |
+| |=| x|=2  | x=x|2 |
+| ^=| x^=2  | x=x^2 |
+| >>=| x>>=2  | x=x>>2 |
+| <<=| x<<=2  | x=x<<2 |
+
+
+
 ```python
 a=7; b=2
 print("Operadores de asignación")
@@ -911,7 +930,17 @@ print(x) # 20
 ```
 ### 4.2.2 Aritméticos
 
-![operadores aritmeticos](../img/operadores_aritmeticos.png)
+
+| Operador | Función |
+|:--------:|:------:|
+| + | Suma |
+| - | Resta  |
+| * |Multiplicacion |
+| / | Division |
+| % |Modulo, resto |
+| ** |Exponente |
+| // | Cociente|
+
 ```python
 x = 10; y = 3
 print("Operadores aritméticos")
@@ -944,7 +973,16 @@ print(-2**4)  # Primero se hace la potencia, después se aplica el signo #-16
 
 Los operadores relacionales, o también llamados comparison operators nos permiten saber la relación existente entre dos variables. Se usan para saber si por ejemplo un número es mayor o menor que otro. Dado que estos operadores  indican si se cumple o no una operación, el valor que devuelven es True o False.
 
-![operadores relacionales](../img/operadores_relacionales.png)
+
+
+| Operador | Función |
+|:--------:|:------:|
+| == | Igual |
+| !=| Distinto  |
+| > |Mayor |
+| < |  Menor|
+| >= |Mayor o igual |
+| <= |Menor o igual |
 
 ```python
 x=2; y=3
@@ -1014,7 +1052,13 @@ print(3<=2.99999999999999999)
 
 Los operadores lógicos o logical operators nos permiten trabajar con valores de tipo booleano. Un valor booleano o bool es un tipo que solo puede tomar valores True o False. Por lo tanto, estos operadores nos permiten realizar diferentes operaciones con estos tipos, y su resultado será otro booleano. Por ejemplo, True and True usa el operador and, y su resultado será True. A continuación lo explicaremos mas en detalle.
 
-![operadores logicos](../img/operadores_logicos.png)
+
+| Operador | Función |
+|:--------:|:------:|
+| and  | Devuelve True si ambos son True | 
+| or | Devuelve True si al menos un elemento es true | 
+| not |Devuelve el contrario a True y False  | 
+
 
 + **Operador and**
 
@@ -1046,5 +1090,18 @@ print(not not not not True) # True
 ```
 
 ### 4.2.5 A nivel de Bit
+
+| Operador | Función |
+|:--------:|:------:|
+| \| | Or bit a bit |
+| &| And Bit a Bit  |
+| ~ |Not Bit a Bit  |
+| ^ |  Xor bit a bit|
+| >> |Desplazamiento a la derecha  |
+| << |Desplazamiento a la izquierda  |
+
 ### 4.2.6 De identidad
+
+
+
 ### 4.2.7 Membresía
