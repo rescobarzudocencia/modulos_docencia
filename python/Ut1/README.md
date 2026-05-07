@@ -122,7 +122,7 @@ x=5;y=10
 ``` 
 En algunas situaciones se puede dar el caso de que queramos tener una sola instrucción en varias línea de código. Uno de los motivos principales podría ser que fuera demasiado larga, y de hecho en la especificación PEP8 se recomienda que las líneas no excedan los 79 caracteres.
 
-Haciendo uso de **\** se puede romper el código en varias líneas, lo que en determinados casos hace que el código sea mucho más legible.
+Haciendo uso de **\\** se puede romper el código en varias líneas, lo que en determinados casos hace que el código sea mucho más legible.
 
 ```python
 x = 1 + 2 + 3 + 4 +\
@@ -937,12 +937,81 @@ El orden de prioridad sería el siguiente para los peradores aritméticos, siend
 print(10*(5+3)) # Con paréntesis se realiza primero la suma # 80
 print(10*5+3) # Sin paréntesis se realiza primero la multiplicación # 53
 print(3*3+2/5+5%4) # Primero se multiplica y divide, después se suma #10.4
-print(-2**4)
- # Primero se hace la potencia, después se aplica el signo
-#-16
+print(-2**4)  # Primero se hace la potencia, después se aplica el signo #-16
 ```
 
 ### 4.2.3 Relacionales
+
+Los operadores relacionales, o también llamados comparison operators nos permiten saber la relación existente entre dos variables. Se usan para saber si por ejemplo un número es mayor o menor que otro. Dado que estos operadores  indican si se cumple o no una operación, el valor que devuelven es True o False.
+
+![operadores relacionales](../img/operadores_relacionales.png)
+
+```python
+x=2; y=3
+print("Operadores Relacionales")
+print("x==y =", x==y) # False
+print("x!=y =", x!=y) # True
+print("x>y =", x>y) # False
+print("x<y =", x<y) # True
+print("x>=y =", x>=y) # False
+print("x<=y =", x<=y) # True
+```
++ **Operador ==**
++ 
+El operador == permite comparar si las variables introducidas a su izquierda y derecha son iguales. Muy importante no confundir con =, que es el operador de asignación.
+```python
+print(4==4) # True
+print(4==5) # False
+print(4==4.0) # True
+print(0==False) # True
+print("asd"=="asd") # True
+print("asd"=="asdf") # False
+print(2=="2") # False
+print([1, 2, 3] == [1, 2, 3]) # True
+```
++ **Operador !=**
+  
+El operador != devuelve True si los elementos a comparar son iguales y False si estos son distintos. De hecho, una vez definido el operador ==, no sería necesario ni explicar != ya que hace exactamente lo contrario. Definido primero, definido el segundo. Es decir, si probamos con los mismos ejemplo que el apartado anterior, veremos como el resultado es el contrario, es decir False donde era True y viceversa.
+```python
+print(4!=4) # False
+print(4!=5) # True
+print(4!=4.0) # False
+print(0!=False) # False
+print("asd"!="asd") # False
+print("asd"!="asdf") # True
+print(2!="2") # True
+print([1, 2, 3] != [1, 2, 3]) # False
+```
++ **Operador >**
+
+El operador > devuelve True si el primer valor es mayor que el segundo y False de lo contrario.
+```python
+print(5>3) # True
+print(5>5) # False
+```
++ **Operador <**
+
+El operador < devuelve True si el primer elemento es mayor que el segundo. Es totalmente válido aplicar operadores relacionales como < sobre cadenas de texto, pero el comportamiento es un tanto
+difícil de ver a simple vista. Por ejemplo abc es menor que abd y A es menor que a.
+```python
+print("abc" < "abd") # True
+print("A"<"a") # True
+```
+ + **Operador >=**
+  
+Similar a los anteriores, >= permite comparar si el primer elemento es mayor o igual que es segundo, devolviendo True en el caso de ser cierto.
+```python
+print(3>=3)  # True
+print([3,4] >= [3,5]) # False
+```
++ **Operador <=**
+
+De la misma manera, <= devuelve True si el primer elemento es menor o igual que el segundo. Nos podemos encontrar con cosas interesantes debido a la precisión numérica existente al
+representar valores, como el siguiente ejemplo.
+```python
+print(3<=2.99999999999999999)
+```
+
 ### 4.2.4 Lógicos
 ### 4.2.5 A nivel de Bit
 ### 4.2.6 De identidad
