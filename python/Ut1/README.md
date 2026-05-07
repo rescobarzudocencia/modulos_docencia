@@ -971,7 +971,7 @@ print([1, 2, 3] == [1, 2, 3]) # True
 ```
 + **Operador !=**
   
-El operador != devuelve True si los elementos a comparar son iguales y False si estos son distintos. De hecho, una vez definido el operador ==, no sería necesario ni explicar != ya que hace exactamente lo contrario. Definido primero, definido el segundo. Es decir, si probamos con los mismos ejemplo que el apartado anterior, veremos como el resultado es el contrario, es decir False donde era True y viceversa.
+El operador != devuelve True si los elementos a comparar son iguales y False si estos son distintos. De hecho, una vez definido el operador \==, no sería necesario ni explicar != ya que hace exactamente lo contrario. Definido primero, definido el segundo. Es decir, si probamos con los mismos ejemplo que el apartado anterior, veremos como el resultado es el contrario, es decir False donde era True y viceversa.
 ```python
 print(4!=4) # False
 print(4!=5) # True
@@ -991,8 +991,7 @@ print(5>5) # False
 ```
 + **Operador <**
 
-El operador < devuelve True si el primer elemento es mayor que el segundo. Es totalmente válido aplicar operadores relacionales como < sobre cadenas de texto, pero el comportamiento es un tanto
-difícil de ver a simple vista. Por ejemplo abc es menor que abd y A es menor que a.
+El operador < devuelve True si el primer elemento es mayor que el segundo. Es totalmente válido aplicar operadores relacionales como < sobre cadenas de texto, pero el  comportamiento es un tanto difícil de ver a simple vista. Por ejemplo abc es menor que abd y A es menor que a.
 ```python
 print("abc" < "abd") # True
 print("A"<"a") # True
@@ -1006,13 +1005,46 @@ print([3,4] >= [3,5]) # False
 ```
 + **Operador <=**
 
-De la misma manera, <= devuelve True si el primer elemento es menor o igual que el segundo. Nos podemos encontrar con cosas interesantes debido a la precisión numérica existente al
-representar valores, como el siguiente ejemplo.
+De la misma manera, <= devuelve True si el primer elemento es menor o igual que el segundo. Nos podemos encontrar con cosas interesantes debido a la precisión numérica existente al representar valores, como el siguiente ejemplo.
 ```python
 print(3<=2.99999999999999999)
 ```
 
 ### 4.2.4 Lógicos
+
+Los operadores lógicos o logical operators nos permiten trabajar con valores de tipo booleano. Un valor booleano o bool es un tipo que solo puede tomar valores True o False. Por lo tanto, estos operadores nos permiten realizar diferentes operaciones con estos tipos, y su resultado será otro booleano. Por ejemplo, True and True usa el operador and, y su resultado será True. A continuación lo explicaremos mas en detalle.
+
+![operadores logicos](../img/operadores_logicos.png)
+
++ **Operador and**
+
+El operador and evalúa si el valor a la izquierda y el de la derecha son True, y en el caso de ser cierto, devuelve True. Si uno de los dos valores es False, el resultado será False. Es realmente un operador muy lógico e intuitivo que incluso usamos en la vida real. 
+```python
+print(True and True) # True
+print(True and False) # False
+print(False and True) # False
+print(False and False) # False
+```
++ **Operador or**
+
+El operador or devuelve True cuando al menos uno de los elementos es igual a True. Es decir,
+evalúa si el valor a la izquierda o el de la derecha son True.
+```python
+print(True or True) # True
+print(True or False) # True
+print(False or True) # True
+print(False or False) # False
+```
++ **Operador not**
+
+Y por último tenemos el operador not, que simplemente invierte True por False y False por
+True. También puedes usar varios not juntos y simplemente se irán aplicando uno tras otro. La verdad que es algo difícil de ver en la realidad, pero simplemente puedes contar el número de not y si es par el valor se quedará igual. Si por lo contrario es impar, el valor se invertirá.
+```python
+print(not True) # False
+print(not False) # True
+print(not not not not True) # True
+```
+
 ### 4.2.5 A nivel de Bit
 ### 4.2.6 De identidad
 ### 4.2.7 Membresía
