@@ -806,21 +806,21 @@ Anteriormente hemos visto los operadores aritméticos, que usaban dos números p
 
 
 
-| Operador | Ejemplo | Equivalente|
-|:--------:|:------:|:---------:|
-| = | x=7 | x=7|
-| +=| x+=2  | x=x+2 |
-| -=| x-=2  | x=x-2 |
-| *=| x*=2  | x=x*2 |
-| /=| x/=2  | x=x/2 |
-| %=| x%=2  | x=x%2 |
-| //=| x//=2  | x=x//2 |
-| **=| x**=2  | x=x**2 |
-| &=| x&=2  | x=x&2 |
-| |=| x|=2  | x=x|2 |
-| ^=| x^=2  | x=x^2 |
-| >>=| x>>=2  | x=x>>2 |
-| <<=| x<<=2  | x=x<<2 |
+| Operador | Ejemplo | Equivalente |
+| :------: | :-----: | :---------: | 
+|    =     |   x=7   |     x=7     |
+|    +=    |  x+=2   |    x=x+2    |
+|    -=    |  x-=2   |    x=x-2    |
+|    *=    |  x*=2   |    x=x*2    |
+|    /=    |  x/=2   |    x=x/2    |
+|    %=    |  x%=2   |    x=x%2    |
+|   //=    |  x//=2  |   x=x//2    |
+|   **=    |  x**=2  |   x=x**2    |
+|    &=    |  x&=2   |    x=x&2    |
+|     \|=  |  x\|=2  |  x=x\|2     |
+|    ^=    |  x^=2   |    x=x^2    |
+|   >>=    |  x>>=2  |   x=x>>2    |
+|   <<=    |  x<<=2  |   x=x<<2    |
 
 
 
@@ -995,7 +995,7 @@ print("x>=y =", x>=y) # False
 print("x<=y =", x<=y) # True
 ```
 + **Operador ==**
-+ 
+
 El operador == permite comparar si las variables introducidas a su izquierda y derecha son iguales. Muy importante no confundir con =, que es el operador de asignación.
 ```python
 print(4==4) # True
@@ -1055,9 +1055,9 @@ Los operadores lógicos o logical operators nos permiten trabajar con valores de
 
 | Operador | Función |
 |:--------:|:------:|
-| and  | Devuelve True si ambos son True | 
-| or | Devuelve True si al menos un elemento es true | 
-| not |Devuelve el contrario a True y False  | 
+| and  | Devuelve True si ambos son True |
+| or | Devuelve True si al menos un elemento es true |
+| not |Devuelve el contrario a True y False  |
 
 
 + **Operador and**
@@ -1069,6 +1069,7 @@ print(True and False) # False
 print(False and True) # False
 print(False and False) # False
 ```
+
 + **Operador or**
 
 El operador or devuelve True cuando al menos uno de los elementos es igual a True. Es decir,
@@ -1079,6 +1080,7 @@ print(True or False) # True
 print(False or True) # True
 print(False or False) # False
 ```
+
 + **Operador not**
 
 Y por último tenemos el operador not, que simplemente invierte True por False y False por
@@ -1094,14 +1096,142 @@ print(not not not not True) # True
 | Operador | Función |
 |:--------:|:------:|
 | \| | Or bit a bit |
-| &| And Bit a Bit  |
+| & | And Bit a Bit  |
 | ~ |Not Bit a Bit  |
 | ^ |  Xor bit a bit|
 | >> |Desplazamiento a la derecha  |
 | << |Desplazamiento a la izquierda  |
 
++ **Operador &**
+
+El operador & realiza la operación que vimos en otros capítulos and, pero por cada bit existente en la representación binaria de los dos números que le introducimos. Es decir, recorre ambos números en su representación binaria elemento a elemento, y hace una operación and con cada uno de ellos.
+
+
+```python
+a = 0b1101
+b = 0b1011
+print(bin(a & b)) #0b1001
+```
+
++ **Operador |**
+
+El operador | realiza la operación or elemento a elemento con cada uno de los bits de los números que introducimos. En el siguiente ejemplo podemos ver como el resultado es 1111 ya que siempre uno de los dos elementos es 1. Se harían las siguientes comparaciones 1 or 1, 1 or 0, 0 or 1 y 1 or 1.
+
+```python
+a = 0b1101
+b = 0b1011
+print(bin(a | b)) # 0b1111
+```
+
++ **Operador ~**
+
+El operador ~ realiza la operación not sobre cada bit del número que le introducimos, es decir, invierte el valor de cada bit, poniendo los 0 a 1 y los 1 a 0. El comportamiento en Python puede ser algo distinto del esperado. En el siguiente ejemplo, tenemos el número 40 que en binario es 101000. Si hacemos ~101000 sería de esperar que como hemos dicho, se inviertan todos los bits y el resultado sea 010111, pero en realidad el resultado es 101001. Para entender porque pasa esto, te invitamos a leer más información sobre el complemento a uno y el complemento a dos.
+
+```python
+a = 40
+print(bin(a))
+print(bin(~a))
+0b101000
+-0b101001
+```
+
++ **Operador ^**
+
+El operador ^ realiza la función xor con cada bit de las dos variables que se le proporciona.
+Anteriormente en otros capítulos hemos hablado de la and o or, que son operadores bastante usados y comunes. Tal vez xor sea menos común, y lo que hace es devolver True o 1 cuando hay al menos un valor True pero no los dos. Es decir, solo devuelve 1 para las combinaciones 1,0 y 0,1 y 0 para las demás.
+
+```python
+x = 0b0110 ^ 0b1010
+print(bin(x))
+# 0 xor 1 = 1
+# 1 xor 0 = 1
+# 1 xor 1 = 0
+# 0 xor 0 = 0
+# 0b1100
+```
+
++ **Operador >>**
+
+El operador >> desplaza todos los bit n unidades a la derecha. Por lo tanto es necesario proporcionar dos parámetros, donde el primer es el número que se desplazará o shift y el segundo es el número de posiciones. En el siguiente ejemplo tenemos 1000 en binario, por lo que si aplicamos un >>2, deberemos mover cada bit 2 unidades a la derecha. Lo que queda por la izquierda se rellena con ceros, y lo que sale por la derecha se descarta. Por lo tanto 1000>>2 será 0010. Es importante notar que Python por defecto elimina los ceros a la izquierda, ya que igual que en el sistema decimal, son irrelevantes.
+
+```python
+a=0b1000
+print(bin(a>>2))
+# 0b10
+```
+
++ **Operador <<**
+
+El operador << es análogo al >> con la diferencia que en este caso el desplazamiento es realizado a la izquierda. Por lo tanto si tenemos 0001 y desplazamos <<3, el resultado será 1000.
+```python
+a=0b0001
+print(bin(a<<3)) # 0b1000
+```
+
+Es importante que no nos dejemos engañar por el número de bits que ponemos a la entrada. Si por ejemplo desplazamos en 4 o en mas unidades nuestra variable a el número de bits que se nos mostrará también se incrementará. Con esto queremos destacar que aunque la entrada sean 4 bits, Python internamente rellena todo lo que está a la izquierda con ceros.
+
+```python
+a=0b0001
+print(bin(a<<10)) # 0b10000000000
+```
+
 ### 4.2.6 De identidad
 
+El operador de identidad o identity operator is nos indica si dos variables hacen referencia al mismo objeto. Esto implica que si dos variables distintas tienen el mismo id(), el resultado de
+aplicar el operador is sobre ellas será True.
 
+| Operador | Función |
+|:--------:|:------:|
+| is | Devuelve True si hace referencia al mismo objeto|
+| is not| Devuelve False si no hace referencia al mismo objeto  |
 
++ **Operador is**
+
+El operador is comprueba si dos variables hacen referencia a el mismo objeto. En el siguiente ejemplo podemos ver como al aplicarse sobre a y b el resultado es True.
+
+```python
+a = 10
+b = 10
+print(a is b) # True
+```
+
+Esto es debido a que Python reutiliza el mismo objeto que almacena el valor 10 para ambas 
+variables. De hecho, si usamos la función id(), podemos ver que el objeto es el mismo.
+
+```python
+print(id(a)) # 4397849536
+print(id(b)) # 4397849536
+```
++ **Operador is not**
+
+Una vez definido is, es trivial definir is not porque es exactamente lo contrario. Devuelve True cuando ambas variables no hacen referencia al mismo objeto.
+```python
+# Python crea dos objetos diferentes, uno
+# para cada lista. Las listas son mutables.
+a = [1, 2, 3]
+b = [1, 2, 3]
+print(a is not b) # True
+# Python reutiliza el objeto que almacena 5
+# por lo que ambas variables apuntan a el mismo
+a = 5
+b = 5
+print(a is not b) # False
+```
 ### 4.2.7 Membresía
+
+Los operadores de membresía o membership operators son operadores que nos permiten saber si un elemento esta contenido en una secuencia. Por ejemplo si un número está contenido en una lista de números.
+
++ **Operador in**
+El operador in nos permite ver si un elemento esta contenido dentro de una secuencia, como podría ser una lista. En el siguiente ejemplo se ve un caso sencillo donde se verifica si 3 esta contenido en la lista [1, 2, 3]. Como efectivamente lo está, el resultado es True.
+
+```python
+print(3 in [1, 2, 3]) # True
+```
+
++ **Operador not in**
+
+Por último, el operador not in realiza lo contrario al operador in. Verifica que un elemento no
+está contenido en otra secuencia. En el siguiente ejemplo se puede ver como 3 no es parte de la secuencia, por lo que el resultado es False.
+```python
+print(3 not in [1, 2, 4, 5]) # True
+```
