@@ -1,11 +1,11 @@
 # UT2 ESTRUCTURAS DE CONTROL, FUNCIONES Y EXCEPCIONES <!-- omit in toc -->
 ---
 - [1. Sentencias Condicionales](#1-sentencias-condicionales)
-  - [1.1 Sentencia IF](#11-sentencia-if)
-  - [1.2 Match](#12-match)
+	- [1.1 Sentencia IF](#11-sentencia-if)
+	- [1.2 Match](#12-match)
 - [2. Sentencias Repetitivas](#2-sentencias-repetitivas)
-  - [2.1 Bucle FOR](#21-bucle-for)
-  - [2.2 Bucle WHILE](#22-bucle-while)
+	- [2.1 Bucle FOR](#21-bucle-for)
+	- [2.2 Bucle WHILE](#22-bucle-while)
 - [3. Funciones](#3-funciones)
 - [4. Excepciones](#4-excepciones)
 
@@ -298,7 +298,7 @@ while i < 3:
 	i += 1
 	j = 0
 ```
-> **Ejemplos while**
+> **Ejemplo while**
 
 Árbol de navidad en Python. Imprime un árbol de navidad formado con * haciendo uso del while y de la multiplicación de un entero por una cadena, cuyo resultado en Python es replicar la cadena.
 ```python
@@ -316,9 +316,215 @@ z-=1
 # ***********
 ```
 # 3. Funciones
+Python tiene funciones nativas como **len()** para calcular la longitud de una lista, pero al igual que en otros lenguajes de programación, también podemos definir **nuestras propias funciones**. Para ello hacemos uso de **def**.
+```python
+def nombre_funcion(argumentos):
+    código
+    return retorno
+```
 
+Cualquier función tendrá un **nombre**, unos **argumentos de entrada**, un **código** a ejecutar y unos **parámetros de salida**. Al igual que las funciones matemáticas, en programación nos permiten realizar diferentes operaciones con la entrada, para entregar una determinada salida que dependerá del código que escribamos dentro. Por lo tanto, es totalmente análogo al clásico **y=f(x)** de las matemáticas.
 
+```python
+def f(x):
+    return 2*x
+y=f(3)
+print(y) # 6
+```
+> **Pasando argumentos de entrada**
 
++ **Argumentos por posición**
+Los argumentos por posición o **posicionales **son la forma más básica e intuitiva de pasar parámetros. Si tenemos una función **resta()** que acepta dos parámetros, se puede llamar como se muestra a continuación.
+```python
+def resta(a, b):
+    return a-b
+resta(5, 3) # 2
+```
+Al tratarse de parámetros posicionales, se interpretará que el primer número es la **a** y el segundo la **b.** El número de parámetros es fijo, por lo que si intentamos llamar a la función con solo uno, dará error.
+```python
+resta(1) # Error! TypeError
+```
+Tampoco es posible usar mas argumentos de los tiene la función definidos, ya que no sabría que hacer con ellos. Por lo tanto si lo intentamos, Python nos dirá que toma 2 posicionales y estamos pasando 3, lo que no es posible.
+```python
+#TypeError: resta() takes 2 positional arguments but 3 were given
+resta(5,4,3) # Error
+```
++ **Argumentos por nombre**
 
+Otra forma de llamar a una función, es usando el nombre del argumento con **=** y su valor. El siguiente código hace lo mismo que el código anterior, con la diferencia de que los argumentos no son posicionales.
+```python
+resta(a=3, b=5) # -2
+```
+Al indicar en la llamada a la función el nombre de la variable y el valor, el orden ya no importa, y se podría llamar de la siguiente forma.
+```python
+resta(b=5, a=3) # -2
+```
+
++ **Argumentos por defecto**
+
+Tal vez queramos tener una función con algún parámetro opcional, que pueda ser usado o no dependiendo de diferentes circunstancias. Para ello, lo que podemos hacer es asignar un valor por defecto a la función. En el siguiente caso **c** valdría cero salvo que se indique lo contrario.
+```python
+def suma(a, b, c=0):
+    return a+b+c
+suma(5,5,3) # 13
+```
+Dado que el parámetro **c** tiene un valor por defecto, la función puede ser llamada sin ese valor.
+```python
+suma(4,3) # 7
+```
+Podemos incluso asignar un valor por defecto a todos los parámetros, por lo que se podría llamar a la función sin ningún argumento de entrada.
+```python
+def suma(a=3, b=5, c=0):
+    return a+b+c
+suma() # 8
+```
+Las siguientes llamadas a la función también son válidas
+```python
+suma(1)     # 6
+suma(4,5)   # 9
+suma(5,3,2) # 10
+```
+O haciendo uso de lo que hemos visto antes y usando los nombres de los argumentos.
+```python
+suma(a=5, b=3) #8
+```
+
++ **Argumentos de longitud variable**
+
+Imaginemos que queremos una función suma() como la de antes, pero en este caso necesitamos que sume todos los números de entrada que se le pasen, sin importar si son 3 o 100. Una primera forma de hacerlo sería con una lista.
+```python
+def suma(numeros):
+    total = 0
+    for n in numeros:
+        total += n
+    return total
+suma([1,3,5,4]) # 13
+```
+Python tiene una herramienta muy potente. Si declaramos un argumento con **\***, esto hará que el argumento que se pase sea empaquetado en una tupla de manera automática. No confundir **\*** con los punteros en otros lenguajes de programación, no tiene nada que ver.
+```python
+def suma(*numeros):
+    print(type(numeros))    # <class 'tuple'>
+    total = 0
+    for n in numeros:
+        total += n
+    return total
+suma(1, 3, 5, 4) # 13
+```
+Usando doble ** es posible también tener como parámetro de entrada una lista de elementos almacenados en forma de clave y valor. En este caso podemos iterar los valores haciendo uso de **items()**.
+```python
+def suma(**kwargs):
+    suma = 0;
+    for key, value in kwargs.items():
+        print(key, value)
+        suma += value
+    return suma
+suma(a=5, b=20, c=23) # 48
+```
+> **Sentencia Return**
+
+El uso de la sentencia return permite realizar dos cosas:
+
++ Salir de la función y transferir la ejecución de vuelta a donde se realizó la llamada.
++ Devolver uno o varios parámetros, fruto de la ejecución de la función.
+
+> **Paso por valor y referencia**
+
+En muchos lenguajes de programación existen los conceptos de paso por **valor** y por **referencia** que aplican a la hora de como trata una función a los parámetros que se le pasan como entrada. Su comportamiento es el siguiente:
+
++ Si usamos un parámetro pasado por **valor**, se creará una copia local de la variable, lo que implica que cualquier modificación sobre la misma no tendrá efecto sobre la original.
++ Con una variable pasada como **referencia**, se actuará directamente sobre la variable pasada, por lo que las modificaciones afectarán a la variable original.
+  
+En Python las cosas son un poco distintas, y el comportamiento estará definido por el tipo de variable con la que estamos tratando. 
+
+Veamos un ejemplo de paso por valor.
+```python
+x = 10
+def funcion(entrada):
+    entrada = 0
+funcion(x)
+print(x) # 10
+```
+Vemos como el valor de x no se modifica.
+No pasa lo mismo si por ejemplo x es una lista como en el siguiente ejemplo. En este caso Python lo trata como si estuviese pasada por referencia, lo que hace que se modifique la variable original. La variable original x ha sido modificada.
+```python
+x = [10, 20, 30]
+def funcion(entrada):
+ entrada.append(40)
+funcion(x)
+print(x) # [10, 20, 30, 40]
+```
+> **Funciones lambda**
+
+Las funciones **lambda** o anónimas son un tipo de funciones en Python que típicamente se definen en una línea y cuyo código a ejecutar suele ser pequeño.
+Lo que significa algo así como, “las funciones lambda son simplemente una versión acortada, que puedes usar si te da pereza escribir una función”
+Lo que sería una función que suma dos números como la siguiente.
+```python
+def suma(a, b):
+    return a+b
+```
+Se podría expresar en forma de una función lambda de la siguiente manera.
+```python
+lambda a, b : a + b
+```
+La primera diferencia es que una función lambda no tiene un nombre, y por lo tanto salvo que sea asignada a una variable, es totalmente inútil. Para ello debemos.
+```python
+suma = lambda a, b: a + b
+```
+Una vez tenemos la función, es posible llamarla como si de una función normal se tratase.
+```python
+suma(2, 4)
+```
+Si es una función que solo queremos usar una vez, tal vez no tenga sentido almacenarla en una variable. Es posible declarar la función y llamarla en la misma línea.
+```python
+(lambda a, b: a + b)(2, 4)
+```
+
+> **Recursividad**
+
+La recursividad o recursión es un concepto que proviene de las matemáticas, y que aplicado al mundo de la programación nos permite resolver problemas o tareas donde las mismas pueden ser divididas en subtareas cuya funcionalidad es la misma. Dado que los  subproblemas a resolver son de la misma naturaleza, se puede usar la misma función para resolverlos. Dicho de otra manera, una función recursiva es aquella que está definida en función de sí misma, por lo que se llama repetidamente a sí misma hasta llegar a un punto de salida.
+Cualquier función recursiva tiene dos secciones de código claramente divididas:
+
++ Por un lado tenemos la sección en la que la función se llama a sí misma.
++ Por otro lado, tiene que existir siempre una condición en la que la función retorna sin volver a llamarse. Es muy importante porque de lo contrario, la función se llamaría de manera indefinida.
+  
+Veamos unos ejemplos con el factorial y la serie de fibonacci.
+
+**Calcular factorial**
+
+Uno de los ejemplos mas usados para entender la recursividad, es el cálculo del factorial de un número n!. El factorial de un número n se define como la multiplicación de todos sus números predecesores hasta llegar a uno. Por lo tanto 5!, leído como cinco factorial, sería 5\*4\*3\*2\*1.
+Utilizando un enfoque tradicional no recursivo, podríamos calcular el factorial de la siguiente manera.
+```python
+def factorial_normal(n):
+    r = 1
+  i = 2
+    while i <= n:
+        r *= i
+        i += 1
+    return r
+factorial_normal(5) # 120
+```
+Dado que el factorial es una tarea que puede ser dividida en subtareas del mismo tipo (multiplicaciones), podemos darle un enfoque recursivo y escribir la función de otra manera.
+```python
+def factorial_recursivo(n):
+    if n == 1:
+        return 1
+    else:
+        return n * factorial_recursivo(n-1)
+factorial_recursivo(5) # 120
+```
+**Serie de Fibonacci**
+
+Otro ejemplo muy usado para ilustrar las posibilidades de la recursividad, es calcular la serie de fibonacci. Dicha serie calcula el elemento n sumando los dos anteriores n-1 + n-2. Se asume que los dos primeros elementos son 0 y 1.
+```python
+def fibonacci_recursivo(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+       return 1
+    else:
+        return fibonacci_recursivo(n-1) + fibonacci_recursivo(n-2)
+fibonacci_recursivo(7)# 13
+```
+Podemos ver que siempre que la n sea distinta de cero o uno, se llamará recursivamente a la función, buscando los dos elementos anteriores. Cuando la n valga cero o uno se dejará de llamar a la función y se devolverá un valor concreto. Podemos calcular el elemento 7, que será 0,1,1,2,3,5,8,13, es decir, 13.
 
 # 4. Excepciones
