@@ -7,6 +7,8 @@
   - [2.3. Definiendo metodos](#23-definiendo-metodos)
 - [3. Herencia](#3-herencia)
   - [3.1. Extendiendo y modificando métodos](#31-extendiendo-y-modificando-métodos)
+  - [3.2. Uso de super()](#32-uso-de-super)
+  - [3.3. Herencia múltiple](#33-herencia-múltiple)
 
 ---
 
@@ -174,5 +176,93 @@ class Animal:
   def describeme(self):
     print("Soy un Animal del tipo", type(self).__name__)
 ```
+Tenemos ya por lo tanto una clase genérica Animal, que generaliza las características y funcionalidades que todo animal puede tener. Ahora creamos una clase Perro que hereda del Animal. Como primer ejemplo vamos a crear una clase vacía, para ver como los métodos y atributos son heredados por defecto.
+```python
+# Perro hereda de Animal
+class Perro(Animal):
+  pass
+mi_perro = Perro('mamífero', 10)
+mi_perro.describeme() # Soy un Animal del tipo Perro
+```
+Con tan solo un par de líneas de código, hemos creado una clase nueva que tiene todo el contenido que la clase padre tiene, pero aquí viene lo que es de verdad interesante. Vamos a crear varios animales concretos y sobreescrbir algunos de los métodos que habían sido definidos en la clase Animal, como el hablar o el moverse, ya que cada animal se comporta de una manera distinta.
+Podemos incluso crear nuevos métodos que se añadirán a los ya heredados, como en el caso de la Abeja con picar().
+```python
+class Perro(Animal):
+  def hablar(self): 
+    print("Guau!")
+  def moverse(self):
+    print("Caminando con 4 patas")
+class Vaca(Animal):
+  def hablar(self):
+    print("Muuu!")
+  def moverse(self):
+    print("Caminando con 4 patas")
+class Abeja(Animal):
+  def hablar(self):
+    print("Bzzzz!")
+    defmoverse(self):
+    print("Volando")
+# Nuevo método
+  def picar(self):
+    print("Picar!")
+```
+Por lo tanto ya podemos crear nuestros objetos de esos animales y hacer uso de sus métodos que podrían clasificarse en tres:
 
++ Heredados directamente de la clase padre: **describeme()**
++ Heredados de la clase padre pero modificados: **hablar()** y **moverse()**
++ Creados en la clase hija por lo tanto no existentes en la clase padre: **picar()**
 
+## 3.2. Uso de super()
+
+En pocas palabras, la función **super()** nos permite acceder a los métodos de la clase padre desde una de sus hijas. Volvamos al ejemplo de **Animal** y **Perro**.
+```python
+class Animal:
+  def __init__(self, especie, edad):
+    self.especie = especie
+    self.edad = edad
+  def hablar(self):
+    pass
+  def moverse(self):
+    pass
+  def describeme(self):
+    print("Soy un Animal del tipo", type(self).__name__)
+```
+Tal vez queramos que nuestro Perro tenga un parámetro extra en el constructor, como podría ser el dueño. Para realizar esto tenemos dos alternativas:
++ Podemos crear un nuevo \_\_init__ y guardar todas las variables una a una.
++ O podemos usar super() para llamar al \_\_init__ de la clase padre que ya aceptaba la especie y edad, y sólo asignar la variable nueva manualmente.
+```python
+class Perro(Animal):
+  def __init__(self, especie, edad, dueño):
+    # Alternativa 1
+    # self.especie = especie
+    # self.edad = edad
+    # self.dueño = dueño
+    # Alternativa 2
+    super().__init__(especie, edad)
+    self.dueño = dueño
+mi_perro = Perro('mamífero', 7, 'Luis')
+mi_perro.especie
+mi_perro.edad
+mi_perro.dueño
+```
+## 3.3. Herencia múltiple
+
+En Python es posible realizar **herencia múltiple**. En otros posts hemos visto como se podía crear una clase padre que heredaba de una clase hija, pudiendo hacer uso de sus métodos y atributos. La herencia múltiple es similar, pero una clase **hereda de varias clases** padre en vez de una sola.
+Veamos un ejemplo. Por un lado tenemos dos clases `Clase1` y `Clase2`, y por otro tenemos la `Clase3` que hereda de las dos anteriores. Por lo tanto, heredará todos los métodos y atributos de ambas.
+```python
+class Clase1:
+  pass
+class Clase2:
+  pass
+class Clase3(Clase1, Clase2):
+  pass
+```
+Es posible también que una clase herede de otra clase y a su vez otra clase herede de la anterior.
+```python
+class Clase1:
+  pass
+class Clase2(Clase1):
+  pass
+class Clase3(Clase2):
+  pass
+```
