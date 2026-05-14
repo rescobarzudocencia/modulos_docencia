@@ -12,4 +12,6 @@
 - [4. Programación Orientdada a Objetos](Ut4/README.md)
 
 - [5. Ficheros y directorios](Ut5/README.md)
+  
+- [6. Módulos y entonos Virtuales](Ut6/README.md)
 ---
