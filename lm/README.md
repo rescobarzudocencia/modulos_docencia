@@ -1,7 +1,7 @@
 # LENGUAJES DE MARCAS
 
 
-![logo de python](img/lm.png)
+![logo de Lenguaje de marcas](img/lm.png)
 
 
 - [1. Introducción](Ut1/README.md)

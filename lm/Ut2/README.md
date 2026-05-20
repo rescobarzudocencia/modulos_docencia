@@ -21,6 +21,8 @@
   - [4.7. Enlaces html - Hipervínculos, links](#47-enlaces-html---hipervínculos-links)
   - [4.8. Imágenes](#48-imágenes)
   - [4.9. Tablas](#49-tablas)
+  - [4.10 Formularios](#410-formularios)
+  - [4.11 Uso de multimedia en HTML](#411-uso-de-multimedia-en-html)
 
 
 
@@ -37,6 +39,7 @@ Existen herramientas de escritorio gratuitas y comerciales que facilitan este tr
 
 De HTML se estudiará su estructura y sintaxis, así como sus elementos principales (listas, tablas, formato de texto, párrafos, cabeceras, formularios, etc.). Elaborar una web sin un diseño atractivo es algo impensable. En este punto es cuando entran en juego las hojas de estilo en cascada (CSS), que describen la manera de visualizar una página web por pantalla. 
 
+Enlace de interes: https://www.w3schools.com/html/default.asp
 
 # 2. Estructura y sintaxis del lenguaje HTML
 
@@ -316,6 +319,20 @@ Los párrafos se generan con la etiqueta `<p>`, debe tener su etiqueta de cierre
 ```html
 <p> Este es un párrafo sencillo </p>
 ```
+
+Hay dos etiquetas que no necesitan cierre y son `<br>` que nos inserta un salto de línea y `<hr>` que nos muestra una línea horizontal.
+
+```html
+Esto es un <br> salto de línea.
+<hr>
+nos muestra la línea
+
+```
+
+Esto es un <br> salto de línea.
+<hr>
+nos muestra la línea
+
 ## 4.5 Formatos de texto
 
 > **Negrita**
@@ -416,8 +433,293 @@ Si no le indicamos nada a la etiqueta `<li>` HTML, ésta se generará de forma a
 </ul>
 
 ### 4.6.2 Listas ordenadas
+
+Las listas ordenadas (ordered list) van enmarcadas dentro de las etiquetas `<ol>` y su cierre. Cada item de la lista se escribe con la misma etiqueta que en las no numeradas: `<li>`. Pero al ser listas ordenadas los símbolos serán números y éstos se  irán  generando automáticamente por orden , conforme escribamos nuevos puntos.
+
+En las listas ordenadas podemos hacer que el primer punto comience con el número que nosotros queramos. Lo conseguiremos gracias al atributo “**value**” o el atributo "**start**"
+(si no se especifica, comenzará por 1). Los siguientes puntos que escribamos se generarán automáticamente por orden, partiendo de ese número.
+```html
+<ol>
+<li value="20">Este será el número 20.</li>
+<li>Este será el 21.</li>
+<li> Este será el 22. Y así sucesivamente.</li>
+</ol>
+```
+<ol>
+<li value="20">Este será el número 20.</li>
+<li>Este será el 21.</li>
+<li> Este será el 22. Y así sucesivamente.</li>
+</ol>
+
+
+También podemos utilizar el atributo **type** para indicar el estilo de numeración (1, a,i,I,A)
+
+```html
+<ol type ="A">
+<li> Capítulo 1</li>
+<li> Capítulo 2</li>
+<li> Capítulo 3</li>
+<li> Capítulo 4</li>
+</ol>
+```
+<ol type ="A">
+<li> Capítulo 1</li>
+<li> Capítulo 2</li>
+<li> Capítulo 3</li>
+<li> Capítulo 4</li>
+</ol>
+
 ### 4.6.1 Listas de definiciones
 
+Si lo que vamos a hacer es un listado de definiciones, podemos usar las etiquetas `<dl>`, `<dt>` y `<dd>`. Vamos a explicarlas por partes:
+
++ La etiqueta `<dl>` viene de los términos ingleses “definiton list” y nos indica que dentro de ella, entre ella y su cierre, va a ir una definición.
++ La etiqueta `<dt>` viene de los términos “definition term” y dentro de ella irá el término que vamos a definir. Para entendernos mejor, dentro de `<dt>` iría el título de la definición.
++ La etiqueta `<dd>` viene de los términos “definition description” y nos dice que dentro de
+ésta irá la definición.
+
+Ejemplo:
+```html
+<h3>Metalenguajes</h3>
+<dl>
+    <dt>SGML</dt>
+        <dd>Metalenguaje para la definición de otros lenguajes de marcado</dd>
+    <dt>XML</dt>
+        <dd>Lenguaje basado en SGML y que se emplea para describir datos</dd>
+    <dt>RSS</dt>
+    <dt>GML</dt>
+    Este ejemplo arrojará la siguiente página por el navegador:
+    <dt>XHTML</dt>
+    <dt>SVG</dt>
+    <dt>XUL</dt>
+    <dd>Lenguajes derivados de XML para determinadas aplicaciones</dd>
+</dl>
+```
+
+
+<h3>Metalenguajes</h3>
+<dl>
+    <dt>SGML</dt>
+        <dd>Metalenguaje para la definición de otros lenguajes de marcado</dd>
+    <dt>XML</dt>
+        <dd>Lenguaje basado en SGML y que se emplea para describir datos</dd>
+    <dt>RSS</dt>
+    <dt>GML</dt>
+    <dt>XHTML</dt>
+    <dt>SVG</dt>
+    <dt>XUL</dt>
+    <dd>Lenguajes derivados de XML para determinadas aplicaciones</dd>
+</dl>
+
 ## 4.7. Enlaces html - Hipervínculos, links
+
+En HTML se utiliza el elemento ancla `<a>` para crear un enlace. Cuando un visitante hace clic en él, el navegador abre otra página, normalmente. El elemento ancla es un elemento contenedor y su aspecto es el siguiente:
+
+`<a>...</a>`
+
+El contenido, texto del enlace, sobre el que pulsa el visitante se coloca dentro del elemento ancla:
+
+<a>Enlace a otra página</a>
+
+El enlace anterior no apunta aningun sítio. Para que apunte hay que indicarlo en el atributo `href`.
+
+```html
+<a href="https://www.w3schools.com/html/default.asp">Enlace a W3schools</a>
+```
+
+<a href="https://www.w3schools.com/html/default.asp">Enlace a W3schools</a>
+
+En este ejemplo estamos enlazando con una pagina web externa, pero también podemos enlazar con otras paginas html que estén en el mismo directorio o en directorios diferententes, incluso podemos enlazar con partes dentro de la misma página html.
+Vamos a ver ejemplos de cada uno de estos supuestos:
+
+Enlazamos con una página **dentro del mismo directorio**:
+
+```html
+Si quieres más información sobre la reseña de alguno de los libros de este sitio puedes <a href="contactame.html">contáctarme</a> vía email.
+```
+el fichero `contactame.html`, debe estar dentro del mismo directorio.
+
+Enlazamos con una página **en otro directorio**:
+
+
+```html
+Si quieres más información sobre la reseña de alguno de los libros de este sitio puedes <a href="./contactos/contactame.html">contáctarme</a> vía email.
+```
+Estamos utilizando una ruta relativa ya que nuestro fichero `contactame.html` se encuentra dentro del directorio `contactos`.
+
+También podemos ver estos enlaces dentro de una misma página de la siguiente manera:
+
+```html
+<p>Si haces click aquí <a href="#respuesta4">4</a> "saltas" a la sección ‘4’</p>
+<p>…</p>
+<p>…</p>
+<p id="respuesta4">4: aquí está escrita la respuesta</p>
+```
+> **Abrir hipervínculo con una ventana nueva**
+
+Para ello utilizamos el atributo `target`. Y puede tmar los siguientes valores:
+
++ **_self** Por defecto abre el documento en la misma pestaña.
++ **_blank** Abre el documento en  una ventana/pestaña nueva.
++ **_parent**  Abre el documento en el marco padre
++ **_top**  Abre el documento en toda la ventana del navedador
+
+
+> **Enlaces para descargar archivos**
+
+En realidad, dentro del atributo href="" podemos colocar la ruta hacia cualquier tipo de recurso, de ahí lo de URL (Uniform Resource Locator). Si el navegador reconoce la extensión, lo abre por ejemplo: html, jpg, png, gif, svg, pdf, etc. Pero si no lo reconoce o es un archivo comprimido (.rar, .zip), el navegador le ofrece al usuario descargarlo.
+
+```html
+<a href="fotos.rar">Descargá todas las fotos</a>
+```
+
 ## 4.8. Imágenes
+
+Para mostrar una imagen en una página tenemos dos formas de hacerlo, una es usando el elemento `img` y otras es mediante CSS (que veremos en el capítulo correspondiente).
+
+Esta etiqueta sólo requiere de dos atributos obligatorios que son: `src` (de source) y el otro es `alt` (de alternative), El atributo `src` lo usaremos para indicar la URL (absoluta o relativa) a la imagen, y `alt` como el texto (alternativo) como que mostrará el navegador en caso de no encontrar la imagen.
+
+Ejemplo de imagen desde una dirección URL.
+
+```html
+<img src="https://www.iesluisvelez.org/portal/wp-content/uploads/2019/07/velez-cabecera-600.png"
+alt="Escudo del instituto Vélez de Écija">
+```
+Ejemplo de imagen desde una ruta
+
+```html
+<img src="/images/inexistente.png" alt="Este texto es visible cuando no hay imagen">
+```
+Podemos alinear la foto en la página como queramos mediante `align`, utilizando los atributos `left` para alinearla a la izquierda o `right` para alinearla a la derecha: otras formas de alinear imágenes son posibles pero están dentro de CSS, así que por ahora no las veremos.
+
+Atributos opcionales pero muy recomendables, son el height y el width. El height marca la altura de la imagen, mientras que el width marca la anchura. Son recomendables porque así ayudaremos al navegador a representar la imagen. Hay que tener cuidado de no deformar la imagen, hecho que sucede si incluimos al mismo tiempo height y width con una proporción diferente a la de la imagen original. Lo normal es redimensionar on un atributo de esto dos.
+
+Y por último, también queremos mostrarte que le puedes adjudicar un borde a la fotografía. El atributo ya te lo sabes:  `border`. Después solo tendrás que definir cuál quieres que sea el grosor del borde.
+
 ## 4.9. Tablas
+
+Para crear una tabla utilizaremos la etiqueta `<table>` junto a su terminación `</table>` y entre ellas vamos configurando nuestra tabla.
+
+Resumen de las etiquetas:
+
+|Etiqueta|	Función|
+|:------:|:-------:|
+| `<table>` |	Tabla |
+|`<tr>`	|Fila|
+|`<td>`	|Celda|
+|`<th>`	|Encabezado|
+|`<caption>`	|Título|
+|`<thead>`	|Cabecera|
+|`<tbody>`	|Cuerpo|
+|`<tfoot>`	|Pie|
+|`<colgroup>`	|Grupo de columnas|
+|`<col>`	|Configuración columna|
+
+Atributos importantes:
+
+|Atributo|	Función|
+|:------:| :-------:|
+| colspan |	Une columnas |
+|rowspan	|Une Filas|
+
+
+Ejemplo:
+
+<table>
+<!-- Fila 1 -->
+<tr>
+<td>Fila 1, columna 1</td>
+<td>Fila 1, columna 2</td>
+</tr>
+<!-- Fila 2 -->
+<tr>
+<td>Fila 2, columna 1</td>
+<td>Fila 2, columna 2</td>
+</tr>
+</table>
+<h2>Tabla (uniendo celdas)</h2>
+<table>
+<tr>
+<td>Fila 1, columna 1</td>
+<td colspan="3"> Fila 1, columnas 2, 3 y 4</td>
+</tr>
+<tr>
+<td rowspan="2">Fila 2, columna 1 <br>+<br>Fila 3, columna 1</td>
+<td>Fila 2 columna 2</td>
+<td>Fila 2 columna 3</td>
+<td>Fila 2 columna 4</td>
+</tr>
+<tr>
+<td>Fila 3 columna 2</td>
+<td>Fila 3 columna 3</td>
+<td>Fila 3 columna 4</td>
+</tr>
+</table>
+
+## 4.10 Formularios
+
+Los formulários nos van apermitir perdir datos al usuario.
+
+Los formulários son creado con al etiqueta `<form>` y su cierre `</form>`, y entre ambas etiquetas vamos a crear los controles del formulario.
+
+Ejemplo:
+```html
+<form>
+    Nombre:
+    <input type="text">
+    <br><br>
+    <input type="submit" value="Enviar">
+</form>
+```
+> **Etiquetas principales**
+
+
+|Etiqueta|	Función|
+|:----:| :----:|
+|`<form>`|	Formulario|
+|`<input>`	|Campo de entrada|
+|`<label>`	|Etiqueta descriptiva|
+|`<textarea>`	|Área de texto|
+|`<select>`	|Lista desplegable|
+|`<option>`	|Opción desplegable|
+|`<button>`	|Botón|
+|`<fieldset>`	|Agrupar campos|
+|`<legend>`	|Título del grupo|
+
+
+> **Atributos importantes de `<form>`**
+
+| Atributo       | Función                       |
+| :------------: | :---------------------------: |
+| `action`       | Página destino                  |
+| `method`       | GET o POST (Php)                |
+| `autocomplete` | Activa/desactiva autocompletado |
+
+Ejemplo:
+
+```html
+<form action="guardar.php" method="post">
+</form>
+```
+> **Tipos de `<input>`**
+
+| Tipo       | Función           |
+| ---------- | ----------------- |
+| `text`     | Texto             |
+| `password` | Contraseña        |
+| `email`    | Correo            |
+| `number`   | Número            |
+| `date`     | Fecha             |
+| `checkbox` | Casilla           |
+| `radio`    | Opción única      |
+| `file`     | Subir archivo     |
+| `color`    | Selector color    |
+| `range`    | Barra deslizante  |
+| `submit`   | Enviar formulario |
+| `reset`    | Reiniciar         |
+| `hidden`   | Campo oculto      |
+
+![logo de python](../img/tipos_input.png)
+
+
+## 4.11 Uso de multimedia en HTML
