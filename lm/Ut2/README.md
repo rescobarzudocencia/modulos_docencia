@@ -771,12 +771,102 @@ Ejemplo:
 
 </audio>
 ```
-Se mostrará como se ve a continuación.
 
 
-<audio controls autoplay >
+> **Etiqueta `<video>`**
 
-    <source src="musica.mp3"
-            type="audio/mpeg">
+Inserta vídeos.
 
-</audio>
+**Atributos importantes**
+
+| Atributo   | Función                 |
+| :----------: | :-----------------------: |
+| `controls` | Controles reproducción  |
+| `autoplay` | Reproducción automática |
+| `loop`     | Repetir                 |
+| `muted`    | Silenciar               |
+| `poster`   | Imagen previa           |
+
+```html
+<video controls
+       width="500"
+       poster="miniatura.jpg">
+    <source src="pelicula.mp4"
+            type="video/mp4">
+
+</video>
+```
+
+> **Etiqueta `<canvas>`**
+
+Área gráfica manipulable con Javascript
+
+**Ejemplo:**
+
+Parte html.
+
+```html
+
+<canvas id="miCanvas"
+        width="400"
+        height="200"
+        style="border:1px solid black;">
+</canvas>
+
+```
+
+Parte Javascript
+
+```js
+<script>
+
+    // Obtener canvas
+    const canvas = document.getElementById("miCanvas");
+    // Obtener contexto 2D
+    const ctx = canvas.getContext("2d");
+    // Dibujar rectángulo
+    ctx.fillStyle = "blue";
+    ctx.fillRect(20, 20, 150, 80);
+    // Dibujar texto
+    ctx.font = "20px Arial";
+    ctx.fillStyle = "red";
+    ctx.fillText("Hola Canvas", 180, 70);
+
+</script>
+```
+
+> **Etiqueta `<svg>`**
+
+Permite crear gráficos vectoriales.
+
+**Ejemplo:**
+
+```html
+<svg width="400" height="200"
+     style="border:1px solid black;">
+
+    <!-- Rectángulo -->
+    <rect x="20"
+          y="20"
+          width="120"
+          height="80"
+          fill="blue" />
+
+    <!-- Círculo -->
+    <circle cx="220"
+            cy="60"
+            r="40"
+            fill="red" />
+
+    <!-- Texto -->
+    <text x="120"
+          y="150"
+          font-size="24"
+          fill="green">
+
+          Hola SVG
+
+    </text>
+
+</svg>
+```
