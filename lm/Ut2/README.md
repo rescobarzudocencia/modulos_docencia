@@ -114,7 +114,7 @@ Vamos a ver un ejemplo del uso de los comentarios, crea un fichero llamado `come
 
 HTML 5 ha introducido las etiquetas semánticas las cuales describen en contenido que almacenan.
 
-Antes se usaba la etiqueta `<div>`, que es una etiqueta de bloque el cual servía para agrupar contenido.
+Antes se usaba la etiqueta `<div>` o `<span>` , que son unas etiquetas de bloque el cual servía para agrupar contenido.
 
 Las etiquetas semánticas:
 
@@ -721,7 +721,7 @@ Ejemplo:
 
 
 
-![logo de python](../img/tipos_input.png)
+![tipos de input](../img/tipos_input.png)
 
 > **Atributos importantes**
 
