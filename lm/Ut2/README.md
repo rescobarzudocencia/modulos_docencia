@@ -12,6 +12,8 @@
     - [4.2.1 Elemento title](#421-elemento-title)
     - [4.2.2 Metadatos](#422-metadatos)
   - [4.3 Elemento body](#43-elemento-body)
+    - [4.3.1 Elementos de Bloque (block)](#431-elementos-de-bloque-block)
+    - [4.3.2. Elementos en Línea (inline)](#432-elementos-en-línea-inline)
   - [4.4 Párrafos](#44-párrafos)
   - [4.5 Formatos de texto](#45-formatos-de-texto)
   - [4.6. Listas](#46-listas)
@@ -311,6 +313,29 @@ A continuación vemos el ejemplo de un `<head>` típico:
 ## 4.3 Elemento body
 
 El elemento `<body>` delimita el contenido de toda nuestra página Web. Es la sección mas importante ya que en ella se encuentran los contenidos a presentar por el navegador.
+
+### 4.3.1 Elementos de Bloque (block)
+
+Estos bloques comienzan en una **nueva línea** y ocupan todo el ancheo de su contendor (de izquierda a derecha).
+
++ **Comportamiento**: Puedes ajustarel width, hight, padding y margin.
++ **Ejemplos comunes**: `<div>`, `<h1> - <h6>`, `<p>`, `<ul>`, `<li>`, `<header>`, `<footer>`, `<section>`.
+
+### 4.3.2. Elementos en Línea (inline)
+Estos elementos solo ocupan el espacio necesario para contener su contenido (texto o imagen). No provocan un salto de línea.
+
++ **Comportamiento**: No respetan las propiedades de width o height. El margin y padding solo funcionan horizontalmente (izquierda y derecha), pero no afectan el espacio vertical de otros elementos.
++ **Ejemplos comunes**: `<span>`, `<a>`, `<strong>`, `<em>`, `<img>` (aunque la imagen es un caso especial).
+  
+
+
+
+|Característica|Bloque (block)|En Línea (inline)|
+| -------------|-------------|------------------|
+|Salto de línea|Sí (siempre empieza abajo)|No (sigue el flujo)|
+|Ancho por defecto|100% del contenedor|Solo su contenido|
+|Permite width/height|Sí|No|
+|Uso común|Estructura y secciones|Estilizar texto|
 
 ## 4.4 Párrafos
 

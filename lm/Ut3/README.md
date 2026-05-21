@@ -10,6 +10,15 @@
     - [3.2.2. Propiedades de color y fondo](#322-propiedades-de-color-y-fondo)
     - [3.2.3. Propiedades de las Listas](#323-propiedades-de-las-listas)
     - [3.2.4. Propiedades de las tablas](#324-propiedades-de-las-tablas)
+    - [3.2.5. Propiedad float](#325-propiedad-float)
+    - [3.2.6. Propiedad position](#326-propiedad-position)
+- [4. Modelo de cajas](#4-modelo-de-cajas)
+  - [4.1. Flex](#41-flex)
+- [5. Unidades de longitud](#5-unidades-de-longitud)
+  - [5.1. Unidades de longitud absoluta](#51-unidades-de-longitud-absoluta)
+  - [5.2. Unidades de longitud relativa](#52-unidades-de-longitud-relativa)
+- [6. Colores](#6-colores)
+- [7. Variables en CSS](#7-variables-en-css)
 
 
 
@@ -413,8 +422,10 @@ A continuación vemos las propiedades mas usadas cuando queremos dar formato de 
 
 ### 3.2.3. Propiedades de las Listas
 
+A continuación vemos las propiedades mas usadas cuando queremos dar formato a las listas.
+
 |Propiedad|Descripción|Valores más usados|
-|:------:|:-------:|:------:|
+|:------|:-------|:------|
 |`list-style-type`|Define el diseño del marcador (viñeta o número)|disc, circle, square, decimal, lower-roman, none.|
 |`list-style-image`|Permite usar una imagen personalizada como marcador|url('ruta/imagen.png'), none|
 |`list-style-position`|Define si el marcador está dentro o fuera del flujo del texto.|inside, outside.|
@@ -422,3 +433,71 @@ A continuación vemos las propiedades mas usadas cuando queremos dar formato de 
 
 ### 3.2.4. Propiedades de las tablas
 
+A continuación vemos las propiedades mas usadas cuando queremos dar formato a las tablas.
+
+|Propiedad|Descripción|Valores más usados|
+| ------|-------|------|
+|`border-collapse`|Determina si los bordes de las celdas se fusionan en uno solo o se mantienen separados.|collapse (unido), separate (separado).|
+|`border-spacing`|Define la distancia entre los bordes de las celdas (solo si border-collapse es separate).|En píxeles: 5px, 10px 20px.|
+|`caption-side`|Coloca el título de la tabla (`<caption>`) arriba o abajo.|top, bottom.|
+|`empty-cells`|Indica si se deben mostrar los bordes y el fondo en celdas que no tienen contenido.|show, hide.|
+|`table-layout`|Controla el algoritmo que usa el navegador para calcular el ancho de las celdas.|auto (basado en contenido), fixed (ancho fijo).|
+
+### 3.2.5. Propiedad float
+
+Es utilizado para maquetar elementos de [bloque](../Ut2/README.md#431-elementos-de-bloque-block).
+
+Los elmentos de bloque mas utilizado son `<header>`, `<footer>`, `<aside>`, `<nav>`, `<article>`, `<section>` y `<div>`.
+
+|Valor |Descripción|
+|------| ----------|
+|`left`| empuja el elemento a lado izquierdo de su contenedor|
+|`right`|empuja el elemento a lado derecho de su contenedor|
+|`none`|valor por defecto, no flota|
+|`inherit`|hereda el valor de la propiedad **float** del padre|
+
+[Ejemplo con 3 contenedores ](float.html), descarga y prueba a cambiar los valores para ver el resultado.
+
+
+### 3.2.6. Propiedad position
+
+Determina como se posiciona un elemento en el documento.
+|Valor |Descripción|
+|------| ----------|
+|`static`| Por defecto se posiciona siguiendo el flujo normal del documento, no le afecta top,botton, left, right y z-index|
+|`relative`|Se posiciona siguiendo el flujo normal del documento pero se puede desplazar su posicion usando top,botton, left, right y z-index|
+|`absolute`| El elemento deja de seguir el flujo del documento, mediante top,botton, left, right se posiciona de manera relativa a su ancestro, y si no posee a la pagina completa |
+|`fixed`|El elemento deja de seguir el flujo del documento, mediante top,botton, left, right se posiciona de manera relativa a la pagina completa|
+|`sticky`|Se posiciona siguiendo el flujo normal del documento mediante  top,botton, left, right  se fijan las posiciones límites relativas a su conteneor de manera que no exceda de estas|
+# 4. Modelo de cajas
+
+
+![modelo cajas](../img/modelo_cajas.png)
+
+El Modelo de Cajas (o Box Model) es fundamental en CSS. Básicamente, dicta que cada elemento HTML es visto por el navegador como una caja rectangular.
+Comprender cómo interactúan sus partes es la clave para que tus diseños no se "rompan" o se vean desalineados.
+
+> **Componentes del Modelo de Cajas**
+
+Cada caja se compone de cuatro capas, de adentro hacia afuera:
++ **Content (Contenido)**: Donde aparece el texto, imágenes o videos. Su tamaño se controla con width y height.
++ **Padding (Relleno)**: El espacio transparente entre el contenido y el borde. Se usa para que el texto no "choque" con las paredes de la caja.
++ **Border (Borde)**: Una línea que rodea el padding y el contenido. Tiene grosor, estilo y color.
++ **Margin (Margen)**: El espacio exterior a la caja. Se usa para separar un elemento de sus vecinos. Es transparente y no tiene fondo.
+
+> **Propiedades y Valores**
+
+|Capa|Propiedad CSS|Ejemplo de Valor|
+|-------|------|------|
+|Contenido|width, height|300px, 50%|
+|Relleno|padding, padding-top,padding-bottom,padding-left,padding-right|20px, 10px 5px|
+|Borde|border,border-raius,border-style,border-width,border-color|2px solid black|
+|Margen|margin, margin-top,magin-botton,margin-left,margin-right|15px, auto|
+
+## 4.1. Flex
+
+# 5. Unidades de longitud
+## 5.1. Unidades de longitud absoluta
+## 5.2. Unidades de longitud relativa
+# 6. Colores
+# 7. Variables en CSS
