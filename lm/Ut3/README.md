@@ -456,7 +456,7 @@ Los elmentos de bloque mas utilizado son `<header>`, `<footer>`, `<aside>`, `<na
 |`none`|valor por defecto, no flota|
 |`inherit`|hereda el valor de la propiedad **float** del padre|
 
-[Ejemplo con 3 contenedores ](float.html), descarga y prueba a cambiar los valores para ver el resultado.
+[Ejemplo con 3 contenedores ](float.zip), descarga y prueba a cambiar los valores para ver el resultado.
 
 
 ### 3.2.6. Propiedad position
