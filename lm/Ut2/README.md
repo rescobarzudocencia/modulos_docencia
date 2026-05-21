@@ -747,6 +747,36 @@ En el siguiente ejemplo puedes ver todos los inputs en un formulario:
 
 
 
-
-
 ## 4.11 Uso de multimedia en HTML
+
+> **Etiqueta `<audio>`**
+
+Inserta sonido o música.
+
+**Atributos importantes**
+
+| Atributo   | Función                   |
+| :----------: | :-------------------------: |
+| `controls` | Muestra controles         |
+| `autoplay` | Reproduce automáticamente |
+| `loop`     | Repetición                |
+| `muted`    | Silenciado                |
+
+Ejemplo:
+```html
+<audio controls autoplay muted>
+
+    <source src="musica.mp3"
+            type="audio/mpeg">
+
+</audio>
+```
+Se mostrará como se ve a continuación.
+
+
+<audio controls autoplay >
+
+    <source src="musica.mp3"
+            type="audio/mpeg">
+
+</audio>
