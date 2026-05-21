@@ -39,7 +39,7 @@ Existen herramientas de escritorio gratuitas y comerciales que facilitan este tr
 
 De HTML se estudiará su estructura y sintaxis, así como sus elementos principales (listas, tablas, formato de texto, párrafos, cabeceras, formularios, etc.). Elaborar una web sin un diseño atractivo es algo impensable. En este punto es cuando entran en juego las hojas de estilo en cascada (CSS), que describen la manera de visualizar una página web por pantalla. 
 
-Enlace de interes: https://www.w3schools.com/html/default.asp
+[W3school](https://www.w3schools.com/html/default.asp)
 
 # 2. Estructura y sintaxis del lenguaje HTML
 
@@ -719,7 +719,34 @@ Ejemplo:
 | `reset`    | Reiniciar         |
 | `hidden`   | Campo oculto      |
 
+
+
 ![logo de python](../img/tipos_input.png)
+
+> **Atributos importantes**
+
+| Atributo      | Función             |
+| :-------------:| :-------------------: |
+| `name`        | Nombre del campo    |
+| `id`          | Identificador       |
+| `placeholder` | Texto ayuda         |
+| `required`    | Obligatorio         |
+| `readonly`    | Solo lectura        |
+| `disabled`    | Desactivado         |
+| `maxlength`   | Máximo caracteres   |
+| `min` / `max` | Límites             |
+| `checked`     | Marcado por defecto |
+
+
+[Para mas información visite este enlace](https://lenguajehtml.com/html/formularios/etiqueta-html-form/)
+
+En el siguiente ejemplo puedes ver todos los inputs en un formulario:
+
+
+[Ejemplo Forumulaio](formulario.html)
+
+
+
 
 
 ## 4.11 Uso de multimedia en HTML
