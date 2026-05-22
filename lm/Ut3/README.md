@@ -456,12 +456,13 @@ Los elmentos de bloque mas utilizado son `<header>`, `<footer>`, `<aside>`, `<na
 |`none`|valor por defecto, no flota|
 |`inherit`|hereda el valor de la propiedad **float** del padre|
 
-[Ejemplo con 3 contenedores ](float.zip), descarga y prueba a cambiar los valores para ver el resultado.
+[Ejemplo con 3 contenedores ](float.zip), descarga y prueba a cambiar los valores para ver el resultado. (Para descargar puls con el boton derecho sobre el enlace, en el menú elige "**Guardar enlace como ...**")
 
 
 ### 3.2.6. Propiedad position
 
 Determina como se posiciona un elemento en el documento.
+
 |Valor |Descripción|
 |------| ----------|
 |`static`| Por defecto se posiciona siguiendo el flujo normal del documento, no le afecta top,botton, left, right y z-index|
@@ -469,12 +470,17 @@ Determina como se posiciona un elemento en el documento.
 |`absolute`| El elemento deja de seguir el flujo del documento, mediante top,botton, left, right se posiciona de manera relativa a su ancestro, y si no posee a la pagina completa |
 |`fixed`|El elemento deja de seguir el flujo del documento, mediante top,botton, left, right se posiciona de manera relativa a la pagina completa|
 |`sticky`|Se posiciona siguiendo el flujo normal del documento mediante  top,botton, left, right  se fijan las posiciones límites relativas a su conteneor de manera que no exceda de estas|
+
+
+[Ejemplo de uso de position ](position.zip), descarga y prueba a cambiar los valores para ver el resultado. (Para descargar puls con el boton derecho sobre el enlace, en el menú elige "**Guardar enlace como ...**")
+
 # 4. Modelo de cajas
 
 
 ![modelo cajas](../img/modelo_cajas.png)
 
 El Modelo de Cajas (o Box Model) es fundamental en CSS. Básicamente, dicta que cada elemento HTML es visto por el navegador como una caja rectangular.
+
 Comprender cómo interactúan sus partes es la clave para que tus diseños no se "rompan" o se vean desalineados.
 
 > **Componentes del Modelo de Cajas**
