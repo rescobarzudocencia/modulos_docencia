@@ -500,7 +500,42 @@ Cada caja se compone de cuatro capas, de adentro hacia afuera:
 |Borde|border,border-raius,border-style,border-width,border-color|2px solid black|
 |Margen|margin, margin-top,magin-botton,margin-left,margin-right|15px, auto|
 
+[Ejemplo de uso de cajas ](cajas.zip)
+
 ## 4.1. Flex
+
+Flexbox **(display:flex)** es un sistema de CSS que permite organizar elementos:
+
++ horizontalmente
++ verticalmente
++ alineados
++ distribuidos automáticamente
+
+Es uno de los sistemas más usados actualmente para maquetación web.
+
+Principales propiedades de Flexbox:
+
+| Propiedad         | Descripción                     | Valores posibles                                                                               |
+| ----------------- | ------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `display`         | Activa Flexbox                  | `flex`, `inline-flex`                                                                          |
+| `flex-direction`  | Dirección de los elementos      | `row`, `row-reverse`, `column`, `column-reverse`                                               |
+| `justify-content` | Alineación en el eje principal  | `flex-start`, `center`, `flex-end`, `space-between`, `space-around`, `space-evenly`            |
+| `align-items`     | Alineación en el eje secundario | `stretch`, `flex-start`, `center`, `flex-end`, `baseline`                                      |
+| `flex-wrap`       | Permite salto de línea          | `nowrap`, `wrap`, `wrap-reverse`                                                               |
+| `align-content`   | Alineación de múltiples líneas  | `stretch`, `flex-start`, `center`, `flex-end`, `space-between`, `space-around`, `space-evenly` |
+| `gap`             | Espacio entre elementos         | `10px`, `1rem`, etc.                                                                           |
+| `row-gap`         | Espacio entre filas             | valores en `px`, `em`, `rem`                                                                   |
+| `column-gap`      | Espacio entre columnas          | valores en `px`, `em`, `rem`                                                                   |
+| `flex-grow`       | Hace crecer elementos           | números (`0`, `1`, `2`...)                                                                     |
+| `flex-shrink`     | Permite reducir tamaño          | números (`0`, `1`, `2`...)                                                                     |
+| `flex-basis`      | Tamaño inicial                  | `auto`, `100px`, `30%`                                                                         |
+| `flex`            | Propiedad abreviada             | `flex: 1`, `flex: 1 1 auto`                                                                    |
+| `align-self`      | Alineación individual           | `auto`, `stretch`, `center`, `flex-start`, `flex-end`, `baseline`                              |
+| `order`           | Cambia orden visual             | números enteros                                                                                |
+
+[Ejemplo de uso de flex ](flex.zip)
+
+
 
 # 5. Unidades de longitud
 ## 5.1. Unidades de longitud absoluta
