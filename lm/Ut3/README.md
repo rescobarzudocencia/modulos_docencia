@@ -536,9 +536,119 @@ Principales propiedades de Flexbox:
 [Ejemplo de uso de flex ](flex.zip)
 
 
-
 # 5. Unidades de longitud
+Las unidades de longitud en CSS definen medidas de distancia y se dividen en dos grandes grupos: 
++ **absolutas** (fijas, ideales para impresión)
++ **relativas** (escalables, ideales para el diseño web responsivo)
+
 ## 5.1. Unidades de longitud absoluta
+
+Son medidas fijas que mantienen su tamaño real independientemente del dispositivo, por lo que no suelen adaptarse a diferentes pantallas. 
+
+
++ **px (píxeles)**: La unidad absoluta más común. Equivale a un punto en la pantalla.
++ **cm / mm**: Centímetros y milímetros (físicos).
++ **in (pulgadas)**: Equivale a 2.54 cm.
++ **pt (puntos)**: Tradicional medida de tipografía. 
++ **pc (picas)**: 
+
+
 ## 5.2. Unidades de longitud relativa
+
+Dependen de otro valor de referencia (el tamaño de la fuente, el elemento padre o la pantalla), lo que las hace perfectas para diseños adaptables.
+
+> **Relativas a la tipografía**
+
++ **rem**: Relativo al tamaño de fuente del elemento raíz (`<html>`). Es la unidad más recomendada por MDN Web Docs para escalabilidad y accesibilidad.
++ **em**: Relativo al tamaño de fuente del elemento contenedor directo.
++ **ch / ex**: Medidas basadas en el ancho del carácter "0" o la altura de la letra "x" de la tipografía actual
+
+> **Relativas a la ventana gráfica**
+
++ **vw**: Porcentaje del ancho total de la pantalla o ventana.
++ **vh**: Porcentaje de la altura total de la pantalla o ventana.
++ **vmin / vmax**: Toma el valor más pequeño o más grande entre el ancho y la altura, respectivamente. 
 # 6. Colores
+
+En CSS, los colores son una de las herramientas más potentes para definir la identidad de un sitio. No solo se trata de elegir un tono, sino de entender los diferentes formatos (sistemas) que el navegador interpreta para renderizarlos.
+
+
+> **Declarar los colores** 
+
+Hay varias formas de declarar un color:
+
+|Formato|Descripción|Ejemplo|
+|------|----------|--------|
+|Nombres Clave|Palabras en inglés (141 nombres estándar)|red, skyblue, bisque|
+|Hexadecimal|Código de 6 dígitos (#RRGGBB) Es el más común|#ff5733|
+|RGB|Define la intensidad de Rojo, Verde y Azul (0-255)|rgb(255, 87, 51)|
+|RGBA|Igual que RGB, pero añade "Alpha" (opacidad de 0 a 1)|rgba(255, 87, 51, 0.5)|
+|HSL|Tono (0-360), Saturación (%) y Luminosidad (%)|hsl(11, 100%, 60%)|
+
+> **Propiedades de los alumnos**
+
+El color se puede aplicar a casi cualquier parte de un elemento. Las propiedades principales son:
+
++ **color**: Cambia el color del texto.
++ **background-color**: Cambia el fondo de la caja.
++ **border-color**: Define el color del borde (requiere que el borde tenga estilo, ej: solid).
++ **outline-color**: Color del contorno (fuera del borde).
++ **text-decoration-color**: Color de la línea de subrayado o tachado.
+
+> **Gradientes**
+
+Los gradientes no son colores planos, sino transiciones. Se tratan técnicamente como imágenes de fondo (background-image).
+
++ **Linear Gradient**: Transición en línea recta.
+
+    + background: linear-gradient(to right, #ff7e5f, #feb47b);
+
++ **Radial Gradient**: Transición desde un punto central hacia afuera.
+
+    + background: radial-gradient(circle, white, blue);
+
+> **Transparencias**
+
+A veces quieres que el fondo se vea a través del elemento. Tienes dos formas de hacerlo:
+
++ **Propiedad opacity**: Afecta a todo el elemento (incluyendo el texto interior).
+
+    + opacity: 0.5;
+
++ **Canal Alpha (RGBA/HSLA)**: Afecta solo al color (el texto se mantiene sólido).
+
+    + background-color: rgba(0, 0, 0, 0.5);
+
 # 7. Variables en CSS
+
+
+Las **CSS Custom Properties** (conocidas como variables CSS) son un mecanismo de CSS que permite dar un valor personalizado a las propiedades CSS. El objetivo principal es evitar escribir múltiples veces un mismo valor, y en su lugar, ponerle un nombre más lógico, semántico y fácil de recordar, que hará referencia al valor real. De esta forma será mucho más legible y más fácil de mantener.
+
+> **Declaración de variable**s
+
+Para declararlas usamos un nombre que comience con dos guiones `(--)`.
+
+Por ejemplo:
+```css
+elemento {
+  --main-bg-color: brown;
+}
+```
+En esta variable estamos declarando un color de fondo marrón.
+
+Ten en cuenta que el selector que usemos para las reglas de estilo define el ámbito (scope) en el que podremos usar la propiedad personalizada (variable). Una buena práctica común es declarar variables en la pseudo-clase `:root`, y así aplicarlas globalmente al documento HTML:
+
+```css
+:root {
+  --main-bg-color: brown;
+}
+```
+> **Uso de variables**
+
+Para acceder al valor de una propiedad personalizada usamos el nombre de la propiedad dentro de la función `var()`, en lugar de cualquier otro valor normal:
+
+```css
+elemento {
+  background-color: var(--main-bg-color);
+}
+```
