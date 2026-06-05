@@ -6,7 +6,10 @@
 - [1. Introducción](#1-introducción)
 - [2. Instalación de Python](#2-instalación-de-python)
 - [3. Sintaxis de Python](#3-sintaxis-de-python)
-  - [3.1 Entrada y salida de datos](#31-entrada-y-salida-de-datos)
+  - [3.1 Camelcase vs Pascalcase](#31-camelcase-vs-pascalcase)
+    - [3.1.1 Camelcase](#311-camelcase)
+    - [3.1.2 Pascalcase](#312-pascalcase)
+  - [3.2 Entrada y salida de datos](#32-entrada-y-salida-de-datos)
 - [4. Tipos de datos y operadores](#4-tipos-de-datos-y-operadores)
   - [4.1 Tipos de datos](#41-tipos-de-datos)
     - [4.1.1 Enteros](#411-enteros)
@@ -193,7 +196,47 @@ print(keyword.kwlist)
 # 'return', 'try', 'while', 'with', 'yield']
 ``` 
 
-## 3.1 Entrada y salida de datos
+
+
+
+## 3.1 Camelcase vs Pascalcase
+
+Son convenciones utilizadas para nombrar las variables, funciones, clases etc.., son usadas para unir palabras sin usar espacios en blanco.
+
+<span style="color: #FF5733;">Estas convenciones serán obligatorias su uso en este módulo.</span>
+
+### 3.1.1 Camelcase
+
+Se nombra la primera palabra en minúscula y la segunda en mayuscula.
+
+```
+mivariableEjemplo
+```
+
+Se usa principalmente para nombrar elementos que epresentan datos específicos o acciones, tales como:
+
++ Variables locales.
++ Funciones y métodos.
++ Propiedades en objetos (en JavaScript, TypeScript o Java).
+
+### 3.1.2 Pascalcase
+
+Se nombra la primera palabra en mayuscula y la segunda en mayuscula.
+
+```
+MivariableEjemplo
+```
+
+Se reserva para nombres de estructuras de alto nivel y tipos en la mayoría de los lenguajes de programación, como por ejemplo:
+
++ Clases y constructores.
++ Interfaces.
++ Tipos personalizados (Types) o Enums.
++ Componentes de frameworks web (como React).
+
+
+
+## 3.2 Entrada y salida de datos
 
 Para leer desde teclado utilizamos **input** y para mostrar los datos por pantalla utlizamos **print**, en el siguiente ejemplo vemos como utilizamos los dos comandos.
 
