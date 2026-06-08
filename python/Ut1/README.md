@@ -203,7 +203,8 @@ print(keyword.kwlist)
 
 Son convenciones utilizadas para nombrar las variables, funciones, clases etc.., son usadas para unir palabras sin usar espacios en blanco.
 
-<span style="color: #FF5733;">Estas convenciones serán obligatorias su uso en este módulo.</span>
+> [!IMPORTANT] 
+> Estas convenciones serán obligatorias su uso en este módulo.
 
 ### 3.1.1 Camelcase
 
