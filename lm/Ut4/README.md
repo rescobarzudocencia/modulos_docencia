@@ -40,6 +40,13 @@
     - [9.2.2. While.](#922-while)
     - [9.2.3. Do While](#923-do-while)
 - [10. Funciones.](#10-funciones)
+  - [10.1. Definición e invocación.](#101-definición-e-invocación)
+  - [10.2. Paso por referencia o paso por valor.](#102-paso-por-referencia-o-paso-por-valor)
+    - [10.2.1. Paso por valor.](#1021-paso-por-valor)
+    - [10.2.2. Paso por referencia.](#1022-paso-por-referencia)
+  - [10.3. Funciones anónimas.](#103-funciones-anónimas)
+  - [10.4. Funciones flecha.](#104-funciones-flecha)
+- [11. Manejo de erroes.](#11-manejo-de-erroes)
 
 
 # 1. Introducción.
@@ -175,8 +182,6 @@ Se reserva para nombres de estructuras de alto nivel y tipos en la mayoría de l
 + Interfaces.
 + Tipos personalizados (Types) o Enums.
 + Componentes de frameworks web (como React).
-
-
 
 # 5. Declaración de Variables y Constantes.
 
@@ -439,7 +444,6 @@ console.log(mayoresDeEdad); // [{ nombre: 'Luis', edad: 25 }, { nombre: 'Ana', e
 Más métodos funcionales
 https://www.luisllamas.es/javascript-metodos-funcionales-en-arrays/
 
-
 # 8. Operadores.
 
 + Operador de asignación: =
@@ -510,22 +514,27 @@ let text = (edad < 18) ? "Menor" : "Mayor";
 Se repite un número finito de veces.
 
 Sintaxis:
+
 ```
 for (expr1; expr2; expr) {
   // code block to be executed
 }
 ```
+
 ```js
 for (let i = 0; i < 5; i++) {
   text += "El numero es: " + i + "<br>";
 }
 ```
+
 Variante1:
+
 ```
 for (key in objeto) {
   
 }
 ```
+
 ```js
 let a;
 a = [ 100, 200, 23 ]; 
@@ -534,12 +543,15 @@ for (let i in a)  {
 	console.log (i + " ---> " + a[i]);
 }
 ```
+
 Variante2:
+
 ```
 for (variable of objeto_iterable) {
   
 }
 ```
+
 ```js
 const cars = ["BMW", "Volvo", "Mini"];
 let text = "";
@@ -556,6 +568,7 @@ while (condition) {
   
 }
 ```
+
 ```js
 while (i < 10) {
   text += "The number is " + i;
@@ -569,6 +582,7 @@ do {
 
 }while (condition);
 ```
+
 ```js
 do {
   text += "The number is " + i;
@@ -576,3 +590,98 @@ do {
 }while (i < 10);
 ```
 # 10. Funciones.
+Una función es un conjunto de instrucciones que se agrupan bajo un nombre de función. Se ejecuta sólo cuando es llamada por su nombre en el código del programa. La llamada provoca la ejecución de las órdenes que contiene.
+
+Las funciones son muy importantes por diversos motivos:
++ Ayudan a estructurar los programas para hacerlos su código más comprensible y más fácil de modificar.
++ Permiten repetir la ejecución de un conjunto de órdenes todas las veces que sea necesario sin necesidad de escribir de nuevo las instrucciones.
+  
+Una función consta de las siguientes partes básicas:
++ Un nombre de función.
++ Los parámetros pasados a la función separados por comas y entre paréntesis.
++ Las llaves de inicio y final de la función.
++ Desde Javascript ES6, se pueden definir valores por defecto para los parámetros.
+
+## 10.1. Definición e invocación.
+
+Sintaxis de la **definición de una función**.
+
+```
+function nombrefuncion (parámetro1, parámetro2=valorPorDefecto...){
+  // instrucciones
+  //si la función devuelve algún valor añadimos:
+  return valor;
+}
+```
+Sintaxis para la **llamada a una función**.
+
+```
+valorRetornado=nombrefuncion (parám1, parám2...);
+```
+## 10.2. Paso por referencia o paso por valor.
+
+Cuando pasamos los argumentos a una función se pueden pasar de dos maneras:
+
+### 10.2.1. Paso por valor.
+
++ Se hace una copia del valor de la variable pasada a la función.
++ La función no puede modificar el valor de la variable original.
++ Se usa con tipos de datos básicos.
+  
+```js
+let a = 1
+function f1 ( num ) {
+  num++;
+  console.log ( num )   
+}
+f (a)   // 2
+consolle.log(a);       // 1  
+// No se modifica el valor de la variable original
+```
+
+### 10.2.2. Paso por referencia.
+
++ No se hace copia del valor de la variable pasada a la función. Lo que se copia es la referencia o dirección de memoria donde se almacenan los datos.
++ La función puede modificar el valor de la variable original.
++ Se usa con arrays, objetos y funciones.
+
+```js
+const b = [ 1, 2 ]   
+function f2 ( array ) {
+  array[0]++
+  console.log( array )
+}
+f2 ( b )  // [ 2, 2 ]  
+console.log(b);         // [ 2, 2 ]  
+// Se modifica el valor de la variable original
+```
+## 10.3. Funciones anónimas.
+Son un tipo de funciones que no tienen nombre, así que en principio no son invocables, suelen usarse cuando solo se invocan una vez o manejadores de eventos.
+```js
+var myFunction = function() {
+  console.log("This is an example of an anonymous function.");
+};
+// Invoking the anonymous function
+myFunction();
+```
+Ejemplo manejando eventos:
+
+```js
+document.querySelector("Button").addEventListener("click", function() {
+  console.log("Button clicked!");
+});
+```
+## 10.4. Funciones flecha.
+Es parecida a las funciones anónimas pero sustituyendo `function` por `=>`.
+```js
+(a, b) => { return a + b; }// expresada en forma de función flecha
+(a, b) => a + b;  // expresada en forma de función flecha, simplificando return
+```
+Ejemplo de función fecha que suma dos números:
+
+```js
+let suma= (a, b) => a + b;
+console.log(suma(10,20));
+```
+# 11. Manejo de erroes.
+
