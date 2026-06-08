@@ -35,6 +35,11 @@
     - [9.1.1. If else](#911-if-else)
     - [9.1.2. Switch](#912-switch)
     - [9.1.2. Operador Ternario](#912-operador-ternario)
+  - [9.2. Bubles.](#92-bubles)
+    - [9.2.1. For.](#921-for)
+    - [9.2.2. While.](#922-while)
+    - [9.2.3. Do While](#923-do-while)
+- [10. Funciones.](#10-funciones)
 
 
 # 1. Introducción.
@@ -467,6 +472,107 @@ console.log(arr2);// arr2 es [[1, 2, 3], 4, 5]
 ## 9.1. Condicionales.
 ### 9.1.1. If else
 
-### 9.1.2. Switch
+```js
+if (condition1) {
+  // code to execute if condition1 is true
+} else if (condition2) {
+  // code to execute if the condition1 is false and condition2 is true
+} else {
+  // code to execute if the condition1 is false and condition2 is false
+}
+```
 
+### 9.1.2. Switch
+```js
+switch(expression) {
+  case x:
+    // code block
+    break;
+  case y:
+    // code block
+    break;
+  default:
+    // code block
+}
+```
 ### 9.1.2. Operador Ternario
+
+La sintaxis es `condition ? expression1 : expression2`.
+
+Si se cumple la `condicion` se ejecuta `expresiion1` y si no `expresion2`.
+
+```js
+let text = (edad < 18) ? "Menor" : "Mayor";
+```
+## 9.2. Bubles.
+### 9.2.1. For.
+
+Se repite un número finito de veces.
+
+Sintaxis:
+```
+for (expr1; expr2; expr) {
+  // code block to be executed
+}
+```
+```js
+for (let i = 0; i < 5; i++) {
+  text += "El numero es: " + i + "<br>";
+}
+```
+Variante1:
+```
+for (key in objeto) {
+  
+}
+```
+```js
+let a;
+a = [ 100, 200, 23 ]; 
+// para mostrarlos por pantalla con bucle for in
+for (let i in a)  {
+	console.log (i + " ---> " + a[i]);
+}
+```
+Variante2:
+```
+for (variable of objeto_iterable) {
+  
+}
+```
+```js
+const cars = ["BMW", "Volvo", "Mini"];
+let text = "";
+for (let x of cars) {
+  text += x;
+}
+```
+
+### 9.2.2. While.
+
+Se repite mientras se cumpla la condición, cuando no se cumpla se saldría del bucle.
+```
+while (condition) {
+  
+}
+```
+```js
+while (i < 10) {
+  text += "The number is " + i;
+  i++;
+}
+```
+### 9.2.3. Do While
+Al menos se repite una vez y se saldría cuando no se cumpla la condición. Suele usarse en los menús de los programas.
+```
+do {
+
+}while (condition);
+```
+```js
+do {
+  text += "The number is " + i;
+  i++;
+}while (i < 10);
+```
+# 10. Funciones.
