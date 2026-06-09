@@ -60,6 +60,13 @@
     - [14.1.3. Crear e insertar elementos.](#1413-crear-e-insertar-elementos)
     - [14.1.4. Modificar estilos CSS.](#1414-modificar-estilos-css)
   - [14.2. Método addEventListener().](#142-método-addeventlistener)
+- [15. Persistencia de datos.](#15-persistencia-de-datos)
+  - [15.1. Local Storage.](#151-local-storage)
+  - [15.2. Session Storage.](#152-session-storage)
+- [16. JSON.](#16-json)
+  - [16.1. Convertir JSON a un objeto.](#161-convertir-json-a-un-objeto)
+  - [16.2. Convertir un obejto a JSON.](#162-convertir-un-obejto-a-json)
+- [17. Webgrafia](#17-webgrafia)
 
 
 # 1. Introducción.
@@ -1150,3 +1157,185 @@ Para solucionarlo tenemos dos formas:
 ```html
 <script src="script.js" defer></script>
 ```
+# 15. Persistencia de datos.
+
+Javascript tiene una forma para que la información persista y ayuda a que los desarrolladores puedan mejorar el rendimiento, de esta manera crear una mejor experiencia de usuario. Usar el local storage es una manera eficaz de que la información persista en una aplicación. También existe Session Storage aunque es menos usado.
+
+## 15.1. Local Storage.
+
+El LocalStorage, como su propio nombre indica, es un almacén que permite guardar datos de forma local, en nuestro navegador. Esto es importante porque hay que tener en cuenta que los datos solo serán accesibles por el usuario que los ha guardado, y en el navegador que lo ha hecho, ya que se almacenan ahí.
+
+Algunos datos importante sobre el almacenamiento de datos:
+
++ Cada dato guardado se identifica con un nombre, que será un  string.
++ Los valores se guardan siempre como string. Si tienes objetos o arrays, pasalos a JSON.
++ Los datos se guardan por dominio. Desde un dominio diferente no puedes recuperar esos datos.
++ Si utilizas otro **navegador**, no tendrás los datos, ya que se guardan en el navegador. Puedes verlos desde el **Dev Tools**, en la pestaña **Applications**, sección **LocalStorage**.
+
+El objeto **localStorage** tiene los siguientes métodos, que podemos escribir en nuestro código:
+
+| Método o Propiedad |Descripción |
+|-------------------| ----------- |
+|length				|Devuelve la cantidad de elementos de datos almacenados en la página 				actual.|
+|getItem(key)		|	Devuelve la información asociada al dato con nombre key.|
+|setItem(key, value)	|	Guarda el valor value en el dato con nombre key.|
+|removeItem(key)	|	Elimina el dato guardado con el nombre key.|
+|key(number)|			Muestra la key del elemento guardado en la posición number del 					localStorage.|
+|clear()	|			Vacía todos los datos del almacén del localStorage para esta página.|
+
+> Ejemplo de almacenar datos
+
+```js
+const userObj = {
+  username = "Maria",
+  email: "maria@mail.com"
+}
+localStorage.setItem('user', JSON.stringify(userObj))
+```
+> Leer los datos del ejmplo anterior
+
+```js
+const storedUserData = localStorage.getItem('user')
+if (storedUserData) {
+  const userData = JSON.parse(storedUserData)
+  // Procesa los datos
+} else {
+  console.log('Datos no encontrados en local storage')
+}
+```
+
+> Comprobar si existe una clave en el LocalStorage
+
+```js
+if (localStorage.getItem('miClave') !== null) {
+  console.log("El dato 'miClave' existe.");
+}
+```
+
+## 15.2. Session Storage.
+
+La diferencia principal es que **sessionStorage** guarda temporalmente los datos hasta que cierras la pestaña, mientras que **localStorage** los guarda y no los borra aunque cierres la pestaña del navegador.
+Tiene los mismos métodos que localStorage.
+
+# 16. JSON.
+
+**JSON** son las siglas de **JavaScript Object Notation**, y no es más que un formato ligero de datos, con una estructura (notación) específica, que es totalmente compatible de forma nativa con Javascript. Como su propio nombre indica, JSON se basa en la sintaxis que tiene Javascript para crear objetos.
+
+Los JSON son cadenas - útiles cuando se quiere transmitir datos a través de una red. Debe ser convertido a un objeto nativo de JavaScript cuando se requiera acceder a sus datos. Esto no es un problema, dado que JavaScript posee un objeto global JSON que tiene los métodos disponibles para convertir entre ellos.
+
+Sintaxis:
++ Los datos se presentan en pares nombre-valor.
++ Los datos se separan por comas.
++ Las llaves contienen objetos.
++ Los corchetes contienen matrices.
+  
+Los ficheros tienen extensión **.json**.
+
+> Ejemplo para almacenar información de los hobbies de una persona:
+
+```json
+{
+  "nombre": "Ana",
+  "edad": 30,
+  "activo": true,
+  "hobbies": ["leer", "correr", "programar"]
+}
+```
+> Ejemplo para almacenar información de los hobbies de dos personas:
+
+```json
+[
+  {
+    "nombre": "Ana",
+    "edad": 30,
+    "activo": true,
+    "hobbies": ["leer", "correr", "programar"]
+  },
+  {
+    "nombre": "Carlos",
+    "edad": 25,
+    "activo": false,
+    "hobbies": ["videojuegos", "música"]
+  }
+]
+```
+
+> Ejemplo para almacenar superheroes, ejemplo mas completo de JSON
+
+```json
+{
+  "squadName": "Super hero squad",
+  "homeTown": "Metro City",
+  "formed": 2016,
+  "secretBase": "Super tower",
+  "active": true,
+  "members": [
+    {
+      "name": "Molecule Man",
+      "age": 29,
+      "secretIdentity": "Dan Jukes",
+      "powers": ["Radiation resistance", "Turning tiny", "Radiation blast"]
+    },
+    {
+      "name": "Madame Uppercut",
+      "age": 39,
+      "secretIdentity": "Jane Wilson",
+      "powers": [
+        "Million tonne punch",
+        "Damage resistance",
+        "Superhuman reflexes"
+      ]
+    },
+    {
+      "name": "Eternal Flame",
+      "age": 1000000,
+      "secretIdentity": "Unknown",
+      "powers": [
+        "Immortality",
+        "Heat Immunity",
+        "Inferno",
+        "Teleportation",
+        "Interdimensional travel"
+      ]
+    }
+  ]
+}
+```
+
+## 16.1. Convertir JSON a un objeto.
+
+**JSON.parse()** → Acepta una cadena JSON como parámetro, y devuelve el objeto JavaScript correspondiente.
+
+```js
+const json = '{"nombre":"Ana","edad":30}';
+const obj = JSON.parse(json);
+console.log(obj.nombre); // Ana
+console.log(obj.edad); // 30
+```
+Y si tuviesemos el siguiente JSON
+
+```js
+const json = '[{"nombre":"Ana","edad":30},{"nombre":"Pedro","edad":40}]';
+```
+¿Cómo accederíamos a los nombres del objeto.?
+
+## 16.2. Convertir un obejto a JSON.
+
+**JSON.stringfy(obj)** → Acepta un objeto como parámetro, y devuelve la forma de cadena JSON equivalente.
+
+```js
+const obj = { nombre: "Ana", edad: 30 };
+const json = JSON.stringify(obj);
+console.log(json); // {"nombre":"Ana","edad":30}
+```
+
+# 17. Webgrafia
+
++ https://lenguajejs.com/javascript/
++ https://lenguajejs.com/dom/
++ https://lenguajejs.com/eventos/
++ https://developer.mozilla.org/es/docs/Web/JavaScript
++ https://www.w3schools.com/js/default.asp
++ https://es.javascript.info/
++ https://www.w3schools.com/js/js_json.asp
++ https://developer.mozilla.org/es/docs/Learn_web_development/Core/Scripting/JSON
