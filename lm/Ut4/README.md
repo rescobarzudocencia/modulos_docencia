@@ -47,6 +47,19 @@
   - [10.3. Funciones anónimas.](#103-funciones-anónimas)
   - [10.4. Funciones flecha.](#104-funciones-flecha)
 - [11. Manejo de erroes.](#11-manejo-de-erroes)
+- [12. Programación orientada a objetos (POO).](#12-programación-orientada-a-objetos-poo)
+  - [12.1. Conceptos.](#121-conceptos)
+  - [12.2. Crear una clase.](#122-crear-una-clase)
+  - [12.3. Herencia.](#123-herencia)
+  - [12.4. Sobreescribir métodos.](#124-sobreescribir-métodos)
+- [13. DOM Html.](#13-dom-html)
+- [14. Eventos.](#14-eventos)
+  - [14.1. Mediante atributos HTML.](#141-mediante-atributos-html)
+    - [14.1.1. Modificar elementos.](#1411-modificar-elementos)
+    - [14.1.2. Modificar atributos de los elementos.](#1412-modificar-atributos-de-los-elementos)
+    - [14.1.3. Crear e insertar elementos.](#1413-crear-e-insertar-elementos)
+    - [14.1.4. Modificar estilos CSS.](#1414-modificar-estilos-css)
+  - [14.2. Método addEventListener().](#142-método-addeventlistener)
 
 
 # 1. Introducción.
@@ -684,4 +697,456 @@ let suma= (a, b) => a + b;
 console.log(suma(10,20));
 ```
 # 11. Manejo de erroes.
+La manera de controlar los errores que nos pueden aparecer cuando estamos programando es utilizando las sentencias  `try … catch.`
 
+Cuando aparece un error el script se para y si no tenemos forma de ver el punto donde se produjo el error es muy complicado encontrarlo si tenemos muchas líneas de código.
+
+La sintaxis es la siguiente:
+
+```
+try {
+	  // código...
+} catch (err) {
+	  // manipulación de error
+}finally{
+	// se ejecuta siempre
+}
+```
+El funcionamiento es el siguiente:
+
+1. Se ejecuta el código de try{…}.
+2. Si no hubo errores, se ignora catch(err), la ejecución llega al final del try y continúa omitiendo el catch.
+3. Tendremos tantos bloques catch(err) como errores queramos controlar.
+4. Si se produce un error, la ejecución del try se detiene y el control comienza con el catch (err). La variable err contendrá un objeto error con detalles sobre lo que sucedió.
+5. El bloque finally siempre se ejecuta, se produzca error o no.
+
+De esta forma no se para el script y podemos ver donde se ha producido el error.
+
+El **objeto err**, contiene información del error sucedido, posee dos propiedades que nos ayudarán del error cometido:
+
+**name**: nombre del error.
+
+**message**: detalles del error.
+
+Veamos el siguiente código
+```js
+try {
+
+	  alert('Inicio de ejecuciones try');  // (1) <--
+
+	  lalala; // error, variable no está definida!
+
+	  alert('Fin de try (nunca alcanzado)');  // (2)
+
+} catch (err) {
+
+	  alert(`¡Un error ha ocurrido!`); // (3) <--
+
+}
+```
+Si ejecutamos el código vemos que se muestra las salidas (1) y (3).
+
+Si queremos ver detalles del error mostramos las propiedades del objeto err.
+```js
+alert(err.name); // ReferenceError
+alert(err.message); // lalala no está definida!
+alert(err.stack); // ReferenceError: lalala no está definida en (...call stack)
+  // También puede mostrar un error como un todo
+  // El error se convierte en cadena como "nombre: mensaje"
+alert(err); 
+```
+>Lanzando nuestros propios errores
+
+Por defecto hay muchos errores ya preprogramados en JavaScript, pero nosotros podemos controlar errores que no estén controlados por JavaScript, para ello utilizamos el operador **throw**.
+
+```js
+function dividir(a, b) {
+  if (b === 0) {
+    throw new Error("No se puede dividir entre cero");
+  }
+  return a / b;
+}
+
+try {
+  console.log(dividir(10, 0));
+} catch (error) {
+  console.error("Error capturado:", error.message);
+}
+```
+
+# 12. Programación orientada a objetos (POO).
+Javascript  permite una mejor definición de clases que en anteriores versiones de Javascript. Mediante la palabra reservada “class”, permite definir clases, métodos, atributos, etc… 
+
+Recordad que los objetos en Javascript se guardan como referencias de memoria. En apartados anteriores hablamos de como clonar arrays y objetos.
+
+https://lenguajejs.com/javascript/oop/que-es/
+
+## 12.1. Conceptos.
+
++ **Clase**: Una plantilla para crear objetos, define sus propiedades y métodos.
++ **Objeto**: Una instancia concreta de una clase (ej. un Perro específico).
++ **Propiedad**: Datos que describen un objeto (ej. nombre, color).
++ **Método**: Funciones que un objeto puede realizar (ej. hablar(), caminar()).
++ **Constructor**: Un método especial que se ejecuta al crear un nuevo objeto.
++ **Herencia**: Permite que una clase herede propiedades y métodos de otra (ej. Estudiante hereda de Persona).
++ **Encapsulamiento**: Agrupar datos y métodos en una unidad (objeto) para ocultar detalles internos.
++ **Polimorfismo**: La capacidad de diferentes objetos de responder al mismo mensaje (método) de forma distinta. 
+
+## 12.2. Crear una clase.
+
+Para crear una clase utilizamos la palabra clave `class` :
+```js
+class nombre_clase{
+	constructor(propiedad1, propiedad2, ...){
+		this.propiedad1=valor1;
+		this.propiedad2=valor2:
+		….
+	}
+	static medotodos(objetos){
+	}
+}
+```
+Si utilizamos métodos `static`, podemos utilizarlos sin que tengamos que crear un objeto de dicha clase.
+
+Ejemplo de una clase y su uso:
+```js
+class Punto {
+// Constructor de la clase
+	constructor(pX,pY){
+		this.pX=pX;
+		this.pY=pY;
+	}
+// Método estático para calcular distancia entre dos puntos
+	static distancia ( a , b) {
+		const dx = a.pX - b.pX;
+		const dy = a.pY - b.pY;
+		return Math.sqrt ( dx * dx + dy * dy );
+	}
+// Método indicado para ser usado como getter
+	get coordX() {
+			return this.pX;
+}
+
+// Método normal
+	devuelveXporY () {
+		return this.pX * this.pY;
+	}
+}
+
+let p1 = new Punto(5,5);
+let p2 = new Punto(10,10);
+//Llamada método estático
+console.log (Punto.distancia(p1, p2));
+//Llamada método normal
+console.log (p1.devuelveXporY());
+// Al ser un getter, puede usarse como una propiedad
+console.log (p1.coordX);
+```
+## 12.3. Herencia.
+La herencia de clase es el modo para que una clase extienda a otra. De esta manera podemos añadir nueva funcionalidad a la ya existente. Utilizamos la palabra clave **extends**.
+
+```js
+class clase_hija extends clase_padre{
+}
+```
+Ejemplo de herencia:
+
+```js
+class Animal {
+  constructor(name) {
+    this.speed = 0;
+    this.name = name;
+  }
+  run(speed) {
+    this.speed = speed;
+    alert(`${this.name} corre a una velocidad de ${this.speed}.`);
+  }
+  stop() {
+    this.speed = 0;
+    alert(`${this.name} se queda quieto.`);
+  }
+}
+
+let animal = new Animal("Mi animal");
+
+class Rabbit extends Animal {
+  hide() {
+    alert(`¡${this.name} se esconde!`);
+  }
+}
+
+let rabbit = new Rabbit("Conejo Blanco");
+
+rabbit.run(5); // Conejo Blanco corre a una velocidad de 5.
+rabbit.hide(); // ¡Conejo Blanco se esconde!
+```
+## 12.4. Sobreescribir métodos.
+
+Los métodos que no están definidos en la clase hija se toman de la clase padre, pero nos puede interesar sobreescribir en la clase hija algún método.
+
+Para ello debemos definir en la clase hija el método con el mismo nombre, pero este método tiene una función diferente que en el método padre.
+
+En el ejemplo anterior si queremos sobreescribir el método stop podríamos codificar lo siguiente:
+
+```js
+class Rabbit extends Animal {
+  hide() {
+    alert(`¡${this.name} se esconde!`);
+  }
+  stop() {
+    super.stop(); // llama el stop padre
+    this.hide(); // y luego hide
+  }
+}
+```
+# 13. DOM Html.
+
+Según el Modelo de Objetos del Documento (DOM), cada etiqueta HTML es un objeto. Las etiquetas anidadas son llamadas “hijas” de la etiqueta que las contiene. El texto dentro de una etiqueta también es un objeto.
+
+Todos estos objetos son accesibles empleando JavaScript, y podemos usarlos para modificar la página.
+
+Por ejemplo, **document.body** es el objeto que representa la etiqueta `<body>`.
+
+Ejecutar el siguiente código hará que el `<body>` sea de color rojo durante 3 segundos:
+
+```js
+<script>
+document.body.style.background = 'red';
+setTimeout(() => document.body.style.background = '', 3000);
+</script>
+```
+Un ejemplo de DOM
+```html
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>About elk</title>
+</head>
+<body>
+  The truth about elk.
+</body>
+</html>
+```
+El DOM representa el HTML como una estructura de árbol de etiquetas. A continuación podemos ver cómo se muestra:
+
+![Dom](../img/dom.png)
+
+
+Cada nodo del árbol es un objeto.
+
+Las etiquetas son nodos de elementos (o simplemente “elementos”) y forman la estructura del árbol. `<html>` está ubicado en la raíz del documento, por lo tanto, `<head>` y `<body>` son sus hijos, etc.
+
+El texto dentro de los elementos forma nodos de texto, y son etiquetados como #text. Un nodo de texto puede contener únicamente una cadena y no puede tener hijos, siempre es una hoja del árbol.
+
+Por ejemplo, la etiqueta `<title>` tiene el texto "About elk".
+
+Hay que tener en cuenta los caracteres especiales en nodos de texto:
+
++ una línea nueva: ↵ (en JavaScript se emplea \n para obtener este resultado)
++ un espacio: ␣
+
+Los espacios y líneas nuevas son caracteres totalmente válidos, al igual que letras y dígitos. Ellos forman nodos de texto y se convierten en parte del DOM. Así, por ejemplo, en el caso de arriba la etiqueta `<head>` contiene algunos espacios antes de la etiqueta `<title>`, entonces ese texto se convierte en el nodo #text, que contiene una nueva línea y solo algunos espacios.
+
+Para mas informaciín consultar los siguientes enlaces: 
+
+https://es.javascript.info/dom-nodes
+
+https://www.luisllamas.es/javascript-que-es-el-dom/
+
+# 14. Eventos.
+
+Los eventos son señales que indican que algo ha ocurrido permitiendo que el código reaccione a acciones del usuario como un clic en un botón o a cambios en el sistema, como la carga de una página.
+
+Algunos eventos pueden ser:
+
++ Evento **click**: Se ha hecho click de ratón sobre un elemento de la página.
++ Evento **keydown**: Pulsación de una tecla específica del teclado.
++ Evento **play**: Reproducción de un archivo de audio/video
++ Evento **wheel**: Scroll con la rueda del ratón sobre un elemento de la página
++ Evento **beforeprint**: El usuario ha activado la opción «Imprimir página».
+  
+[En el siguiente enlace vemos los diferentes eventos](
+https://developer.mozilla.org/es/docs/Web/API/Document_Object_Model/Events)
+
+Existen varias alternativas para manejar los eventos en Javascript.
+
+[Eventos del navegador](https://lenguajejs.com/eventos/eventos-navegador/que-son/)
+
+[Eventos de teclado](https://lenguajejs.com/eventos/eventos-navegador/keyboard-event/)
+[Eventos de puntero](https://lenguajejs.com/eventos/eventos-navegador/pointer-event/)
+[Seleccionar elementos del DOM](https://www.luisllamas.es/seleccionar-elementos-del-dom-javascript/)
+
+[Eventos DOM mas usados](https://www.luisllamas.es/javascript-eventos-dom-mas-usados/)
+
+## 14.1. Mediante atributos HTML.
+
+Asociar por ejemplo a un botón un evento mediante un atributo:
+```html
+<button onClick="alert('Hello!')">Saludar</button>
+```
+En el ejemplo anterior estamos añadiendo el código ejecutable dentro de la etiqueta button, en este caso al ser un trozo pequeño no pasa nada, pero si tuviéramos un código más extenso, lo mejor es crear una función con dicho código y asociar dicha función.
+```js
+<script>
+  function doTask() {
+    alert("Hello!");
+  }
+</script>
+
+<button onClick="doTask()">Saludar</button>
+```
+
+Para modificar el contenido de una etiqueta tenemos que asignarle un ID que buscaremos con **getElementById**. Es utilizado porque el ID en un documento es único.
+
+Ejemplo:
+
+Html
+```html
+ <img id="myImage" src="images/off.jpg" style="width:100px">
+```
+JavaScript
+```js
+<button onclick="document.getElementById('myImage').src='images/on.jpg'">Encender</button>
+```
+
+[Mas información sobre getElemntById](https://developer.mozilla.org/es/docs/Web/API/Document/getElementById)
+
+**document.getElementById(id).propiedad=””**,  **id** es el ID que se le ha asociado al elemento Html y propiedad es la propiedad que queremos modificar. En el ejemplo anterior modificamos **.src** que es donde se indica la imagen que muestra. Si por ejemplo queremos modificar el texto utilizaremos **.innerHtml=”texto”**.
+
+También podemos seleccionar elementos pertenecientes a una clase con **getElementsByClassName**, seleccionaremos a todos. Devuelve una colección de elementos con la clase especificada.
+```js
+const elementos = document.getElementsByClassName('mi-clase');
+```
+Otra forma de seleccionar es mediante **getElementsByTagName**, devuelve una colección de todos los elementos de dicha etiqueta.
+```js
+const elementos = document.getElementsByTagName('p');
+```
+### 14.1.1. Modificar elementos.
+
++ **textContent** → Cambia el texto visible de un elemento reemplazando todo el contenido.
+```js
+const elemento = document.getElementById('mi-elemento');
+elemento.textContent = 'Nuevo contenido de texto';
+```      
++ **innerHTML** → Permite modificar el contenido HTML dentro de un elemento. Esto incluye etiquetas HTML y texto. Es útil para agregar contenido dinámico, pero hay que tener cuidado con la inyección de código para evitar vulnerabilidades de seguridad.
+  
+```js  
+const elemento = document.getElementById('mi-elemento');
+elemento.innerHTML = '<strong>Texto en negrita</strong>';
+```
+### 14.1.2. Modificar atributos de los elementos.
+
++ **setAttribute** → permite cambiar el valor de un elemento HTML.
+```js      
+const elemento = document.getElementById('mi-elemento');
+elemento.setAttribute('data-info', 'valor');
+```
++ **getAtrribute** → se usa para obtener el valor de un atributo de un elemento.
+```js      
+const elemento = document.getElementById('mi-elemento');
+const valor = elemento.getAttribute('data-info');
+console.log(valor); // 'valor'
+```
++ **Modificación directa: src, href y className** → modificamos directamente las propiedades del objeto.
+```js
+const imagen = document.getElementById('mi-imagen');
+imagen.src = 'nueva-foto.jpg';
+```
+### 14.1.3. Crear e insertar elementos.
+
++ **document.createElement** → crea un elemento nuevo en DOM.
++ **AppendChild** → añade el elemento al final de la lista del nodo padre.
+
+En el siguiente código se muestra como al cargar la página nos crea una taabla dinámicamente 10x10.
+```js
+document.addEventListener("DOMContentLoaded", () => {
+  const filas = 10;
+  const columnas = 10;
+  const contenedor = document.getElementById('contenedor-tabla');
+  const tabla = document.createElement('table');
+  for (let i = 0; i < filas; i++) {
+    const fila = document.createElement('tr');
+    for (let j = 0; j < columnas; j++) {
+      const celda = document.createElement('td');
+      celda.id = `${i}${j}’;
+      celda.textContent = `${i},${j}`; 
+      fila.appendChild(celda);
+    }
+    tabla.appendChild(fila);
+  }
+ contenedor.appendChild(tabla);
+});
+```
+
+[Como reemplazar y eliminar elementos](https://www.luisllamas.es/insertar-y-eliminar-elementos-del-dom-javascript/)
+
+### 14.1.4. Modificar estilos CSS.
+
++ elemento.style.propiedadCSS=’valor’
+
+```css
+elemento.style.color = 'red';
+elemento.style.backgroundColor = 'yellow';
+elemento.style.fontSize = '18px';
+elemento.style.width = '200px';
+elemento.style.height = '100px';
+```
+[Modificar estilos CSS](https://www.luisllamas.es/javascript-modificar-estilos-css-dom/)
+
++ miElemento.classList.add("nueva-clase");
+
+Para asignar una clase a un elemento. Previamente hay que haberlo capturado,
+
+## 14.2. Método addEventListener().
+
+El método **.addEventListener()** nos permite empezar a escuchar un evento o eventos concretos, y en el caso de que ocurra alguno, ejecutar la función asociada.
+
+> [!IMPORTANT] 
+> Todos los eventos que vamos a capturar deben hacerse con este método. No se permitirá dentro del código Html.
+
+```html
+<button>Click me</button>
+<script>
+const button = document.querySelector("button");
+function action() {
+  alert("Hello!");
+};
+button.addEventListener("click", action);
+</script>
+```
++ Buscamos el elemento que tendrá el evento, en este caso `<button>`.
++ Creamos la función `action()`, que realizará la acción deseada.
++ En el botón, escuchamos el evento `click` y le asociamos la función `action`.
+
+El ejemplo anterior lo podemos reducir en el siguiente código.
+```js
+const button = document.querySelector("button");
+button.addEventListener("click", function() {
+  console.log("Boton clickeado!");
+});
+```
+
+Ejemplo anterior con función flecha
+
+```js
+button.addEventListener("click", () => {
+  console.log("Boton clickeado!");
+});
+button.addEventListener("mouseleave", () => {
+  console.log("Raton salio del boton!");
+});
+button.addEventListener("click", funcion);
+```
+**funcion** debe estar definida con anterioridad.
+
+> [!IMPORTANT] 
+> Nos vamos a encontrar que cuando pongamos nuestro script en el `<head>`, no nos va a funcionar, ya que **addEventListener** se ejecuta antes de que el HTML se cargue, impidiendo que JS encuentre los elementos.
+
+**Defer** indica que el script se ejecute cuando el DOM esté completamente formado.
+
+Para solucionarlo tenemos dos formas:
++ Colocar el script al final de `<body>`.
++ Añadir defer a la etiqueta `<script>`.
+
+```html
+<script src="script.js" defer></script>
+```
