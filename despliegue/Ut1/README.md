@@ -4,8 +4,8 @@
 - [2. Fases del Despliegue.](#2-fases-del-despliegue)
 - [3. Opciones de alojamiento](#3-opciones-de-alojamiento)
 - [4. DNS.](#4-dns)
-- [4.1. Características de DNS.](#41-características-de-dns)
-- [4.2. Ficheros hosts.](#42-ficheros-hosts)
+  - [4.1. Características de DNS.](#41-características-de-dns)
+  - [4.2. Ficheros hosts.](#42-ficheros-hosts)
 - [5. Puertos en redes informáticas.](#5-puertos-en-redes-informáticas)
 
 
@@ -66,7 +66,7 @@ DNS permite recordar fácilmente los nombres de todos los servidores conectados 
 
 El nombre es más fiable. La dirección numérica podría cambiar por muchas razones, pero no el nombre que identifica el servidor.
 
-# 4.1. Características de DNS.
+## 4.1. Características de DNS.
 
 + Es una base de datos jerárquica que contiene asociaciones de nombres de dominios a @ IP.
 + Está formada por un conjunto de servidores distribuidos por todo Internet, en lugar de mantenerla centralizada en un único servidor.
@@ -74,7 +74,7 @@ El nombre es más fiable. La dirección numérica podría cambiar por muchas raz
 + Usa un resolvedor (“resolver”) que permite realizar las consultas a la bbdd.
 + Utiliza un protocolo para intercambiar información de nombres.
 
-# 4.2. Ficheros hosts.
+## 4.2. Ficheros hosts.
 
 Cuando se hace una petición a un sitio Web, lo primero que busca es en fichero `hosts`, este fichero se encuentra tanto en Windows como en Linux.
 
