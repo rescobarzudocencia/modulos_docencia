@@ -5,6 +5,8 @@
   - [1.2. Contenedores.](#12-contenedores)
   - [1.3. Glosario.](#13-glosario)
 - [2. Instalación.](#2-instalación)
+  - [2.1. Ayuda de docker.](#21-ayuda-de-docker)
+- [3. Docker Hub.](#3-docker-hub)
 
 
 # 1.Introducción.
@@ -87,4 +89,67 @@ sudo systemctl status docker
 ```
 ![Comprobar Docker Instalado](../img/compDockerInstalado.png)
 
+Una vez instalado, por defecto se usa utilizando permisos de administrador, y puede ser un engorro cada vez utilizar sudo para ello vamos a ver que hacer para poder utilizar Docker con un usuario.
 
+Primero vamos a comprobar si el grupo docker ha sido creado.
+
+```bash
+sudo cat /etc/group | grep docker
+```
+![Comprobar Grupo Docker](../img/comprobarGrupoDocker.png)
+
+Si no lo hubiese creado lo creamos:
+```bash
+sudo groupadd docker
+```
+Añadir nuestro usuario al grupo ya que si no lo hacemos tenemos que utilizar siempre el sudo para realizar cualquier acción.
+```bash
+sudo usermod -aG docker $USER
+```
+Reiniciamos la máquina.
+
+Para ver que todo está funcionando vamos a instalar el contenedor Hello World.
+
+```bash
+docker run hello-world
+```
+![Hello World](../img/helloWorld.png)
+
+Otra de las utilidades que vamos a utilizar es **docker-compose**. Aunque la instalación la veremos más adelante, podemos realizar ya la instalación.
+
+La instalación de docker-compose es un proceso muy sencillo. Si somos usuarios de MAC y Windows no tendremos que instalar nada ya que docker-compose es una de las herramientas que por defecto se incluyen dentro de Docker Desktop. 
+
+Si somos usuarios de Linux su instalación se realiza únicamente con dos pasos:
+
+```bash
+# Descarga del fichero mediante la orden curl y colocación en el directorio adecuado. 
+sudo curl -L "https://github.com/docker/compose/releases/download/2.40.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+# Concesión de los permisos de ejecución
+sudo chmod +x /usr/local/bin/docker-compose
+
+# Comprobación de que la instalación está correcta.
+docker-compose --version
+docker-compose version 2.40.3
+```
+
+
+> [!IMPORTANT]
+>
+> Si no se descargase hay que realizar manualmente la descarga:
+
+1. Lo descargamos de: https://github.com/docker/compose/releases/tag/v2.40.3/
+2. El fichero a descargar es **docker-compose-linux-x86_64**.
+3. Copiarlo al directorio correcto **sudo cp  /home/usuario/Descargas/docker-compose-linux-x86_64 /usr/local/bin/docker-compose** Sustituyendo usuario por el usuario local.
+ 4. Darle permisos de ejecución: **sudo chmod +x /usr/local/bin/docker-compose**.
+ 5. Comprobar la versión: **docker-compose --version**.
+
+## 2.1. Ayuda de docker.
+
+Si necesitamos ayuda se puede mostrar con la opción **--help**.
+```bash
+docker rmi --help
+docker --help
+```
+
+# 3. Docker Hub.
