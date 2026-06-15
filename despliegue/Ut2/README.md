@@ -7,6 +7,12 @@
 - [2. Instalación.](#2-instalación)
   - [2.1. Ayuda de docker.](#21-ayuda-de-docker)
 - [3. Docker Hub.](#3-docker-hub)
+- [4. Gestión de imágenes.](#4-gestión-de-imágenes)
+  - [4.1. Descarga de imágenes.](#41-descarga-de-imágenes)
+  - [4.2. Mostrar imágenes descargadas.](#42-mostrar-imágenes-descargadas)
+  - [4.3. Borrado de imágenes.](#43-borrado-de-imágenes)
+  - [4.4. Obteniendo inofrmación de las imágenes.](#44-obteniendo-inofrmación-de-las-imágenes)
+  - [4.5. Otros comandos.](#45-otros-comandos)
 
 
 # 1.Introducción.
@@ -153,3 +159,160 @@ docker --help
 ```
 
 # 3. Docker Hub.
+
+Es un repositorio donde podemos descargar imagenes de servicios que queramos montar.
+Podemos aceder desde [Enlace Docker Hub](https://hub.docker.com/)
+
+Cuando hemos ejecutado **docker run hello-world** ha pasado dos cosas:
+
++ Se **DESCARGA** la imagen que es algo así como la "plantilla" para la creación de contenedores en ejecución.
++ Se **EJECUTA** el contenedor.
+
+# 4. Gestión de imágenes.
+
+Como ya hemos dicho las imágenes son la plantilla a partir de las cuales vamos a generar nuestros contenedores.
+
+## 4.1. Descarga de imágenes.
+
+Un comando útil es la búsqueda de imágenes para poder crear nuestros contenedores, utilizaremos el siguiente comando, por ejemplo si queremos instalar un contenedor con **ubuntu** podemos buscar las imágenes ya creadas con el siguiente comando:
+
+```bash
+docker search ubuntu
+```
+
+![Docker buscar imagen ubuntu](../img/dockerSearchUbuntu.png)
+
+De la información que nos muestra una de las columnas más importantes es la de ST**ARS que son las estrellas que tiene dicha imagen, en modo gráfico también. 
+
+Descargamos las imágenes con el comando 
+
+```
+docker pull imagen:version
+```
+
+Indicando el nombre de la imagen y la versión de la misma (**TAG**). Si no indicamos nada se descarga la última versión (latest). 
+
+```bash
+# mysql - Es el nombre de la imagen 8.0.22 es la versión o TAG
+docker pull mysql:8.0.22
+```
+
+Es recomendable usar `docker pull` por las siguientes razones:
+
++ Me permite **actualizar** una determina pareja imagen:versión a su última actualización. Solo tendré que hacer **docker pull con el mismo imagen:versión**.
++ Suponiendo que ya teníamos previamente la versión descargada. Actualiza la versión mysql:5.7
+
+```
+docker pull mysql:5.7
+```
+
+> [!IMPORTANT]
+>
+>Me permite **bajar todas las versiones de una imagen** de una >sola vez. Esto **puede ser peligroso** si una imagen tiene muchas >versiones disponibles. Lo conseguiremos con la opción `-a` o >`--all-tags`.
+
+## 4.2. Mostrar imágenes descargadas.
+
+Cada vez que descarguemos una imagen podemos mostrar por pantalla una lista de las imágenes que tenemos en nuestro sistema usando la orden:
+
+```bash
+# Listas imágenes descargas
+docker images o docker image ls
+```
+
+La información que se nos muestra se organiza en forma tabular y nos proporciona los siguientes datos:
+
++ **IMAGE**: Nombre de la imagen en el repositorio., con la versión de la imagen descargada Por ejemplo: mysq:5.7
++ **ID**: Un identificador que es único para cada imagen. Siempre podemos usar este ID en vez del nombre.
++ **DISK SIZE**: Tamaño de la imagen.
+
+## 4.3. Borrado de imágenes.
+
+Conforme vamos avanzando en el uso de Docker iremos **acumulando imágenes** en nuestro sistema. Estas imágenes, bien es cierto, no ocupan tanto espacio como una máquina virtual pero si hemos descargado varias decenas o centenas de las mismas (basta un par docker pull -a para eso) al final nos encontraremos con que podemos llegar a ocupar una cantidad considerable de espacio en disco si no tenemos cierto control sobre las mismas.
+
+En este caso, para una mejor gestión, podemos empezar a borrar imágenes de la siguiente forma:
+
+```bash
+# Borrado de la imagen mysql:8.0.22
+docker rmi mysql:8.0.22
+# Borrado de una imagen usando su IMAGE ID
+docker rmi dd7265748b5d
+# Borrado de dos imágenes (o varias) a la vez. Puedes usar nombre e IMAGE ID
+docker rmi mysql:8.0.22 mysql:5.7
+```
+
+
+> [!IMPORTANT]
+>
+>No podemos borrar una imagen si ya tenemos un contenedor que está usándola.
+
+Si aun así queremos borrarla **podemos forzar ese borrado**, lo cual afectará, evidentemente, a los contenedores que tuviéramos referenciando esa imagen. Eso lo conseguimos añadiendo la opción `-f` o `--force`. Por ejemplo:
+
+```bash
+# Borra la imagen httpd (Apache latest) aunque hubiera contenedores que estuvieran usando esa imagen.
+docker rmi -f httpd
+```
+Este proceso de borrado, sobre todo si tenemos muchas imágenes,  puede ser un proceso engorroso. Para facilitar esto disponemos de la orden **docker image prune** que tiene tres opciones básicas:
+
++ **-a** o **--all** para borrar todas las imágenes que no están siendo usadas por contenedores
++ **-f** o **--force** para que no nos solicite confirmación. Es una operación que puede borrar muchas imágenes de una tacada y debemos ser cuidadosos. Os recomiendo no usar esta opción.
++ **--filter** para especificar ciertos filtros a las imágenes.
+
+Para demostrar su funcionamiento vamos a poner varios ejemplos:
+
+```bash
+# Borrar todas las imágenes sin usar
+docker image prune -a
+# Borrado de las imágenes creadas hace más de una semana 10 días
+docker image prune --filter until="240h"
+```
+
+## 4.4. Obteniendo inofrmación de las imágenes.
+
+Una vez tenemos ya las imágenes descargadas es muy interesante conocerlas al máximo para poder utilizarlas. Para ello tenemos **dos fuentes principales**:
+
++ La **página de la imagen en DockerHub** que suele recoger sobre todo información relativa a aspectos como:
+  + Una descripción de la aplicación o servicio que contiene la imagen.
+  + Una lista de versiones TAGs disponibles.
+  + Variables de entorno interesantes.
+  + Cómo ejecutar la imagen.
++ La salida de las órdenes **docker image inspect / docker inspect** que nos da ya una información más detallada sobre las características, con todos los metadatos de la misma.
+
+Veamos un ejemplo de la misma:
+
+```bash
+# Dos formas de obtener información de la imagen mysql:8.0.22
+docker image inspect mysql:8.0.22
+docker inspect mysql:8.0.22
+```
+Está en formato JSON (JavaScript Object Notation) y nos da datos sobre aspectos como:
+
++ El id y el checksum de la imagen.
++ Los puertos abiertos.
++ La arquitectura y el sistema operativo de la imagen.
++ El tamaño de la imagen.
++ Los volúmenes.
++ El ENTRYPOINT que es lo que se ejecuta al hacer docker run.
++ Las capas.
++ Y muchas más cosas....
+
+Adicionalmente podemos formatear la salida usando Go  y el flag `--format/-f`. Una descripción detallada queda fuera de los objetivos de este curso pero vamos a poner varios ejemplos:
+
+```bash
+# Mostrar la arquitectura y el sistema
+docker inspect --format '{{.Architecture}} es la arquitectura y el SO es {{.Os}}' mysql:8.0.22
+ amd64 es la arquitectura y el SO es linux
+# Mostrar la lista de puertos expuestos
+docker inspect --format '{{.Config.ExposedPorts}}' mysql:8.0.22
+map[3306/tcp:{} 33060/tcp:{}]
+```
+NOTA: Para poder este formateo debemos conocer en profundidad la estructura del JSON que nos devuelve.
+
+
+## 4.5. Otros comandos.
+
+Además de los comandos que hemos visto en los apartados anteriores la orden **docker image** tiene una gran variedad de **subcomandos**, que si bien no son necesarios para poder empezar con docker si que es bueno conocer que existen, os recomiendo los siguientes:
+
++ **docker image build** para construir una imagen desde un fichero Dockerfile.
++ **docker image history** para que se nos muestre por pantalla la evolución de esa imagen.
++ **docker image save / docker image load (o docker save / docker load)** para guardar imágenes en fichero y cargarlas desde fichero.
++ **docker image tag ( docker tag)** para añadir TAGs (versiones) a las distintas imágenes.
