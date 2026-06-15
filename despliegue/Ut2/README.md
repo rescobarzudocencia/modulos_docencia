@@ -13,6 +13,13 @@
   - [4.3. Borrado de imágenes.](#43-borrado-de-imágenes)
   - [4.4. Obteniendo inofrmación de las imágenes.](#44-obteniendo-inofrmación-de-las-imágenes)
   - [4.5. Otros comandos.](#45-otros-comandos)
+- [5. Contenedores.](#5-contenedores)
+  - [5.1. Asignando nombre a los contenedores.](#51-asignando-nombre-a-los-contenedores)
+  - [5.2. Ejecución de servicios. Puertos y variables de entorno.](#52-ejecución-de-servicios-puertos-y-variables-de-entorno)
+  - [5.3. Ejecutar órdenes en contenedores.](#53-ejecutar-órdenes-en-contenedores)
+  - [5.4. Obtener información de los contenedores.](#54-obtener-información-de-los-contenedores)
+    - [5.4.1. Docker ps.](#541-docker-ps)
+    - [5.4.2. Docker inspect.](#542-docker-inspect)
 
 
 # 1.Introducción.
@@ -208,7 +215,7 @@ docker pull mysql:5.7
 
 > [!IMPORTANT]
 >
->Me permite **bajar todas las versiones de una imagen** de una >sola vez. Esto **puede ser peligroso** si una imagen tiene muchas >versiones disponibles. Lo conseguiremos con la opción `-a` o >`--all-tags`.
+>Me permite **bajar todas las versiones de una imagen** de una >sola vez. Esto **puede ser peligroso** si una imagen tiene >muchas >versiones disponibles. Lo conseguiremos con la opción >`-a` o `--all-tags`.
 
 ## 4.2. Mostrar imágenes descargadas.
 
@@ -316,3 +323,150 @@ Además de los comandos que hemos visto en los apartados anteriores la orden **d
 + **docker image history** para que se nos muestre por pantalla la evolución de esa imagen.
 + **docker image save / docker image load (o docker save / docker load)** para guardar imágenes en fichero y cargarlas desde fichero.
 + **docker image tag ( docker tag)** para añadir TAGs (versiones) a las distintas imágenes.
+
+# 5. Contenedores.
+
+Los contenedores son creados a partir de las **imágenes**. Eso lo podemos conseguir de la siguiente manera:
+      
++ **docker pull nombre_imagen:version** que descargará desde el repositorio una imagen con la versión indicada o la última versión (**latest**) si no indicamos versión.
++ Y la orden fundamental para ejecutar contenedores que es **docker run **cuya función principal es poner en ejecución contenedores en base a una imagen de referencia que le indicaremos. Una **CUESTIÓN IMPORTANTE** que debemos de tener en cuenta al usar docker run es que si vamos a **ejecutar un contenedor** que usa como base una **imagen que no tenemos**, esta **se descargará de manera automática**. Para buscar las imágenes que queremos la opción que os recomiendo es usar el buscador de Docker Hub.
+
+Esta orden **docker run** tiene una sintaxis sencilla pero multitud de opciones de las que explicaremos algunas. No obstante la estructura general es la siguiente:
+
+
+![Docker run](../img/docerRun.png)
+
+Solo vamos a ver algunas de las opciones que posee este comando:
++ **-d** o **--detach** para ejecutar un contenedor (normalmente porque tenga un servicio) en background.
++ **-e** o **--env** para establecer variables de entorno en la ejecución del contenedor.
++ **-h** o **--hostname** para establecer el nombre de red parar el contenedor.
++ **--help** para obtener ayuda de las opciones de docker.
++ **--interactive** o **-i** para mantener la STDIN abierta en el contenedor.
++ **--ip** si quiero darle una ip concreta al contenedor.
++ **--name** para darle nombre al contenedor.
++ **--net** o **--network** para conectar el contenedor a una red determinada.
++ **-p** o **--publish** para conectar puertos del contenedor con los de nuestro host.
++ **--restart** que permite reiniciar un contenedor si este se "cae" por cualquier motivo.
++ **--rm** que destruye el contenedor al pararlo.
++ **--tty** o **-t** para que el contenedor que vamos a ejecutar nos permita un acceso a un terminal para poder ejecutar órdenes en él.
++ **--user** o **-u** para establecer el usuario con el que vamos a ejecutar el contenedor.
++ **--volume** o **-v** para montar un bind mount o un volumen en nuestro contenedor.
++ **--wordirk** o **-w** para establecer el directorio de trabajo en un contenedor.
+
+A continuación vamos a ver algunos ejemplos básicos. En apartados posteriores de este mismo módulo y en módulos posteriores continuaremos con la introducción de más opciones:
+
+> **Ejemplo 1**
+
+```bash
+# Descargar una imagen de manera previa
+docker pull ubuntu:18.04
+# Crear un contenedor de ubuntu:18.04 y tener acceso a un shell en él. Si no hemos descargado la imagen de manera previa se descargará.
+docker run -it ubuntu:18.04 /bin/bash
+root@ef2bea1d6cb1:/#
+```
+Al crear el contenedor se nos da un acceso a un shell del mismo. Es importante destacar que **estamos accediendo como root**. Al salir del terminal el contenedor se para.
+
+> **Ejemplo 2**
+```bash
+# Crear un contenedor de ubuntu:18.04 y listar el contendido de la carpeta /
+docker run ubuntu:18.04 ls /
+```
+bin boot dev etc ...
+
+Al crear el contenedor se ejecuta la orden ls / y posteriormente el contenedor pasa a estar parado. Y ya no podremos acceder a él. 
+
+
+> **Ejemplo 3**
+
+```bash
+# Crear un contenedor de httpd (Servidor Apache)
+docker run httpd
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
+[Mon Dec 07 10:01:52.670809 2020] [mpm_event:notice] [pid 1:tid 140412541457536] AH00489: Apache/2.4.46 (Unix) configured -- resuming normal operations
+[Mon Dec 07 10:01:52.670973 2020] [core:notice] [pid 1:tid 140412541457536] AH00094: Command line: 'httpd -D FOREGROUND'
+```
+Al ejecutar esa orden se crea un servidor Web Apache 2.4 en la ip mostrada y se nos muestra por pantalla el log de dicho servicio. Introducir la Ip en el navegador.
+
+> **Ejemplo 4**
+
+```bash
+# Crear un contenedor de debian 9 y mostrar el contenido de una carpeta establecida con el parámetro -w
+docker run -it -w /etc debian:9 ls
+```
+Al crear el contenedor se ejecuta la orden ls desde el directorio /etc, posteriormente el contenedor pasa a estar parado. Y ya no podremos acceder a él. 
+
+> [!NOTE] 
+> 
+>Conforme vayamos creando contenedores hay dos órdenes que nos van a interesar para hacer un seguimiento de qué tenemos en nuestro sistema:
+
+```bash
+# Mostrar los contenedores en ejecución (Estado Up)
+docker ps
+# Mostrar todos los contenedores creados ya estén en ejecución (Estado Up) o parados (Estado Exited)
+docker ps -a
+```
+
+[Referencia Docker run](https://docs.docker.com/engine/reference/commandline/run/)
+
+## 5.1. Asignando nombre a los contenedores.
+
+Hasta ahora cuando hemos puesto en ejecución los contenedores la propia aplicación docker ha sido  la que nos ha dado un **nombre por defecto**. Estos nombres creados aleatoriamente por docker **constan de dos nombres aleatorios unidos por un guión bajo _**, por ejemplo: happy_golick, magical_mclean etc.
+
+Evidentemente esto no es operativo. Son nombre **difíciles de recordar**, que no tienen nada que ver con los contenedores que queremos lanzar e **imposible de gestionar y memorizar** cuando empezamos a tener muchos contenedores en nuestro sistema.
+
+Por este motivo es conveniente que hagamos **obligatorio el uso del flag --name** cuando usamos la orden docker run. De esta manera, si usamos nombre elegidos por nosotros serán más fáciles de recordar que los asignados por defecto. Ademas podemos elegir nombres que tenga relación con la función que va a desempeñar dicho contenedor.
+
+Pondremos varios ejemplos:
+
+```bash
+# Damos el nombre de servidorBD a un contenedor de la imagen mysql:8.0.22
+
+docker run -d --name servidorBD -p 3306:3306 mysql:8.0.22
+
+# Damos el nombre de servidorWeb a un contenedor de la imagen httpd:latest (Apache)
+
+docker run -d --name servidorWeb -p 80:80 httpd
+```
+
+## 5.2. Ejecución de servicios. Puertos y variables de entorno.
+
+Una de las cosas que más interesantes de docker no es ya el hecho de que se puede **probar todas versiones de los distintos sistemas** que van apareciendo, es el hecho de que **PARA PROBAR Y USAR CUALQUIER SERVICIO Y CUALQUIER APLICACIÓN NO TENGO QUE INSTALAR NADA EN MI SISTEMA**, sea cual sea el servicio o la aplicación que se me ocurra, siempre la tengo en Docker Hub. Solo tengo que buscarla, averiguar cuál es la versión que quiero y lanzar el contenedor o contenedores necesarios. 
+
+
+Nos vamos a centrar en servicios de un solo contenedor, estamos hablando de servidores de bases de datos, servidores web, servidores de aplicaciones etc... servicios que de otra parte son de uso casi diario en nuestras aulas. Veremos en módulos posteriores aplicaciones que requieren la interacción de más de un contenedor.
+
+Para la ejecución de contenedores de este tipo vamos a tener que en cuenta varias cosas:
+
++ Usar el **flag -d** para que el servicio se ejecute en **modo background o dettach**. Si no lo hacemos se bloqueará el terminal mostrando el log del servicio (en ciertas ocasiones puede interesarnos) y tendremos que salir del mismo con Ctrl+C. Esto para el contenedor aunque podremos arrancarlo posteriormente.
++ Si queremos que el servicio que vamos a lanzar sea accesible desde el exterior tendremos que añadir el **flag -p** de la siguiente manera **-p PUERTO_EN_HOST:PUERTO_EN_CONTENEDOR** que normalmente sería el puerto por defecto del servicio. Esto es una **REDIRECCIÓN DE PUERTOS**. Podemos tener varias reglas -p al arrancar (dependiendo del servicio será necesario) y es muy importante recordar que no podemos tener dos servicios escuchando en el mismo puerto. Si lo intentamos se nos mostrará un mensaje de error.
++ **Comprobar y definir** si es necesario las **variables de entorno** que puede tener el contenedor. Las variables de entorno importantes se describen en la página de las imágenes en DockerHub y para usarlas tenemos que usar el **flag -e NOMBRE_VARIABLE=VALOR**.
+
+Para ilustrar todo esto vamos a poner varios ejemplos:
+
+```bash
+# Ejecuto un servidor Apache sin el flag -d ni redirección de puertos. Se bloquea el terminal mostrando los logs y tendré que salir con Ctrl+C
+
+docker run httpd
+
+# Ejecuto un servidor Apache en background y accediendo desde el exterior a través del puerto 8888 de mi máquina.
+
+docker run -d --name servidorWeb -p 8888:80 httpd
+
+# Ejecuto un servidor Apache en background y accediendo desde el exterior a través del puerto 8888 de mi máquina. Y hacemos que cuando se reinicie el servicio Docker el contenedor se arranque automáticamente.
+
+docker run –restart always -d --name servidorWeb -p 8888:80 httpd
+
+# Creación de un servidor de base de datos mariadb accediendo desde el exterior a través del puerto 3306 y estableciendo una contraseña de root mediante una variable de entorno
+
+docker run -it -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root mariadb
+```
+
+## 5.3. Ejecutar órdenes en contenedores.
+
+## 5.4. Obtener información de los contenedores.
+
+### 5.4.1. Docker ps.
+
+### 5.4.2. Docker inspect.
+
