@@ -44,6 +44,10 @@
 - [8. Imágenes propias.](#8-imágenes-propias)
   - [8.1. Desde un contenedor en ejecución.](#81-desde-un-contenedor-en-ejecución)
 - [9. El fichero Dockerfile](#9-el-fichero-dockerfile)
+  - [9.1. Uso de Docker build.](#91-uso-de-docker-build)
+  - [9.2. Resumen de comandos Dockerfile.](#92-resumen-de-comandos-dockerfile)
+  - [9.3. Fichero .dokerignore](#93-fichero-dokerignore)
+- [10. Aplicaciones Multicapa. Docker Compose.](#10-aplicaciones-multicapa-docker-compose)
 
 
 # 1.Introducción.
@@ -1125,6 +1129,114 @@ docker push -a usuarioDockerHub/ubuntu20netutils
 
 # 9. El fichero Dockerfile
 
+En el apartado anterior hemos visto cómo crear y distribuir mis nuevas imágenes partiendo de un contenedor. Esta forma suele ser la preferida cuando empezamos porque es fácil si tenemos ciertos conocimientos de sistemas y porque no hace falta mucho conocimiento sobre docker y su entorno. Sin embargo este tipo de flujo de trabajo aunque fácil, tiene unos inconvenientes importantes: 
 
++ **No se puede reproducir la imagen**. Si la perdemos tenemos que recordar toda la secuencia de órdenes que habíamos ejecutado desde que arrancamos el contenedor hasta que teníamos una versión definitiva e hicimos docker commit.
++ **No podemos cambiar la imagen de base**. Si ha habido alguna actualización, problemas de seguridad etc con la imagen de base tenemos que descargar la nueva versión, volver a crear un nuevo contenedor basado en ella y ejecutar de nuevo toda la secuencia de órdenes.
+
+Frente a estos inconvenientes el enfoque preferido es utilizar **ficheros Dockerfile**, que son una **forma declarativa de construir nuevas imágenes**. Este proceso de construcción queda descrito en las siguientes imágenes:
+
+Si trabajamos así y aunque el proceso de construcción del Dockerfile es costoso al principio, vamos a evitar los dos problemas citados anteriormente:
+
++ **Podremos reproducir la imagen fácilmente** ya que en el fichero **Dockerfile** tenemos todas y cada una de las **órdenes necesarias** para la construcción de la imagen. Si además ese Dockfile está guardado en un sistema de control de versiones como git podremos, no solo reproducir la imagen sino asociar los cambios en el Dockerfile a los cambios en las versiones de las imágenes creadas.
++ Si queremos **cambiar la imagen de base** esto es extremadamente sencillo con un Dockerfile, únicamente tendremos que **modificar la primera línea de ese fichero** tal y como explicaremos posteriormente.
+
+## 9.1. Uso de Docker build.
+
+Por lo tanto para construir las imágenes necesitamos un fichero **Dockerfile** dentro de un contexto, ya sea en mi equipo o un repositorio exterior, y la orden **docker build** cuya estructura general es la siguiente:
+
+![Docker Build](../img/dockerBuild.png)
+
+Ejemplos:
+
+```bash
+# Construcción de una imagen sin nombre ni versión estando el Dockerfile en el mismo directorio donde se ejecuta docker build
+docker build .
+# Construcción de una imagen especificando nombre y versión estando el Dockerfile en el mismo directorio donde se ejecuta docker build (--tag/-t)
+docker build -t  usuario/nombre_imagen:1.0 .
+# Construcción de una imagen especificando un repositorio en GitHub donde se encuentra el Dockerfile. Ese repositorio es el contexto de construcción
+docker build -t usuarioDockerHub/nombre_imagen:1.1 https://github.com/...../nombre_repo.git#nombre_rama_git
+# Construcción de una imagen usando una variable de entorno estando el Dockerfile en el mismo directorio donde se ejecuta docker build (--build-arg)
+docker build --build-arg user=usuario -t  usuarioDockerHub/nombre_imagen:1.0 .
+# Construcción de una imagen sin usar las capas cacheadas por haber realizado anteriormente imágenes con capas similares y estando el Dockerfile en el mismo directorio donde se ejecuta docker build (--no-cache)
+docker build --no-cache -t  usuarioDockerHub/nombre_imagen:1.0 .
+# Construcción de una imagen especificando nombre,versión y especificando la ruta al fichero Dockerfile mediante el flag --file/-f
+docker build -t  usuario/nombre_imagen:1.0 -f /home/usuario/DockerProject/Dockerfile
+```
+> [!NOTE]
+> Si quiero que la imagen construida sea distribuida mediante DockerHub debo poner como prefijo de la imagen mi nombre de usuario de DockerHub.
+
+## 9.2. Resumen de comandos Dockerfile.
+
+Un fichero **Dockerfile** es un conjunto de instrucciones que serán ejecutadas de forma secuencial para construir una nueva imagen docker.
+![Fichero Dockerfile](../img/dockerfile.png)
+
+
+Las órdenes más comunes son:
+
++ **FROM**: Sirve para especificar la imagen sobre la que voy a construir la mía. Ejemplo: FROM php:7.4-apache
++ **LABEL**: Sirve para añadir metadatos a la imagen mediante clave=valor. 
+      Ejemplo: LABEL company=iesalixar
++ **COPY**: Para copiar ficheros desde mi equipo a la imagen. Esos ficheros deben estar en el mismo contexto (carpeta o repositorio). Su sintaxis es `COPY [--chown=<usuario>:<grupo>] src dest`. 
+      Por ejemplo: COPY --chown=www-data:www-data myapp /var/www/html
++ **ADD**: Es similar a COPY pero tiene funcionalidades adicionales como especificar URLs  y tratar archivos comprimidos.
++ **RUN**: Ejecuta una orden creando una nueva capa. Su sintaxis es `RUN orden / RUN ["orden","param1","param2"]`. Ejemplo: RUN apt update && apt install -y git. En este caso es muy importante que pongamos la opción -y porque en el proceso de construcción no puede haber interacción con el usuario.
++ **WORKDIR**: Establece el directorio de trabajo dentro de la imagen que estoy creando para posteriormente usar las órdenes RUN,COPY,ADD,CMD o ENTRYPOINT. Ejemplo: WORKDIR /usr/local/apache/htdocs
++ **EXPOSE**: Nos da información acerca de qué puertos tendrá abiertos el contenedor cuando se cree uno en base a la imagen que estamos creando. Es meramente informativo. Ejemplo: EXPOSE 80
++ **USER**: Para especificar (por nombre o UID/GID) el usuario de trabajo para todas las órdenes RUN,CMD Y ENTRYPOINT posteriores. 
+      Ejemplos: USER jenkins / USER 1001:10001
++ **ARG**: Para definir variables para las cuales los usuarios pueden especificar valores a la hora de hacer el proceso de build mediante el flag --build-arg. Su sintaxis es `ARG nombre_variable o ARG nombre_variable=valor_por_defecto`. Posteriormente esa variable se puede usar en el resto de la órdenes de la siguiente manera $nombre_variable. Ejemplo: ARG usuario=www-data. NO SE PUEDE USAR EN ENTRYPOINT Y CMD
++ **ENV**: Para establecer variables de entorno dentro del contenedor. Puede ser usado posteriormente en las órdenes RUN añadiendo $ delante de el nombre de la variable de entorno. Ejemplo: ENV WEB_DOCUMENT_ROOT=/var/www/html  NO  SE PUEDE USAR EN ENTRYPOINT Y CMD
++ **ENTRYPOINT**: Para establecer el ejecutable que se lanza siempre  cuando se crea el contenedor  con docker run, salvo que se especifique expresamente algo diferente con el flag --entrypoint. Su síntaxis es la siguiente: `ENTRYPOINT <command> / ENTRYPOINT ["executable","param1","param2"]`. Ejemplo: ENTRYPOINT ["service","apache2","start"]
++ **CMD**: Para establecer el ejecutable por defecto (salvo que se sobreescriba desde la orden docker run) o para especificar parámetros para un ENTRYPOINT. Si tengo varios sólo se ejecuta el último. Su sintaxis es `CMD param1 param2 / CMD ["param1","param2"] / CMD["command","param1"]`.Ejemplo: CMD [“-c” “/etc/nginx.conf”]  / ENTRYPOINT [“nginx”].
+
+>Ejemplos de ficheros Dockerfile
+
+[DOCKERFILE Proyecto Tomcat](https://gist.github.com/pekechis/438a7aecfc9ecc67cb8d2bd1988875b4)
+
+[DOCKERFILE Código de un repositorio (WORDPRESS)](https://gist.github.com/pekechis/50089bf90443bac115572a71b8ec42ac)
+
+[DOCKERFILE para proyecto Django](https://gist.github.com/pekechis/d7237427bbee51a3ad1d0f3865f696fd)
+
+
+[Referencia a ficheros Dockerfile](https://docs.docker.com/engine/reference/builder/)
+
+## 9.3. Fichero .dokerignore
+
+Antes de que se ejecuten las órdenes ADD y COPY de los Dockerfile el proceso de construcción de docker build mira si en el contexto de la construcción  existe un fichero .dockerignore. El funcionamiento de este tipo de ficheros es análogo al funcionamiento de los ficheros **.gitignore** que excluyen una serie de ficheros del control de versiones.
+
+
+Un ejemplo genérico:
+```gitignore
+# Esa carpeta app tiene el contenido de un repositorio
+#Excluyo la carpeta .git
+app/.git
+#Excluyo el fichero .gitignore
+app/.gitignore
+#Excluyo todos los archivos dentro de la carpeta log pero dejo la carpeta
+app/log/*
+#Excluyo todos los archivos dentro de la carpeta tmp pero dejo la carpeta.
+app/tmp/*
+#Excluyo el archivo README.md
+app/README.md
+```
+
+Un ejemplo para una aplicación node:
+```gitignore
+# Esa carpeta nodeapp tiene el contenido de un repositorio
+#Excluyo la carpeta .git
+nodeapp/.git
+#Excluyo el fichero .gitignore
+nodeapp/.gitignore
+#Excluyo la carpeta node_modules. Eso me obliga a hacer npm install al arrancar el contenedor
+nodeapp/node_modules
+#Excluyo el fichero creado por el editor de código
+.vscode
+```
+
+
+[Referencia a ficheros .gitignore.](https://docs.docker.com/engine/reference/builder/#dockerignore-file)
+
+# 10. Aplicaciones Multicapa. Docker Compose.
 
 
