@@ -20,6 +20,9 @@
   - [5.4. Obtener información de los contenedores.](#54-obtener-información-de-los-contenedores)
     - [5.4.1. Docker ps.](#541-docker-ps)
     - [5.4.2. Docker inspect.](#542-docker-inspect)
+    - [5.4.3. Docker Logs.](#543-docker-logs)
+  - [5.5. Gestión de contenedores.](#55-gestión-de-contenedores)
+- [6. Persistencia en Docker.](#6-persistencia-en-docker)
 
 
 # 1.Introducción.
@@ -398,7 +401,7 @@ Al crear el contenedor se ejecuta la orden ls desde el directorio /etc, posterio
 
 > [!NOTE] 
 > 
->Conforme vayamos creando contenedores hay dos órdenes que nos van a interesar para hacer un seguimiento de qué tenemos en nuestro sistema:
+>Conforme vayamos creando contenedores hay dos órdenes que nos van a interesar para hacer un seguimiento de qué tenemos en nuestro sistema.
 
 ```bash
 # Mostrar los contenedores en ejecución (Estado Up)
@@ -464,9 +467,189 @@ docker run -it -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root mariadb
 
 ## 5.3. Ejecutar órdenes en contenedores.
 
+Con los contenedores en ejecución vamos a querer ejecutar órdenes en ellos. Querremos realizar operaciones como:
+
++ Instalar paquetes.
++ Modificar o ver el contenido de ciertos ficheros.
++ Habilitar ciertos módulos de servicios
+      
+Esto lo podemos hacer de dos maneras o bien obteniendo un terminal del contenedor y ejecutando las órdenes necesarias desde allí o bien directamente ejecutando una orden determinada "contra" el contenedor. Para ambos casos voy a necesitar la orden **docker exec** y es **NECESARIO QUE EL CONTENEDOR ESTÉ EN EJECUCIÓN**.
+
+La sintaxis de esta orden es bastante sencilla y muy similar a la de docker run:
+
+```bash
+docker exec [opciones] nombre_contenedor orden [argumentos]
+```
+Algunas de las opciones más importantes son:
+
++ **-it** (-i y -t juntos) si vamos a querer tener interactividad con el contenedor ejecutando un shell (/bin/bash normamente). Una vez tenemos el terminal ya podremos trabajar desde dentro del propio sistema.
++ **-u** o **--user** si quiero ejecutar la orden como si fuera un usuario distinto del de root.
++ **-w** o **--workdir** si quiero ejecutar la orden desde un directorio concreto.
+
+Lo vamos a ver mejor con algunos ejemplos:
+
+```bash
+# Obtener un terminal en un contenedor que ejecutar un servidor Apache (httpd) y que se llama web
+
+docker exec -it web /bin/bash
+
+root@5d96ce1f7374:/usr/local/apache2#
+
+# Mostrar el contenido de la carpeta /usr/local/apache2/htdocs del contenedor web. Como no hace falta interactividad no es necesario -it
+
+docker exec web ls /usr/local/apache2/htdocs
+
+# Crear directamente un fichero "HOLA MUNDO" en el directorio raíz del servidor apache. Utilizo sh -c para ordenes compuestas o complejas
+
+docker exec -it web sh -c "echo 'HOLA MUNDO' > /usr/local/apache2/htdocs/index.html"
+```
+
+Adicionalmente existe otra orden que nos va a ser de mucha utilidad cuando trabajemos con contenedores, la orden docker cp que me permite mover ficheros desde mi sistema al contenedor y desde el contenedor a mi sistema. Su sintaxis es muy sencilla y la vamos a ilustrar con dos ejemplos, uno en cada sentido:
+
+```bash
+# Copiar mi fichero prueba.html al fichero /usr/local/apache2/htdocs/index.html de mi contenedor llamado web que es un servidor Apache (httpd)
+
+docker cp prueba.html web:/usr/local/apache2/htdocs/index.html
+
+#Copiar el fichero index.html que se encuenta en /usr/local/apache2/htdocs/index.html de mi contenedor llamado web un fichero llamado test.html en mi directorio HOME
+
+docker cp web:/usr/local/apache2/htdocs/index.html $HOME/test.html
+```
+
+> [!NOTE] 
+> LOS CONTENEDORES VIENEN CON SOLO LO IMPRESCINDIBLE INSTALADO. SI QUIERO INSTALAR ALGO DEBO NORMALMENTE HACER ANTES UN APT UPDATE (ya que la mayoría son basados en Debian).
+
 ## 5.4. Obtener información de los contenedores.
+
+Conforme vayamos usando docker el número de contenedores que tenemos funcionando irá en aumento hasta que llegue un momento en que no sepamos con seguridad aspectos como si el contenedor tenía persistencia o no, si tenía redirección de puertos o no, si le había puesto algún nombre o estaba usando un nombre concedido por docker etc.
+En ese contexto hay varios comandos docker que me van a ayudar a obtener información de un contenedor. En este curso vamos a usar los dos siguientes:
+
++ La orden docker ps.
++ La orden docker inspect.
++ La orden docker logs.
 
 ### 5.4.1. Docker ps.
 
+La orden **docker ps** nos va a servir para obtener información de los contenedores ya arrancados. La información que nos proporciona va a ser menos exhaustiva que la que podemos obtener con **docker inspect** pero nos puede ayudar a determinar aspectos como:
+
++ El **estado** del contenedor (Parado EXITED o Funcionado UP).
++ La **imagen** de la que deriva el contenedor.
++ El **tamaño** actual del contenedor.
++ La orden que ejecuta el contenedor al arrancar, lo que se llama el ENTRYPOINT.
++ El **nombre** del contenedor, ya sea dado por nosotros o por docker.
++ **Cuando fue creado** el contenedor.
++ Las **redirecciones de puertos**, en caso de haberlas.
+
+Como muchas de las órdenes de **docker ps** tiene multitud de opciones (flags) así que para ilustrar su uso mejor vamos a poner varios ejemplos de las más usadas.
+```bash
+# Mostrar los contenedores que están en ejecución
+docker ps
+# Mostrar todos los contenedores, estén parados o en ejecución (-a o --all)
+docker ps -a
+# Añadir la información del tamaño del contenedor a la información por defecto (-s o --size)
+docker ps -a -s
+# Mostrar información del último contenedor que se ha creado (-l o --latest). Da igual el estado
+docker ps -l
+# Filtar los contenedores de acuerdo a algún criterio usando la opción (-f o --filter)
+# Filtrado por nombre
+docker ps --filter name=servidor_web
+# Filtrado por puerto. Contenedores que hacen público el puerto 8080
+docker ps --filter publish=8080
+```
+
 ### 5.4.2. Docker inspect.
 
+Si la información que hemos obtenido usando docker ps , que es una información general, no es suficiente para nuestro objetivo deberemos usar la docker inspect que nos va a dar una información detallada del contenedor que seleccione. Lo podemos hacer de las siguientes formas:
+```bash
+# Por nombre. Por ejemplo: Mostrar información detallada del contenedor cuyo nombre es jenkins
+docker inspect jenkins
+# Por id. Por ejemplo: Mostrar información detallada del contenedor cuyo id es 5e5adf6815bc
+docker inspect 5e5adf6815bc
+```
+Al ejecutar esto obtendremos una imagen similar a la siguiente:
+![Docker Inspect](../img/dockerInspect.png)
+
+Esta imagen es una imagen parcial, porque se nos muestra mucha información, está en formato JSON (JavaScript Object Notation) y nos da datos sobre aspectos como:
+
++ El id del contenedor.
++ Los puertos abiertos y sus redirecciones.
++ Los bind mounts y volúmenes usados.
++ El tamaño del contenedor
++ La configuración de red del contenedor.
++ El ENTRYPOINT que es lo que se ejecuta al hacer docker run.
++ El valor de las variables de entorno.
++ Y muchas más cosas....
+
+Adicionalmente podemos formatear la salida usando https://pkg.go.dev/text/template y el flag --format/-f. Una descripción detallada queda fuera de los objetivos de este curso pero vamos a poner varios ejemplos:
+```bash
+# Mostrar la ip del contenedor
+docker inspect --format 'La ip es {{.NetworkSettings.Networks.bridge.IPAddress}}' jenkins
+La ip es 172.17.0.2
+# Mostrar las redirecciones de puertos del contenedor
+docker inspect --format 'Las redirecciones de puertos son {{.NetworkSettings.Ports}}' jenkins
+Las redirecciones de puertos son map[50000/tcp:[{0.0.0.0 50000}] 8080/tcp:[{0.0.0.0 9090}]]
+```
+
+> [!NOTE] 
+> 
+>Para poder este formateo debemos conocer en profundidad la estructura del JSON que nos devuelve.
+
+### 5.4.3. Docker Logs.
+Los dos comandos que hemos visto anteriormente nos dan información relativa al contenedor pero no nos dan información de lo que está pasando en el contenedor. Para determinar este tipo de cosas siempre hemos tenido los logs y siguen estando disponibles aunque estemos en docker mediante el uso de la orden docker logs, que me va a servir tanto para contenedores que estén parados como para contenedores en ejecución.
+
+Los podemos hacer de las siguientes formas:
+```bash
+# Por nombre. Por ejemplo: Mostrar los logs del contenedor cuyo nombre es jenkins
+docker logs jenkins
+# Por id. Por ejemplo: Mostrar los logs cuyo id es 5e5adf6815bc
+docker logs 5e5adf6815bc
+```
+Como todas las órdenes docker logs tiene más opciones más cuyo uso vamos a ilustrar con ejemplos:
+```bash
+# Opción -f o --follow . Sigue escuchando la salida que pueden dar los logs del contenedor
+docker logs -f jenkins
+# Opción  --tail 5. Muestra las 5 últimas líneas de los logs del contenedor en cuestión
+docker logs --tail 5 jenkins
+```
+## 5.5. Gestión de contenedores.
+
+Con el paso del tiempo iremos ejecutando muchos contenedores y llegará un momento en que tengamos la necesidad de realizar operaciones como las siguientes:
+
++ Parar un contenedor que no estamos necesitando o que , puede ser, esté ejecutando un servicio que ocupe un puerto que queremos ocupar con otro servicio o contenedor.
++ Eliminar un contenedor que instalamos y que ya no necesitamos. Puede ser que ya ni nos acordemos del motivo por el cual teníamos "eso" en nuestro sistema (a mí al menos me pasa).
++ Queremos iniciar un contenedor que estaba parado pero que vamos a volver a necesitar.
++ Queremos reiniciar un contenedor para que nuevas opciones de configuración sean aplicadas.
+
+Para operaciones de ese tipo tenemos las siguientes órdenes docker:
+
++ **docker stop** para detener el contenedor, ya sea por nombre o por ID.
++ **docker rm** para borrar el contenedor, ya sea por nombre o por ID.
++ **docker start** iniciar un contenedor que estaba parado previamente, ya sea por nombre o por ID.
++ **docker restart** para reiniciar un contenedor que previamente ya estaba en ejecución.
+
+Cada una de ellas tiene diferentes flags u opciones. Vamos a ver las más importantes mediante ejemplos:
+```bash
+# Para un contenedor en ejecución que se llame servidorWeb
+docker stop servidorWeb
+# Para un contenedor en ejecución cuyo ID es ea9b922190d8 pero esperando 10 segundo (-t o --time)
+docker stop -t 10 ea9b922190d8
+# Borrar un contenedor que se llama servidorBD
+docker rm servidorBD
+# Borrado un contenedor que se llame jenkins aunque esté en ejecución (--force o -f)
+docker rm -f jenkins
+# Inicio de un contenedor con nombre jenkins
+docker start jenkins
+# Inicio de un contenedor con nombre jenkins pero haciendo el attach de la entrada estándar para poder interactuar con él (-i o --interactive)
+docker start -i jenkins
+# Reinicio de un contenedor con ID ea9b922190d8
+docker restart ea9b922190d8
+```
+
+Hay que tener en cuenta varias cosas que si pensamos un poco ya nos indica los efectos el propio sentido común:
+
++ Si hago **docker start** y el contenedor ya está iniciado, no pasa nada.
++ Si hago **docker stop** y el contenedor ya está parado, no pasa nada.
++ Si hago **docker restart** y el contenedor ya está parado, es lo mismo que si ejecutar un docker start.
++ Pero es importante destacar que **SI UN CONTENEDOR ESTÁ EN EJECUCIÓN NO PODEMOS BORRARLO** salvo que usemos la opción -f. 
+
+# 6. Persistencia en Docker.
