@@ -23,6 +23,27 @@
     - [5.4.3. Docker Logs.](#543-docker-logs)
   - [5.5. Gestión de contenedores.](#55-gestión-de-contenedores)
 - [6. Persistencia en Docker.](#6-persistencia-en-docker)
+  - [6.1. Los datos en los contenedores.](#61-los-datos-en-los-contenedores)
+  - [6.2. Volúmenes y Bind Mount.](#62-volúmenes-y-bind-mount)
+    - [6.2.1. Volúmenes Docker.](#621-volúmenes-docker)
+    - [6.2.2. Bind Mount.](#622-bind-mount)
+  - [6.3. Gestionando volúmenes y obteniendo información.](#63-gestionando-volúmenes-y-obteniendo-información)
+    - [6.3.1. Creación de volúmenes.](#631-creación-de-volúmenes)
+    - [6.3.2 Eliminación de volúmenes.](#632-eliminación-de-volúmenes)
+    - [6.3.3 Obtención de información de los volúmenes.](#633-obtención-de-información-de-los-volúmenes)
+    - [6.3.4 Lista de volúmenes del sistema.](#634-lista-de-volúmenes-del-sistema)
+  - [6.4. Asociando almacenamiento a los contenedores.](#64-asociando-almacenamiento-a-los-contenedores)
+  - [6.5. Uso de los volúmenes y bind mounts.](#65-uso-de-los-volúmenes-y-bind-mounts)
+  - [6.6. Bind mounts para desarrollo. Depurando aplicaciones.](#66-bind-mounts-para-desarrollo-depurando-aplicaciones)
+- [7. Redes en Docker.](#7-redes-en-docker)
+  - [7.1. Tipos de redes en Docker.](#71-tipos-de-redes-en-docker)
+  - [7.2. Gestionando redes.](#72-gestionando-redes)
+  - [7.3. Obteniendo información de las redes.](#73-obteniendo-información-de-las-redes)
+  - [7.4. Asociando redes a contenedores.](#74-asociando-redes-a-contenedores)
+  - [7.5. Iptables en contenedores.](#75-iptables-en-contenedores)
+- [8. Imágenes propias.](#8-imágenes-propias)
+  - [8.1. Desde un contenedor en ejecución.](#81-desde-un-contenedor-en-ejecución)
+- [9. El fichero Dockerfile](#9-el-fichero-dockerfile)
 
 
 # 1.Introducción.
@@ -517,7 +538,7 @@ docker cp web:/usr/local/apache2/htdocs/index.html $HOME/test.html
 ```
 
 > [!NOTE] 
-> LOS CONTENEDORES VIENEN CON SOLO LO IMPRESCINDIBLE INSTALADO. SI QUIERO INSTALAR ALGO DEBO NORMALMENTE HACER ANTES UN APT UPDATE (ya que la mayoría son basados en Debian).
+> Los contenedores vienen con solo lo imprescindible instalado. Si quiero instalr algo debo normalmente hacer antes un apt update (ya que la mayoría son basados en Debian).
 
 ## 5.4. Obtener información de los contenedores.
 
@@ -653,3 +674,457 @@ Hay que tener en cuenta varias cosas que si pensamos un poco ya nos indica los e
 + Pero es importante destacar que **SI UN CONTENEDOR ESTÁ EN EJECUCIÓN NO PODEMOS BORRARLO** salvo que usemos la opción -f. 
 
 # 6. Persistencia en Docker.
+
+Trataremos los siguientes aspectos:
+
++ **Necesidad** de persistir los datos de los contenedores.
++ **Formas de gestionar** esa persistencia (Volúmenes y Bind Mounts).
++ **Operaciones** para la **gestión** de volúmenes y para la **obtención de información** de los mismos.
++ Cómo **asociar volúmenes o bind mounts a nuestros contenedores**. 
++ Uso de la persistencia de los datos como **copia de seguridad**.
++ **Compartición de datos** entre distintos contenedores.
+**+ Depuración de aplicaciones usando bind mounts**.
+
+![Docker Persistencia](../img/persistenciaDocker.png)
+
+## 6.1. Los datos en los contenedores.
+
+Los **ficheros, datos y configuraciones** que creemos en los contenedores **sobreviven a las paradas** de los mismos, sin embargo, **son destruidos si el contenedor es destruido**. Y esto, como todos entendemos es una situación no deseable ya que puede echar por tierra nuestro trabajo.
+Por lo tanto tenemos que tener muy presente varios aspectos a la hora de afrontar esta situación y la gestión del almacenamiento de los contenedores:
+
++ Los **datos de un contenedor mueren con él**.
++ Los datos de los contenedores **no se mueven fácilmente** ya que están fuertemente acoplados con el host en el que el contenedor está ejecutándose.
++ Escribir en los contenedores **es más lento que** escribir en el **host** ya que tenemos una capa adicional.
+
+Ante la situación anteriormente descrita Docker nos proporciona **VARIAS SOLUCIONES PARA PERSISTIR DATOS** de contenedores.
+
++ Los **VOLÚMENES** docker.
++ Los **BIND MOUNT**.
+
+## 6.2. Volúmenes y Bind Mount.
+
+Tal y como dijimos en el apartado anterior, de las soluciones de persistencia que nos proporciona docker nos vamos a quedar con dos para este curso, los **volúmenes** y los **bind mounts**. Antes de que hablemos de las características y ventajas de cada una de ellas las vamos a situar dentro de nuestro host con el siguiente esquema general:
+
+![Volumenes y Bind Mout](../img/volumenes.png)
+
+### 6.2.1. Volúmenes Docker.
+
+Si elegimos conseguir la persistencia usando **volúmenes** estamos haciendo que **los datos de los contenedores** que nosotros decidamos se almacenen en una **parte del sistema de ficheros** que es **gestionada** por **docker** y a la que, debido a sus permisos, solo docker tendrá acceso.
+
+Esa "**ZONA RESERVADA**" de docker cambia de un sistema operativo a otro y también puede cambiar dependiendo de la forma de instalación, pero de manera general podemos decir que es:
+
++ **/var/lib/docker/volumes** en las distribuciones de Linux si lo hemos instalado desde paquetes estándar.
+* **/var/snap/docker/common/var-lib-docker/volumes** en Linux si hemos instalado docker mediante snap (no recomendado).
++ **C:\ProgramData\docker\volumes** en las instalaciones de Windows.
++ **/var/lib/docker/volumes** también en Mac aunque se requiere que haya una conexión previa a la máquina virtual que se crea.
+      
+Este tipo de volúmenes se suele usar en los siguiente casos:
+
++ Para compartir datos entre contenedores. Simplemente tendrán que usar el mismo volumen.
++ Para copias de seguridad ya sea para que sean usadas posteriormente por otros contenedores o para mover esos volúmenes a otros hosts.
++ Cuando quiero almacenar los datos de mi contenedor no localmente si no en un proveedor cloud.
++ En algunas situaciones donde usando Docker Desktop quiero más rendimiento. Esto se escapa al ámbito de este curso.
+
+### 6.2.2. Bind Mount.
+
+Si elegimos conseguir la persistencia de los datos de los contenedores usando **bind mount** lo que estamos haciendo es "**mapear**" una parte de mi sistema de ficheros, de la que yo normalmente tengo el control, con una parte del sistema de ficheros del contenedor.
+
+Este mapeado de partes de mi sistema de ficheros con el sistema de ficheros del contenedor me va a permitir: 
+
++ **Compartir ficheros** entre el host y los containers.
++ Que otras aplicaciones que no sean docker tengan acceso a esos ficheros, ya sean código, ficheros etc...
+
+Puede parecer que el hecho de que otras aplicaciones accedan a esos datos es algo negativo pero precisamente los **bind mounts** es el mecanismo que vamos a **preferir** para la fase de **DESARROLLO** ya que:
+
++ Las **aplicaciones** que podrán acceder a esos ficheros serán los **IDEs o editores de código**.
++ Estaremos modificando con aplicaciones locales **código** que a la vez se encuentra **en nuestro equipo y en el contenedor**.
++ Y desde mi propio equipo estaré probando ese **código en el entorno elegido, o en varios entornos** a la vez **sin necesidad de tener que instalar absolutamente nada** en mi sistema.
+
+## 6.3. Gestionando volúmenes y obteniendo información.
+
+En el apartado anterior presentamos las dos opciones para la persistencia de datos con docker que consideramos que eran de mayor interés para el desarrollo de software: volúmenes y bind mounts. En este apartado nos centraremos  en los volúmenes y en las operaciones básicas que podemos hacer con ellos mediante la orden docker volume. Estas operaciones son:
+
++ **Creación** de los volúmenes.
++ **Eliminación** de los volúmenes.
++ **Obtención de información** de los volúmenes.
+
+En el apartado siguiente veremos  como, una vez hayamos definido estos volúmenes, podremos usarlos en nuestros contenedores.
+
+### 6.3.1. Creación de volúmenes.
+
+Para la creación de volúmenes vamos a usar la orden docker volume create que tiene la siguiente estructura:
+
+![Docker Volume](../img/dockerVolume.png)
+
+Entre las opciones que podemos incluir a la hora de crear los volúmenes están:
+
++ **--driver** o **-d** para especificar el driver elegido para el volumen. Si no especificamos nada el driver utilizado es el local que es el que nos interesa desde el punto de vista de desarrollo porque desarrollamos en nuestra máquina. Al ser Linux en mi caso ese driver local es **overlay2** pero existen otras posibilidades como **aufs, btrfs, zfs, devicemapper o vfs**. Si estamos interesados en conocer al detalle cada uno de ellos aquí tenemos más información.
++ **--label** para especificar los metadatos del volumen mediante parejas clave-valor.
++ **--opt** o **-o** para especificar opciones relativas al driver elegido. Si son opciones relativas al sistema de ficheros  puedo usar una sintaxis similar a las opciones de la orden mount.
++ **--name** para especificar un nombre para el volumen. Es una alternativa a especificarlo al final que es la  forma que está descrita en la imagen superior.
+
+Vamos a ilustrar este funcionamiento con varios ejemplos:
+```bash
+# Creación de un volumen llamado datos (driver local sin opciones)
+docker volume create data
+# Creación de un volumen data especificando el driver local
+docker volume create -d local data
+# Creación de un volumen llamando web añadiendo varios metadatos
+docker volume create --label servicio=http --label server=apache Web
+```
+
+### 6.3.2 Eliminación de volúmenes.
+
+Para la eliminación de los volúmenes creados tenemos dos opciones:
++ **docker volume rm** para eliminar un volumen en concreto (por nombre o por id).
++ **docker volumen prune** para eliminar los volúmenes que no están siendo usados por ningún contenedor.
+  
+A continuación vamos a ver una lista de ejemplos para ilustrar el funcionamiento de ambos:
+
+```bash
+# Borrar un volumen por nombre
+docker volume rm nombre_volumen
+# Borrar un volumen por ID
+docker volume rm a5175dc955cfcf7f118f72dd37291592a69915f82a49f62f83666ddc81f67441
+# Borrar dos volúmenes de una sola vez
+docker volume rm nombre_volumen1 nombre_volumen2
+# Forzar el borrado de un volumen -f o --force
+docker volume rm -f nombre_volumen
+# Borrar todos los volúmenes que no tengan contenedores  asociados
+docker volume prune
+# Borrar todos los volúmenes que no tengan contenedores  asociados sin pedir confirmación (-f o --force)
+docker volume prune -f
+# Borrar todos los volúmenes sin usar que contengan cierto valor de etiqueta (--filter)
+docker volume prune --filter label=valor
+```
+
+> [!NOTE] 
+> No se pueden eliminar volúmenes en uso por contenedores, salvo que usemos el flag -f o --force y no es algo recomendado.
+
+### 6.3.3 Obtención de información de los volúmenes.
+
+Si queremos obtener información de los volúmenes que hemos creado podemos hacerlo de dos formas:
+
++ Usando **docker volume ls** que nos proporciona una lista de los volúmenes creados y algo de información adicional.
++ Usando **docker volume inspect** que nos dará una información mucho más detallada del volumen que hayamos elegido.
+
+Si queremos información más detallada de un volumen tenemos que ejecutar la siguiente orden:
+
+```bash
+# Información detallada de un volumen por nombre
+docker volume inspect nombre_volumen
+# Información detallada de un volumen por ID
+docker volume inspect a5175dc955cfcf7f118f72dd37291592a69915f82a49f62f83666ddc81f67441
+```
+Y la información que nos muestra es:
+
++ La fecha de creación del volúmen.
++ El tipo del driver.
++ Etiquetas asociadas.
++ El punto de montaje.
++ El nombre del volumen.
++ Las opciones asociadas al driver.
++ Y el ámbito del volumen.
+
+
+### 6.3.4 Lista de volúmenes del sistema.
+
+Si ejecutamos la siguiente orden:
+
+```bash
+# Listar los volúmenes creados en el sistema
+docker volume ls
+```
+
+## 6.4. Asociando almacenamiento a los contenedores.
+
+Una vez hemos visto en el apartado anterior cómo crear los volúmenes vamos a ver en este apartado como puedo usar los volúmenes y los bind mounts en los contenedores. Para cualquiera de los dos casos lo haremos mediante el uso de **dos flags** de la orden **docker run**:
+
++ El flag **--volume** o **-v**. Este flag lo utilizaremos para establecer bind mounts.
++ El flag **--mount**. Este flag nos servirá para establecer bind mounts y para usar volúmenes previamente definidos (entre otras cosas).
+
+Es importante que tengamos en cuenta dos cosas importantes a la hora de realizar estas operaciones:
+
++ Al usar tanto volúmenes como bind mount el contenido de lo que tenemos **sobreescribirá la carpeta destino en el sistema de ficheros del contenedor** en caso de que exista. Y si nuestra carpeta origen no existe y hacemos un bind mount esa carpeta se creará pero lo que tendremos en el contenedor es una carpeta vacía. Con esto hay que tener especial cuidado, sobre todo cuando estamos trabajando con carpetas que pueden contener datos y configuraciones varias.
++ Si usamos imágenes de DockerHub, debemos **leer la información que cada imagen nos proporciona en su página** ya que esa información suele indicar cómo persistir los datos de esa imagen, ya sea con volúmenes o bind mounts, y cuáles son las **carpetas importantes** en caso de ser imágenes que contengan ciertos servicios (web, base de datos etc...)
+
+Como acostumbramos en este curso vamos a ilustrar todo esto mediante una serie de ejemplos a los que añadiremos varias opciones
+
+```bash
+# BIND MOUNT (flag -v): La carpeta web del usuario será el directorio raíz del servidor apache. 
+Se crea si no existe
+docker run --name apache -v /home/usuario/web:/usr/local/apache2/htdocs -p 80:80 httpd
+# BIND MOUNT (flag --mount): La carpeta web del usuario será el directorio raíz del servidor apache. Se crea si no existe
+docker run --name apache -p 80:80 –mount type=bind, src=/home/usuario/web, dst=/usr/local/apache2/htdocs httpd
+# VOLUME (flag --mount). Mapear el volumen previamente creado y que se llama Data en la carpeta raíz del servidor apache
+docker run --name apache -p 80:80 --mount type=volume,src=Data,dst=/usr/local/apache2/htdocs httpd
+# VOLUME (flag --mount). Igual que el anterior pero al no poner nombre de volumen se crea uno automáticamente (con un ID como nombre)
+docker run --name apache -p 80:80 --mount type=volume,dst=/usr/local/apache2/htdocs httpd
+```
+
+En cualquiera de los dos casos, cuando creamos un bind mount o asociamos un volumen a un contenedor, esto queda reflejado en la salida de la orden **docker inspect sobre dicho contenedor**, de una manera similar a la imagen inferior.
+
+![Volúmenes Bind Mount](../img/volumesBindmount.png)
+
+## 6.5. Uso de los volúmenes y bind mounts.
+
+Hemos visto a lo largo de los apartados anteriores que con el uso de volúmenes y bind mounts conseguimos que los datos de los contenedores persistan y que sobrevivan incluso si los contenedores desaparecen. En este apartado vamos a concretar y desarrollar un poco más los usos que les podemos darles para conseguir: 
+
++ Hacer **copias de seguridad de contenidos**. En nuestro caso será tanto para código para datos.
++ Compartir **contenidos entre contenedores**. Lo haremos compartiendo código entre varios contenedores.
++ Probar una nueva versión de contenedor para **comprobar si la actualización de nuestro sistema puede dar problemas**.
+
+Ilustraremos todo esto en los siguientes vídeos.
+
+[Como copia de seguridad](https://youtu.be/rV9mEsPQJW0?list=PL-8CyWabyNa85xowmOeBMCspbrn6qNWgl)
+
+[Compartir codigo entre contenedores](https://youtu.be/jIYQZIbSeng?list=PL-8CyWabyNa85xowmOeBMCspbrn6qNWgl)
+
+[Para comprobar compatibilidad entre versiones](https://youtu.be/qdURCnir3dY?list=PL-8CyWabyNa85xowmOeBMCspbrn6qNWgl)
+
+## 6.6. Bind mounts para desarrollo. Depurando aplicaciones.
+
+En los apartados anteriores hemos visto como colocar las carpetas con el código que estaba editando en el contenedor que me interesaba. Hemos utilizado **BIND MOUNTS** porque ese tipo de persistencia me permite modificar los ficheros desde cualquier aplicación, no como los volúmenes que están en el área del sistema de ficheros que pertenece a docker y requiere permisos adicionales.
+
+Sin embargo para poder afrontar con garantías el proceso de desarrollo vamos a necesitar en algún momento depurar y eso requiere que conectemos nuestro editor de código o IDE con el contenedor y que instalemos las utilidades necesarias.
+
+Hay muchos editores e IDEs, muchos lenguajes de programación y muchos tipos de contenedores y aunque el curso no puede cubrirlos todos el proceso es más o menos siempre el mismo y vamos a ilustrarlo con los siguiente ejemplos:
+
++ Depurar desde Visual Studio Code una aplicación web PHP que se despliega en un contenedor con Apache+PHP
++ Depurar desde Visual Studio Code una aplicación python (Django) que se despliega en un contenedor de Django.
+
+Para otro editores de código,IDES y lenguajes de programación el proceso es similar, la clave está en configurar una depuración remota ya que mi código va a estar en un  contenedor.
+
+[Depurando una aplicacion en  PHP](https://youtu.be/OBvVSUYDq5s?list=PL-8CyWabyNa85xowmOeBMCspbrn6qNWgl)
+
+[Depurando una aplicación web Python Django](https://youtu.be/LJ1_hxw1c38?list=PL-8CyWabyNa85xowmOeBMCspbrn6qNWgl)
+
+# 7. Redes en Docker.
+
+Docker ha creado sin que nosotros seamos conscientes una "red docker" y establecido las** reglas iptables necesarias para que esos contenedores tengan conectividad** con el exterior, para que tengan conectividad entre ellos si pertenecen a la misma red docker, y para que sean accesibles desde el exterior si es que hemos hecho la redirección de puertos pertinente.
+
+En este módulo profundizaremos en este aspecto docker centrándonos en un tipo concreto de red docker, la red **bridge** que es la de uso más común para el desarrollo.
+
+## 7.1. Tipos de redes en Docker.
+
+Cuando nuestro contenedor y los servicios que podemos tener instalados en él  tienen algún tipo de conexión nosotros **no hemos tenido que configurar nada** y el contenedor ni sabe ni es consciente del funcionamiento de la red ni de la plataforma sobre la que funciona. El contenedor es **red y sistema agnóstico**.
+
+Esto se consigue con un sistema de red en el que nosotros podemos "enchufar" distintos dispositivos de red a cada contenedor usando distintos drivers que pueden ser de los siguientes tipos:
+
++ **Bridge**: Es el driver por defecto. Mi equipo actúa como puente del contenedor con el exterior y como medio de comunicación entre los distintos contenedores que tengo en ejecución dentro de una misma red docker.
++ **Host**: El contenedor usa directamente la red de mi máquina (el host).
++ **Overlay**: Un sistema que conecta distintos servicios docker de máquinas diferentes. Se utiliza para docker Swarm, que es la tecnología de docker para la orquestación de contenedores.
++ **MacVlan**: Que nos permite asignar una MAC a nuestro contenedor que parecerá que es un dispositivo físico en nuestra red.
++ **None**:  Si queremos que el contenedor no tenga conectividad alguna.
+
+Aunque todos estos tipos de drivers tienen su utilizad en determinadas situaciones lo cierto es que para los objetivos del curso nos vamos a centrar únicamente en los drivers de tipo **BRIDGE** que me van a permitir, siempre dentro nuestra máquina local:
+
++ **Aislar los distintos contenedores** que tengo en distintas subredes docker, de tal manera que desde cada una de las subredes solo podremos acceder a los equipos de esa misma subred.
++ **Aislar los contenedores del acceso exterior**.
++ **Publicar servicios** que tengamos en los contenedores **mediante redirecciones** que docker implementará con las pertinentes reglas de ip tables.
+
+Un ejemplo de una configuración de una **RED CONSTRUIDA CON EL DRIVER BRIDGE** podría ser la siguiente:
+
+![Docker red](../img/dockerRed.png)
+
+Este esquema representa una aplicación típica compuesta por dos servicios, un servidor web y un servidor de base de datos , cada uno de ellos en un contenedor diferente y haciendo accesible al exterior mi servidor web en el puerto 8080. 
+
+Para que todo esto funcione docker creará de manera automática los interfaces virtuales y los puentes de red necesarios para cada uno de los dispositivos y configurará las reglas necesarias para que esos interfaces tengan acceso a internet, para aislar los contenedores del resto de las redes y para establecer las redirecciones de puertos necesarias.
+
+## 7.2. Gestionando redes.
+
+En el apartado anterior comentamos que para usar docker para el desarrollo vamos a tener más que suficiente con la creación de redes con el driver bridge. Sin embargo, vamos a tener que hacer una diferenciación entre dos tipos de redes "bridged": la red creada por defecto por docker para que funcionen todos los contenedores y aquellas redes "bridged" definidas por el usuario, es decir, por nosotros. Esta red por defecto se llama bridge  y podemos comprobrar que se ha creado ejecutando la siguiente orden que nos muestra todas las redes docker que tengamos:
+
+```bash
+# Mostrar todas las redes docker creadas
+docker network ls
+```
+Como resultado obtendremos una salida similar a la siguiente, en la que se destaca mediante un recuadro la red bridge por defecto.
+
+![Docker Network](../img/dockerNetwork.png)
+
+
+Esta salida, además del nombre de cada una de las redes creadas recoge la siguiente información:
+
++ El **NETWORK ID** que me sirve para identificar una red y que se puede usar indistintamente con el nombre para cualquiera de las operaciones de gestión de redes (crear, borrar, obtener información etc...)
++ El **DRIVER**, que como ya dijimos en el apartado anterior me define el tipo de red que voy a "conectar" a los contenedores. Podía tomar los valores bridge, none, host,macvlan y overlay.
++ El **SCOPE** que nos indica el ámbito de nuestras redes y que en este caso son redes locales dentro de nuestra propia máquina.
+      
+Esta red "bridged" por defecto, que es la usada por defecto por los contenedores, se diferencia en varios aspectos de las redes "bridged" que creamos nosotros. Estos aspectos son los siguientes:
+
++ Las redes que nosotros definamos proporcionan **resolución DNS entre los contenedores** cosa que la red por defecto no hace a  no ser que usemos opciones que ya se consideran "deprectated".
++ Puedo **conectar en caliente a los contenedores redes "bridged" definidas por el usuario**. Si uso la red por defecto tengo que parar previamente el contenedor.
++ Me permite gestionar de manera más segura el **aislamiento de los contenedores**, ya que si no indico una red al arrancar un contenedor este se incluye en la red por defecto donde pueden convivir servicios que no tengan nada que ver.
++ Tengo más control sobre la configuración de las redes si las defino yo. Los contenedores de la red por defecto comparten todos la misma configuración de red (MTU, reglas ip tables etc...).
++ Los contenedores dentro de la  red "bridge" comparten todos ciertas variables de entorno lo que puede provocar ciertos conflictos.
+
+Una vez nos hemos situado vamos a ver cómo realizamos las operaciones más comunes para gestionar y trabajar con redes en docker. Estas operaciones son:
+
++ Listado de las redes (**docker network ls**).
++ Creación de las redes. (**docker network create**).
++ Borrado de las redes. (**docker network rm / docker network prune**).
+
+Una descripción más detallada de lo todas las opciones la podemos ver en la [referencia completa de redes en docker](https://docs.docker.com/engine/network/) pero, tal y como acostumbramos en este curso, vamos a ilustrar su funcionamiento con distintos ejemplos.
+
+> Ejemplos de creación de redes
+
+```bash
+# Crear una red. Al no poner nada más coge las opciones por defecto, red bridge local y el mismo docker elige la dirección de red y la máscara
+docker network create red1
+# Crear una red (la red2) dándole explícitamente el driver bridge (-d) , una dirección y una máscara de red (--subnet) y una gateway (--gateway)
+docker network create -d bridge --subnet 172.24.0.0./16 --gateway 172.24.0.1 red2
+```
+La orden **docker network create** tiene más opciones para las redes de tipo bridge y muchas más para redes de otro tipo. Pero como estamos en un curso de docker aplicado al desarrollo estas opciones son más que suficientes para poder montar nuestros entornos y los de nuestros alumnos.
+
+> [!NOTE] 
+> Cada red docker que crea, crea un puente de red específico para cada red que podemos ver con ifconfig / ip a
+
+> Eliminación de redes
+
+```bash
+# Eliminar la red red1
+docker network rm red1
+# Eliminar una red con un determinado ID
+docker network rm 3cb4100fe2dc
+# Eliminar todas la redes que no tengan contenedores asociados
+docker network prune
+# Eliminar todas las redes que no tengas contenedores asociados sin preguntar confirmación (-f o --force)
+docker netowk prune -f
+# Eliminar todas las redes que no tengan contenedores asociados y que fueron creadas hace más de 1 hora (--filter)
+docker network prune  --filter until=60m
+```
+
+> [!NOTE] 
+> No puedo borrar una red que tenga  contenedores que la estén usando. Deberé primero borrar los contenedores o desconectar la red.
+
+## 7.3. Obteniendo información de las redes.
+
+De igual manera que con las imágenes y los contenedores, puedo obtener información de las redes docker de maneras diferentes:
+
++ Mediante la orden **docker network ls**, que presentamos en el apartado anterior y que además tiene diversas opciones algunas de las cuales veremos posteriormente.
++ Mediante la orden **docker network inspect**, que nos mostrará una información mucho más detallada con todas las características de la red.
+
+También podemos formatear esta salida usando https://pkg.go.dev/text/template, tal y como habíamos hecho en los módulos anteriores cuando inspeccionábamos imágenes o contenedores. Un ejemplo de ello sería lo siguiente:
+
+```bash
+# Mostrar el tipo de driver de una red docker (podríamos usar también el ID de la red)
+docker network inspect mi_red  --format 'El driver de {{.Name}} es {{.Driver}}'
+# Mostrar la dirección de red y la pasarela de una red docker
+docker network inspect mi_red  --format '{{.IPAM.Config}}'
+```
+
+En cuanto a la orden docker network ls,  vamos a ver con distintos ejemplos algunas de las opciones que podemos usar:
+
+```bash
+# Mostrar solo el ID de las redes (-q o --quiet)
+docker network ls -q
+# Mostrar las redes de driver=bridge y nombre=brigde( la red por defecto) (-f o --filter)
+docker network ls -f driver=bridge -f name="bridge"
+# Mostrar lo mismo que en el anterior caso pero formateando con Go Templates
+docker network ls -f driver=bridge -f name=bridge --format 'La red por de defecto tiene el siguiente ID {{.ID}}'
+```
+
+## 7.4. Asociando redes a contenedores.
+
+En los tres apartados anteriores hemos hablado de aspectos relativos a las redes docker pero **no hemos dicho nada de cómo "conectamos" esas redes a nuestros contenedores** que es el paso fundamental para que dichos contenedores puedan conectarse entre ellos , puedan ofrecer servicios al exterior y puedan conectarse a Internet para poder actualizarse y/o instalar cualquier dependencia que necesitemos. Para realizar esta "conexión" debemos de tener en cuenta los siguientes aspectos:
+
++ Al arrancar un contenedor podemos **especificar a qué red** está conectado inicialmente usando el **flag --network** seguido del nombre de la red a la que queremos conectarlo.
++ Si al arrancar un contenedor **no especificamos una red**, el contenedor se conectará a la red por defecto, la red "**bridge**" **que usa el driver** "**bridge**".
++ **Al arrancar** un contenedor no puedo "**conectarlo**" inicialmente **a más de una red**.
++ **Tras crear el contenedor** puedo **conectarlo a más redes o desconectarlo de alguna red**. Dependiendo de si he elegido la red por defecto o no, podré o no podré hacer esa conexión o desconexión en caliente (con el contenedor un funcionando).
+
+Para ilustrar todas estar afirmaciones vamos a realizar distintos ejemplos:
+
+```bash
+# Arrancar un contenedor de Apache sin especificar red y habilitando la conexión desde el exterior a través del puerto 80. Se conectará por defecto a la red bridge.
+docker run -d --name web -p 80:80 httpd
+# Arranchar un contenedor de Apache conectándose a la red red1 que es una red bridge definida por el usuario y habilitando la conexión desde el exterior a través del puerto 8080
+docker run -d --name web2 --network red1 -p 8080:80 httpd
+# Arranchar un contenedor de Apache conectándose a la red red1 dándole una ip (que debe pertenecer a esa red)
+docker run -d --name web2 --network red1 --ip 172.18.0.5 -p 8181:80 httpd
+# Conectar una nueva red, la red2  al contenedor web2.
+docker network connect red2 web2
+# Conectar una red, la red2 al contenedor web y darle una ip (que debe pertenecer a esa red)
+docker network connect --ip 172.28.0.3 red2 web
+# Desconectar la red1 del contenedor web2. Debe estar funcionando para poder desconectarse
+docker network disconnect red1 web2
+```
+
+Por supuesto la orden docker connect tienen más opciones que podemos consultar en la referencia y , adicionalmente, hay varios flags de la orden docker run que están relacionados con redes y que pueden resultar de interés:
+
++ **--dns** para establecer unos servidores DNS predeterminados.
++ **--ip6** para establecer la dirección de red ipv6
++ **--hostname** o **-h** para establecer el nombre de host del contenedor. Si no lo establezco será el ID del mismo.
+
+## 7.5. Iptables en contenedores.
+
+En ocasiones en algunos de los módulos (más relacionados con redes normalmente) puede que queramos montar ciertos entornos,  compuestos por varias máquinas, en los que sea necesario que tengamos nosotros el control de las reglas iptables de las distintas máquinas que los conforman.
+
+Normalmente esto se hace con distintas máquinas virtuales pero en vista de las posibilidades de red que nos dan los contenedores, ¿podría montar entornos de ese estilo con contenedores?. Por defecto esto no es posible en los contenedores, pero podemos conseguirlo de una de estas dos maneras:
+
++ Arrancar el contenedor con el flag --cap-add=NET_ADMIN. Así le damos al contenedor la "capacidad" Linux de administrar la red.
++ Arrancar el contenedor de con flag --privileged que le da todas las capacidades al contenedor que puede hacer lo mismo que se puede hacer desde el host. Esto, además de habilitar el uso de iptables, me permitiría cosas como "instalar docker dentro de un contenedor docker". Debemos de tener mucho cuidado con esta característica porque puede presentar varios problemas al levantar ciertas limitaciones a los cgroups..
+
+Independientemente de la opción que elijamos, antes de poder usar iptables, y dado las pocas cosas que incluye por defecto un contenedor, deberemos:
+
++ **apt update** (para recargar los repositorios que no vienen cargados por defecto).
++ **apt install -y iptables** (para instalar la herramienta de firewall para Linux).
+
+
+Video resumen:
+
+https://youtu.be/DLce5da2ge4?list=PL-8CyWabyNa85xowmOeBMCspbrn6qNWgl
+
+
+https://docs.docker.com/network/
+
+
+# 8. Imágenes propias.
+
+Hasta este capítulo hemos estado usando contenedores basados en imágenes de terceros que nos descargábamos desde DockerHub. En este capítulo vamos a realizar la **personalización de las imágenes** para que se adecúen a nuestras necesidades.
+
+Esta personalización para conseguir nuestras propias imágenes la vamos a conseguir de dos maneras:
+
++ **Partiendo de un contenedor que tenemos en ejecución** y sobre el que hemos realizado modificaciones.
++ **De manera declarativa** a través del **fichero Dockerfile** y un proceso de construcción  que veremos que puede ser manual o automático.
+
+## 8.1. Desde un contenedor en ejecución.
+
+La primera forma para personalizar las imágenes y distribuirlas es partiendo de un contenedor en ejecución. Para ello vamos a tener varias posibilidades:
+
+1. Utilizar la secuencia de órdenes **docker commit / docker save / docker load**. En este caso la **distribución** se producirá a partir de un **fichero**.
+2. Utilizar la pareja de órdenes **docker commit / docker push**. En este caso la **distribución** se producirá a través de **DockerHub**.
+3. Utilizar la pareja de órdenes **docker export / docker import**. En este caso la distribución de producirá a través de un **fichero**.
+
+Veamos algunos ejemplos:
+```bash
+# Creación de una nueva imagen a partir del contenedor con nombre ejemplo (tag=latest)
+docker commit ejemplo usuarioDockerHub/ubuntu20netutils
+# Igual que la anterior pero añadiendo versión (tag)
+docker commit ejemplo usuarioDockerHub/ubuntu20netutils:1.0
+# Igual que la anterior pero pausando el contenedor durante el commit (--pause/-p) y añadiendo un mensaje describiendo el commit (--message/-m)
+ docker commit -m "Versión con Nmap" -p ejemplo usuarioDockerHub/ubuntu20netutils:1.1
+# Igual que la anterior pero añadiendo la información del autor (--author/-a)
+docker commit -a "Juan Diego Pérez" -m "Versión con Nmap" -p ejemplo usuarioDockerHub/ubuntu20netutils:1.1
+# Guardar la imagen ubuntu20netutils:1.1 al ficher u20v1.1.tar
+docker save usuarioDockerHub/ubuntu20netutils:1.1 > u20v1.1.tar
+# Lo mismo que en el apartado anterior sin la redirección y especificando el fichero (--output / -o)
+docker save --output u20v1.1.tar usuarioDockerHub/ubuntu20netutils:1.1
+# Carga la imagen con nombre imagen.tar (--input / -i)
+docker load --input imagen.tar
+# Autentificación en DockerHub
+docker login
+# Subir una imagen ubuntu20netutils:1.1 a DockerHub
+docker push usuarioDockerHub/ubuntu20netutils:1.1
+# Subir una imagen ubuntu20netutils:1.1 a DockerHub suprimiendo la salida que se muestra sobre la información del proceso de subida (--quiet /  -q)
+docker push -q usuarioDockerHub/ubuntu20netutils:1.1
+# Subir a DockerHub todas las versiones (tags) de la imagen ubuntu20netutils (--all-tags / -a)
+docker push -a usuarioDockerHub/ubuntu20netutils
+```
+[Video explicativo](https://youtu.be/eWkqN9U5yJU?list=PL-8CyWabyNa85xowmOeBMCspbrn6qNWgl)
+
+# 9. El fichero Dockerfile
+
+
+
+
