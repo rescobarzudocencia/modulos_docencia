@@ -48,6 +48,10 @@
   - [9.2. Resumen de comandos Dockerfile.](#92-resumen-de-comandos-dockerfile)
   - [9.3. Fichero .dokerignore](#93-fichero-dokerignore)
 - [10. Aplicaciones Multicapa. Docker Compose.](#10-aplicaciones-multicapa-docker-compose)
+  - [10.1. Instalación de docker-compose.](#101-instalación-de-docker-compose)
+  - [10.2. El archivo docker-compose.yml.](#102-el-archivo-docker-composeyml)
+  - [10.3. La orden docker-compose.](#103-la-orden-docker-compose)
+  - [10.4.  Ejemplos.](#104--ejemplos)
 
 
 # 1.Introducción.
@@ -1169,6 +1173,7 @@ docker build -t  usuario/nombre_imagen:1.0 -f /home/usuario/DockerProject/Docker
 ## 9.2. Resumen de comandos Dockerfile.
 
 Un fichero **Dockerfile** es un conjunto de instrucciones que serán ejecutadas de forma secuencial para construir una nueva imagen docker.
+
 ![Fichero Dockerfile](../img/dockerfile.png)
 
 
@@ -1235,8 +1240,278 @@ nodeapp/node_modules
 ```
 
 
-[Referencia a ficheros .gitignore.](https://docs.docker.com/engine/reference/builder/#dockerignore-file)
+[Referencia a ficheros .dokerignore.](https://docs.docker.com/engine/reference/builder/#dockerignore-file)
 
 # 10. Aplicaciones Multicapa. Docker Compose.
+
+**Hasta ahora** hemos estado hablando de **contenedores en solitario** pero la realidad es que **las aplicaciones actuales están formadas de varias aplicaciones o servicios. TÍPICAMENTE** podríamos decir que tenemos al menos los siguientes elementos:
+
+![Docker Servicios](../img/dockerServicios.png)
+
+Una CAPA DE PRESENTACIÓN que hace referencia al cliente que obtiene los datos pudiendo ser un navegador, una app móvil etc..
+
++ Una **CAPA LÓGICA**  que tipicamente está representada por un **servidor web, servidor de aplicaciones** etc..
++ Una **CAPA DE DATOS** que reside normalmente en un **servidor de base de datos**, ya sea relacional o no.
+
+Además **nos podemos encontrar aplicaciones con arquitecturas mucho más complejas** con diversos servidores de bases de datos, distintos APIs independientes, servidores de autentificación etc... Aunque estas aplicaciones existen, lo cierto es que para el objetivo del curso nos vamos a conformar con aplicaciones como las descritas anteriormente, con una capa de presentación, una capa de lógica y una capa de datos.
+
+Precisamente ya vimos por encima en el módulo anterior un ejemplo de este tipo de aplicaciones donde teníamos:
+
++ Un contenedor con un servidor web Apache, con el módulo PHP instalado y el código  de Wordpress descargado en la carpeta adecuada.
++ Un contenedor con un servidor de base de datos MariaDb para guardar los datos de la aplicación.
+
+Esos contenedores los habíamos creado y configurado por separado aunque conformaban una única aplicación. Tenía que arrancarlos y configurarlos uno a uno de manera manual. 
+
+Eso no es ideal y además no es ágil, cada vez que quiero poner en funcionamiento este tipo de arquitectura deberé repetir todo el proceso de manera paso a paso. LO IDEAL sería:
+
++ Hacer todo de manera declarativa para que no tenga que repetir todo el proceso cada vez.
++ Poner en funcionamiento todos los contenedores que necesita mi aplicación de una sola vez y debidamente configurados.
++ Garantizar que los contenedores se arrancan en el orden adecuado. Por ejemplo: Mi aplicación no podrá funcionar debidamente hasta que no esté el servidor de bases de datos funcionando en marcha.
++ Asegurarnos de que hay comunicación entre los contenedores que pertenecen a la aplicación.
+
+Para todo esto tenemos la herramienta DOCKER-COMPOSE. Si tuviéramos que definir esta herramienta diríamos:
+
+"**DOCKER-COMPOSE ES UNA HERRAMIENTA PARA DESPLEGAR GRUPOS DE CONTENEDORES QUE FORMAN PARTE DE UNA MISMA APLICACIÓN  O UN MISMO ENTORNO**"
+
+Los pasos son los siguientes:
+
+1. **Describo de manera declarativa** todos los contenedores que conforman mi aplicación en el fichero docker-compose.yml. Este fichero es un fichero con formato YAML. https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html
+2. Al ejecutar **docker-compose up** se levanta toda la aplicación, es decir, todos los contenedores que la conforman.
+
+## 10.1. Instalación de docker-compose.
+
+La instalación de docker-compose es un proceso muy sencillo. Si somos usuarios de MAC y Windows no tendremos que instalar nada ya que docker-compose es una de las herramientas que por defecto se incluyen dentro de Docker Desktop. 
+
+Si somos usuarios de Linux su instalación se realiza únicamente con dos pasos:
+```bash
+# Descarga del fichero mediante la orden curl y colocación en el directorio adecuado. 
+sudo curl -L "https://github.com/docker/compose/releases/download/2.40.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+# Concesión de los permisos de ejecución
+sudo chmod +x /usr/local/bin/docker-compose
+
+# Comprobación de que la instalación está correcta.
+docker-compose --version
+docker-compose version 2.40.3
+```
+> [!NOTE]
+> Si no se descargase hay que realizar manualmente la descarga:
+
+1. Lo descargamos de: https://github.com/docker/compose/releases/tag/v2.40.3/
+2. El fichero a descargar es **docker-compose-linux-x86_64**
+3. Copiarlo al directorio correcto **sudo cp  /home/usuario/Descargas/docker-compose-linux-x86_64 /usr/local/bin/docker-compose** Sustituyendo usuario por el usuario local.
+4. Darle permisos de ejecución: **sudo chmod +x /usr/local/bin/docker-compose**
+5. Comprobar la versión: **docker-compose --version**
+
+## 10.2. El archivo docker-compose.yml.
+
+Como ya hemos dicho en el apartado anterior el fichero docker-compose.yml es un fichero en formato YAML que contiene las instrucciones para crear y configurar los servicios que van a constituir mi aplicación o entorno. Su estructura general es la siguiente:
+
+![Docker Compse Yml](../img/dockerCompseYml.png)
+
+Dentro de cada una de estas secciones tenemos multitud de opciones. Es imposible tratar todas de manera detallada así que nos vamos a centrar en ejemplos para conseguir:
+
++ Asociar contenedores e imágenes a los servicios creados.
++ Especificar las distintas variables de entorno que pueden tener los contenedores creados. Recordad que hay que consultar siempre la página de cada imagen en DockerHub.
++ Establecer las redirecciones de puertos si fueran necesarias.
++ Persistir los datos de los contenedores usando bind mounts o volúmenes . Definiremos los volúmenes, si es necesario, para que sean usados por los contenedores.
++ Definir redes para asociarlas a los contenedores en caso de que queramos que no usen la red por defecto. En el módulo 5 hablamos de las diferencias entre la red por defecto y las redes creadas por el usuario.
++ Establecer orden de inicio para los contenedores que componen mi aplicación.
+
+> Asociar contenedores a servicios.
+
+```yaml
+version: '3'
+	# Empieza la sección de servicios.
+ 	services:
+ 		# Declaro un servicio con nombre miapache
+ 		miapache:
+ 		# Ese contenedor usará como imagen de base la imagen httpd(Servidor Apache) de Docker Hub.
+ 			image: httpd
+ 			# Le doy nombre al contenedor cuando arranque (equivalente al flag --name de docker run) 
+			container_name: web
+```
+> Especificar las variables de entorno para los contenedores.
+
+```yaml
+version: '3'
+  # Empieza la sección de servicios.
+  services:
+    # Declaro un servicio con nombre datos
+    datos:
+ # Ese contenedor usará como imagen de base la imagen mariadb (Servidor de base de datos) de Docker Hub.
+      image: mariadb
+# Le doy nombre al contenedor cuando arranque (equivalente al flag --name de docker un) 
+      container_name: bd
+ # Establezco las variables de entorno para configurar el servicio
+    environment:
+        MYSQL_ROOT_PASSWORD: 123456
+        MYSQL_DATABASE: test
+        MYSQL_USER: pepe
+        MYSQL_PASSWORD: pepe
+```
+
+> Establecer la redirección de puertos
+
+```yaml
+version: '3'
+  # Empieza la sección de servicios.
+  services:
+    # Declaro un servicio con nombre miapache
+    miapache:
+     # Ese contenedor usará como imagen de base la imagen httpd(Servidor Apache) de DockerHub.
+      image: httpd
+      # Le doy nombre al contenedor cuando arranque (equivalente al flag --name de docker un) 
+      container_name: web
+      # Establezco la redirección de puertos
+      ports:
+	- 8080:80
+```
+
+> Persisto los datos usando Bind Mount para un servidor Web
+
+```yaml
+version: '3'
+  # Empieza la sección de servicios.
+  services:
+    # Declaro un servicio con nombre miapache
+    miapache:
+     # Ese contenedor usará como imagen de base la imagen httpd(Servidor Apache) de DockerHub.
+      image: httpd
+      # Le doy nombre al contenedor cuando arranque (equivalente al flag --name de docker un) 
+      container_name: web
+      # Establezco un bind bound de la carpeta src de mi equipo en la carpeta /app del contenedor.
+      volumes:
+        - "./src:/app"
+       # Notación alternativa a lo anterior
+       - type: bind
+         source: "./src"
+         target: /app
+```
+
+> Persistir los datos de un servidor de BD use un volumen.
+
+```yaml
+version: '3'
+  services:
+    # Declaro un servicio con nombre datos
+    datos:
+     # Ese contenedor usará como imagen de base la imagen mariadb (Servidor de base de datos) de DockerHub.
+      image: mariadb
+      # Le doy nombre al contenedor cuando arranque (equivalente al flag --name de docker un) 
+      container_name: bd
+      .........
+      # Establezco que los datos de la base de datos van a persistir en el volumen datosapp que se montará en /var/lib/mysql
+      volumes:
+        - "datosapp:/var/lib/mysql"
+      # Notación alternativa a lo anterior
+      volumes:
+        - type: volume
+          src: datosapp
+          target: "var/lib/mysql"
+ # Sección para la definición de los volúmenes. Está al mismo nivel de la sección services
+  volumes:
+    datosapp: local
+```
+
+> Definir redes asociadas a los contenedores.
+
+```yaml
+version: '3'
+# Empieza la sección de servicios.
+  services:
+    # Declaro un servicio con nombre miapache
+    miapache:
+     # Ese contenedor usará como imagen de base la imagen httpd(Servidor Apache) de DockerHub.
+      image: httpd
+      # Le doy nombre al contenedor cuando arranque (equivalente al flag --name de docker un) 
+      container_name: web
+      # Establezco el nombre de red para el contenedor
+      hostname: web
+      # Establezco la red o redes a las que se va a conectar el contenedor
+      networks:
+        - ejemplo
+...
+# Sección de definición de redes. Está al mismo nivel que services y volumes
+networks:
+  # Definición de la red ejemplo
+  ejemplo:
+    # Tipo de red
+    driver: bridge
+    # Opciones de la red
+    ipam:
+      driver: default
+      config:
+        subnet: 172.20.0.0/16
+```
+
+[Ejemplo de despliegue de Wordpress con Mariadb.](https://iesgn.github.io/curso_docker_2021/sesion5/wordpress.html)
+
+
+[Y una extensión para manejar este tipo de ficheros en Visual Studio Code.](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
+
+
+## 10.3. La orden docker-compose.
+
+Una vez hemos creado el archivo **docker-compose.yml** tenemos que empezar a trabajar con él, es decir a crear los contenedores que describe su contenido.
+Esto lo haremos mediante el ejecutable docker-compose.
+
+> [!NOTE]
+> Es importante destacas que debemos invocarla desde el directorio en el que se encuentra el fichero **docker-compose.yml**.
+
+Esta herramienta (docker-compose) tiene muchos subcomandos y estos subcomandos, a su vez, tienen u montón de opciones. Nos vamos a centrar en ejemplificar con las combinaciones más comunes y además pondremos una lista de aquellas que también pueden resultar interesantes:
+
+```bash
+#Obtener la versión de docker-compose.
+docker-compose --version
+# Crear los contenedores (servicios) que están descritos en el docker-compose.yml.
+docker-compose up
+# Crear contenedores con nombre diferente a docker-compose.yml, como wordpress.yml
+docker-compose -f wordpress.yml up
+# Crear en modo detach los contenedores (servicios) que están descritos en el docker-compose.yml. Eso significa que no muestran mensajes de log en el terminal y que se  nos vuelve a mostrar un prompt.
+docker-compose up -d
+# Detiene los contenedores que previamente se han lanzado con docker-compose up.
+docker-compose stop
+# Inicia los contenedores descritos en el docker-compose.yml que estén parados.
+docker-compose run
+# Pausa los contenedores que previamente se han lanzado con docker-compose up.
+docker-compose pause
+# Reanuda los contenedores que previamente se han pausado.
+docker-compose unpause
+# Reinicia los contenedores. Orden ideal para reiniciar servicios con nuevas configuraciones.
+docker-compose restart
+# Para los contenedores, los borra  y también borra las redes que se han creado con docker-compose up (en caso de haberse creado).
+docker-compose down
+# Para los contenedores y borra contenedores, redes y volúmenes
+docker-compose down -v
+# Muestra los logs del servicio llamado servicio1 que estaba descrito en el docker-compose.yml.
+docker-compose logs servicio1
+# Ejecuta una orden, en este caso /bin/bash en un contenedor llamado servicio1 que estaba descrito en el docker-compose.yml
+docker-compose exec servicio1 /bin/bash
+```
+Algunos otros subcomandos interesante son:
+
++ **docker-compose build** que ejecutaría, si está indicado, el proceso de construcción de una imagen que va a ser usado en el docker-compose.yml  a partir de los  ficheros Dockerfile que se indican.
++ **docker-compose top** que muestra  los procesos que están ejecutándose en cada uno de los contenedores de los servicios.
+
+
+
+[Referencia a Docker Compose](https://docs.docker.com/compose/reference/)
+
+## 10.4.  Ejemplos.
+
+
+[Docker Compose con wordpress precargado](https://youtu.be/4Dc--OiiNh0?list=PL-8CyWabyNa85xowmOeBMCspbrn6qNWgl)
+
+
+[Docker Compose para desarrollo](https://youtu.be/h8GKcuYOLDY?list=PL-8CyWabyNa85xowmOeBMCspbrn6qNWgl)
+
+
+[Docker Compose para prueba de aplicaciones](https://youtu.be/DfWy9WHv2JI?list=PL-8CyWabyNa85xowmOeBMCspbrn6qNWgl)
+
+[Publicación de archivos docker-compose en DockerHub](https://youtu.be/Gh2YyGdQsS4?list=PL-8CyWabyNa85xowmOeBMCspbrn6qNWgl)
+
+
+
 
 
