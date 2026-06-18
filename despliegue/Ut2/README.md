@@ -1,5 +1,9 @@
 # UT2 DOCKER <!-- omit in toc -->
 ---
+
+
+![Docker Logo](../img/dockerLogo.png)
+
 - [1.Introducción.](#1introducción)
   - [1.1. Virtualización.](#11-virtualización)
   - [1.2. Contenedores.](#12-contenedores)
