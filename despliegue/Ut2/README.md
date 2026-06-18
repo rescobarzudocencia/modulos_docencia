@@ -52,6 +52,7 @@
   - [10.2. El archivo docker-compose.yml.](#102-el-archivo-docker-composeyml)
   - [10.3. La orden docker-compose.](#103-la-orden-docker-compose)
   - [10.4.  Ejemplos.](#104--ejemplos)
+- [11. Portainer.io](#11-portainerio)
 
 
 # 1.Introducción.
@@ -1512,6 +1513,39 @@ Algunos otros subcomandos interesante son:
 [Publicación de archivos docker-compose en DockerHub](https://youtu.be/Gh2YyGdQsS4?list=PL-8CyWabyNa85xowmOeBMCspbrn6qNWgl)
 
 
+# 11. Portainer.io
 
+Portainer.io CE, es la versión Community Edition es la versión gratuita y restringida donde nos muestra una interfaz gráfica y fácil de usar para la gestión de entornos de contenedores como Docker, Docker Swarm, Kubernetes y Nomad.
 
+Portainer es un contenedor Docker y nos podemos descargar el fichero Yaml con el siguiente comando:
+```bash
+curl -L https://downloads.portainer.io/ce-lts/portainer-compose.yaml -o portainer-compose.yaml
+```
+En contenido del fichero yaml es el siguiente:
 
+```yaml
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:lts
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    ports:
+      - 9443:9443
+      - 8000:8000  # Remove if you do not intend to use Edge Agents
+volumes:
+  portainer_data:
+    name: portainer_data
+networks:
+  default:
+    name: portainer_network
+```
+Una vez descargado desplegamos el contenedor con:
+
+```bash
+docker compose -f portainer-compose.yaml up -d
+```
+
+Una vez desplegado accedemos a el : https://localhost:9443
