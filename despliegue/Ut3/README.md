@@ -501,7 +501,7 @@ Para usar **htpasswd** tiene que estar el paquete **apache2-utils** instalado, *
 
 Si queremos proteger el directorio  **/var/www/html/secreto**. En **apache2.conf**:
 
-```bash
+```apache
 <Directory /var/www/html/secreto>
     AuthType Basic
     AuthName “Acceso denegado”
@@ -574,7 +574,215 @@ Para un sitio web del servidor:
 
 ## 7.2. Restricciones de acceso a recursos.
 
+**Autorización** es cualquier proceso en el cual cualquiera está permitido a estar donde se quiera, o tener información la cuál se quiera tener.
+
+La directiva **Require** es la utilizada para establecer estas restricciones. Este acceso puede ser controlado en función del nombre del host cliente o su IP. **Estas restricciones tienen más prioridad que las basadas en el nombre de usuario** (Require user | group | valid-user).
+
+Require suele estar incluida en una sección `<Directory>`.
+
+> [!NOTE]
+>En el apartado anterior ya se explicaron las opciones de Require que controlan el acceso en base a los usuarios: user, group y valid-user. Ahora trataremos las que lo hacen en función del nombre del host cliente y su IP (ip, host y local) y las generales (all).
+
+> Require ip
+
++ Ip completa, permite el acceso al cliente con esa IP.
+  
+    Require ip 10.1.2.3
+
+    Require ip 192.168.1.104 192.168.1.205
+      
++ Ip parcial, se indica algunos octetos.
+  
+    Require ip 10.1
+
+    Require ip 10 172.20 192.168.2
+      
++ Dirección de red/Máscara
+  
+    Require ip 10.1.0.0/255.255.0.0
+      
++ Notificación CIDR
+  
+    Require ip 10.1.0.0/16
+
+> Require host
+
+Permite controlar el acceso al servidor en función del nombre del host cliente especificado. Los hosts cuyos nombres coinciden o finalizan en esta cadena tienen permitido el acceso.
+
+Require host sitio.org
+
+Require host .net sitio.edu
+
+> Require local
+
+Permite el acceso si se cumple alguna de estas condiciones:
+
++ La IP del cliente coincide con 127.0.0.0/8
++ Tanto el cliente como el servidor tienen la misma IP.
+  
+Require local
+
+> Acceso General
+
+Para **permitir** el acceso a todo aquel que lo solicite:
+
+Require all granted
+
+Para **denegar** el acceso a todo aquel que lo solicite:
+
+Require all denied
+
 # 8. Protocolo Https.
+Cada vez es más necesario cifrar el contenido que se trasmite entre el cliente y el servidor, este proceso nos permite asegurar por ejemplo el proceso de autenticación
+de usuarios para evitar que alguien capture una contraseña de usuario y acceda de forma fraudulenta.
+
+El cifrado de la comunicación entre el navegador y el servidor web se hace mediante el protocolo HTTPS, que tiene las siguientes características principales:
+
++ Utiliza el protocolo SSL (actualmente TLS) para el cifrado de datos.
++ El servidor utiliza por defecto el puerto 443/tcp.
++ Utiliza mecanismos de cifrado de clave pública y las claves públicas se denominan certificados.
++ El formato de los certificados está especificado por el estándar X.509 y normalmente son emitidos por una entidad denominada **Autoridad Certificadora** (CA por sus siglas en inglés).
++ En el caso de HTTPS, la función principal de la CA es demostrar la autenticidad del servidor y que pertenece legítimamente a la persona u organización que lo utiliza.
+Dependiendo de los criterios utilizados para comprobar la autenticidad del servidor se emiten diferentes tipos de certificados X.509 (actualmente se usa el llamado Extended Validation Certificate).
++ El navegador contiene una lista de certificados de CA en las que confía y acepta inicialmente sólo los certificados de los servidores emitidos por alguna de estas CA.
++ Una vez aceptado el certificado de un servidor web, el navegador utiliza éste para cifrar los datos que quiere enviar al servidor mediante el protocolo HTTPS y cuando llegan al servidor sólo éste podrá descifrarlos ya que es el único que posee la clave privada que los descifra.
+
+El funcionamiento de forma esquemática de HTTPS la podríamos resumir en el siguiente gráfico:
+
+
+![Apache Https](../img/apacheHttps.png)
+
+Seguramente tengamos ya el certificado SSL autofirmado instalado en nuestro equipo, porque **ssl-cert** se instala al instalar Apache. Lo comprobamos con:
+
+**aptitude search ssl-cert**, nos aparecerá. 
+Si no está instalado se instala con **sudo apt install aptitude**.
+
+Al instalar el paquete ssl-cert se generan automáticamente (con el comando openssl) un par de certificados:
+
++ `/etc/ssl/private/ssl-cert-snakeoil.key` (privado) → Clave privada.
++ `/etc/ssl/certs/ssl-cert-snakeoil.pem` (público) → Certificado.
+
+Para comprobarlo nos vamos al directorio y ejecutamos:
+
+1. El certificado X.509 está en formato PEM (base64), compruébalo editando el fichero:
+2. 
+```bash
+   more  ssl-cert-snakeoil.pem
+```
+1. Para mostrar su contenido utiliza la siguiente instrucción desde el directorio correspondiente:
+```bash
+openssl x509 -in ssl-cert-snakeoil.pem -inform PEM -text
+```
+La información contenida en **ssl-cert-snakeoil.pem** es la misma que nos facilita el navegador web cuando queremos ver el contenido del certificado.
+
+Si el certificado autofirmado no fuese correcto, podemos generar uno nuevo con:
+
+```bash
+make-ssl-cert generate-default-snakeoil --force -overwrite
+```
+
+Si el certificado que se genera así no tiene todas las características necesarias, habrá que crear un certificado autofirmado directamente mediante openssl.
+
+> Crear un certificado autofirmado con openssl
+
+1. Creamos una clave privada RSA de 2048 bits:
+   
+```bash
+openssl genrsa 2048 > /etc/ssl/private/clave-ssl.key
+```
+2. Modificamos los propietarios y permisos.
+
+```bash
+chown root:ssl-cert /etc/ssl/private/clave-ssl.key
+chmod 640 /etc/ssl/private/clave-ssl.key
+```
+
+3. Con la clave privada anterior creamos un certificado X.509 de un año de validez. En este proceso openssl nos solicitará información para completar los atributos del certificado:
+
+```bash
+openssl req -new -x509 -nodes -sha1 -days 365 -key clave-ssl.key > servidor.pem
+       .....
+       Country Name (2 letter code) [AU]:ES
+       State or Province Name (full name) [Some -State]:Cordoba
+       Locality Name (eg, city) []:Montilla
+       Organization Name (eg, company) [Internet Widgits Pty Ltd]:IES Inca Garcilaso
+       Organizational Unit Name (eg, section) []:
+       Common Name (eg, YOUR name) []:
+       Email Address []:
+```
+
+> Utilización de HTTPS en Apache2 con certificado autofirmado
+
+Cuando instalamos apache2 sólo se activa el protocolo HTTP y se abre el puerto 80/tcp, para utilizar el protocolo HTTPS debemos activar el módulo ssl y reiniciar Apache:
+
+```bash
+a2enmod ssl
+.....
+service apache2 restart
+```
+
+Si vemos el contenido del fichero ports.conf comprobaremos que Apache sólo escucha peticiones
+en el puerto 443/tcp cuando el módulo ssl está activado:
+
+```apache
+Listen 80
+<IfModule ssl_module>
+	Listen 443
+</IfModule>
+```
+
+Sin embargo, Apache todavía no acepta peticiones del tipo https://ciclo.instituto.com, porque el único sitio que está activo está definido sólo en el puerto **80/tcp**, como podemos comprobar viendo el contenido del fichero **/etc/apache2/sites-available/000-default.conf**:
+
+```apache
+<VirtualHost *:80>
+...
+</VirtualHost>
+```
+
+> [!IMPORTANT]
+>Los sitios del servidor están en: /etc/apache2/sites-available y /etc/apache2/sites-enabled.
+
+Hay otro sitio predefinido (**default-ssl**) que escucha peticiones en el **puerto 443** y que está preparado para utilizar SSL, únicamente hay activarlo y recargar el servidor:
+
+```bash
+a2ensite default-ssl
+Enabling site default -ssl.
+Run '/etc/init.d/apache2 reload ' to activate new configuration!
+service apache2 reload
+```
+
+Si editamos el fichero **default-ssl.conf** vemos que se sirven los mismos ficheros que con HTTP con el certificado y clave indicados en **SSLCertificateFile** y **SSLCertificateKeyFile**, respectivamente:
+
+```
+...
+SSLEngine on
+SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem
+SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+…
+```
+El significado de las directivas, que pueden incluirse en la Configuración Global o en secciones `<VirtualHost>` es:
+
++ **SSLEngine**: Habilita/Deshabilita el uso del motor del protocolo SSL del servidor.
++ **SSLCertificateFile**: Indica la ruta del certificado del servidor.
++ **SSLCertificateKeyFile**: Indica la ruta de la clave privada de cifrado del servidor.
+
+También se puede emplear la directiva **SSLRequireSSL** (equivalente a “Require ssl”) en una sección `<Directory>` para negar una conexión que no use el protocolo HTTPS. Por ejemplo, para denegar la entrada al sitio web “secreto” si no se accede con https://localhost/secreto :
+
+```apache
+<Directory “/var/www/html/secreto”>
+	SSLRequireSSL
+	...
+</Directory>
+```
+> Configuración del navegador
+
+Cuando establecemos por primera vez una conexión HTTPS con servidor web que utiliza un certificado autofirmado, el navegador nos advertirá que no reconoce ese servidor con un mensaje como el de la imagen:
+
+![Apache conexión segura](../img/apacheConexionsegura.png)
+
+Para solucionarlo añadimos una excepción, que consiste en aceptar de forma permanente o no el certificado X.509 que nos está facilitando el servidor web, lo que nos garantiza que la comunicación en**tre el cliente y el servidor web se realizará de forma cifrada. De esta forma nunca se garantiza la autenticidad del servidor**, ya que podría darse el caso de que aceptásemos el certificado de un servidor que hubiese suplantado al legítimo y posteriormente le diésemos información relevante.
+
 
 # 9. Enlaces Web.
 
++ Documentación oficial de Apache https://httpd.apache.org/docs/2.4/es/
