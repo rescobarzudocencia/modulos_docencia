@@ -1,6 +1,6 @@
 # BASES DE DATOS
 ---
-![logo de python](img/logo_python.png)
+![Bases de Datos](img/bd.png)
 
 
 - [1. Introducción, Instalación , Tipos de datos y Operadores](Ut1/README.md)
