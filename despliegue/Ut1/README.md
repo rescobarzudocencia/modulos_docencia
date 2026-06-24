@@ -113,4 +113,8 @@ Ejemplo:
 192.168.1.50:8080
 ```
 
+
+![Puertos Importantes.](../img/puertos.jpeg)
+
+
 [Listado de puertos Wikipedia](https://es.wikipedia.org/wiki/Anexo:Puertos_de_red).
