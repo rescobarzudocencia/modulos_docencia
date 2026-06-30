@@ -24,6 +24,11 @@
   - [5.2. Rol de las entidades en las relaciones.](#52-rol-de-las-entidades-en-las-relaciones)
   - [5.3. Cardinalidades de las relaciones y la participación de las entidades.](#53-cardinalidades-de-las-relaciones-y-la-participación-de-las-entidades)
 - [6. El modelo E/R Extenido.](#6-el-modelo-er-extenido)
+  - [6.1. Interrelacion de exclusividad.](#61-interrelacion-de-exclusividad)
+  - [6.2. Interrelacion de inclusividad.](#62-interrelacion-de-inclusividad)
+  - [6.3. Restricción de exclusión.](#63-restricción-de-exclusión)
+  - [6.4. Restricción de inclusión.](#64-restricción-de-inclusión)
+  - [6.5. Relaciones de Jeraquía.](#65-relaciones-de-jeraquía)
 
 
 
@@ -256,4 +261,38 @@ Cardinalidades:
 Un empleado «trabaja» como mínimo 1 departamento y como máximo puede trabajar en varios. Ese varios se representa con la letra «n» → Participación(1,n) y se pone en el lado opuesto a EMPLEADO, es decir, junto a DEPARTAMENTO. Un departamento «tiene» como mínimo por 1 empleado y como máximo puede tener varios → Participación (1,n) y se pone en el lado opuesto a DEPARTAMENTO, es decir, junto a EMPLEADO. Para determinar la cardinalidad nos quedamos con las dos participaciones máximas y la «n» se pone en mayúsculas «N» y para diferenciar el otro «varios» en lugar de «N» ponemos «M» (Igual que cuando en matemáticas había dos variables no se ponía x e x sino x e y). Es decir → N:M.
 
 # 6. El modelo E/R Extenido.
+
+El modelo Entidad/Relación extendido incluye todo lo visto en el modelo Entidad/Relación pero además las Relaciones de Jerarquía. Una relación de jerarquía se produce cuando una entidad se puede relacionar con otras a través de una relación cuyo rol sería «Es un tipo de».
+
+## 6.1. Interrelacion de exclusividad.
+
+Un empleado puede estar en una empresa, o bien realizando prácticas, en cuyo caso está asignado a un grupo de prácticas y no pertenece a ningún departamento en concreto. O bien puede ser empleado en plantilla y en este caso pertenece a un departamento.
+
+![Interrelación Exclusiva](../img/2_interrelacionExclusiva.png)
+
+## 6.2. Interrelacion de inclusividad.
+
+Para que un empleado pueda trabajar como diseñador de productos debe haber asistido, al menos, a dos cursos.
+
+![Interrelación Inclusiva](../img/2_interrelacionInclusiva.png)
+
+## 6.3. Restricción de exclusión.
+
+Los empleados, en función de sus capacidades, o son diseñadores de productos o son operarios y los fabrican, no es posible que ningún empleado sea diseñador y fabricante a la misma vez.
+
+![Restricciónn exclusión](../img/2_restriccionExcusion.png)
+
+## 6.4. Restricción de inclusión.
+
+Para que un hombre se divorcie de una mujer, previamente ha de haberse casado con ella.
+
+![Restricción inclusión](../img/2_restriccionInclusion.png)
+
+## 6.5. Relaciones de Jeraquía.
+
+El modelo Entidad/Relación extendido incluye todo lo visto en el modelo Entidad/Relación pero además las Relaciones de Jerarquía. Una relación de jerarquía se produce cuando una entidad se puede relacionar con otras a través de una relación cuyo rol sería `«Es un tipo de»`.
+
+Imaginemos, queremos hacer una BD sobre los animales de un Zoo. Tenemos las entidades ANIMAL, FELINO, AVE, REPTIL, INSECTO. FELINO, AVE, REPTIL e INSECTO tendrían el mismo tipo de relación con ANIMAL: «son un tipo de». Ahora bien, su representación mediante el E/R clásico sería bastante engorrosa:
+
+
 
