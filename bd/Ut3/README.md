@@ -79,7 +79,7 @@ Cada una de las entidades que participan genera una tabla. Además generamos otr
 
 Realicemos el paso a tablas de la relación N:M entre MÓDULO (1,n) y ALUMNO (1,n). Este tipo de relación siempre genera tabla y los atributos de la relación, pasan a la tabla que ésta genera.
 
-alumno([num_expediente](),nombre,tlfno,fecha_nac)
+alumno([num_expediente](#),nombre,tlfno,fecha_nac)
 
 modulo(<u>cod_modulo</u>,nombre)
 
