@@ -17,6 +17,7 @@
     - [5.3.1. Bases de datos locales.](#531-bases-de-datos-locales)
     - [5.3.2. Bases de datos centralizados.](#532-bases-de-datos-centralizados)
     - [5.3.3. Bases de datos distribuidas.](#533-bases-de-datos-distribuidas)
+- [6. Sistemas gestores de bases de datos.](#6-sistemas-gestores-de-bases-de-datos)
 
 
 
@@ -137,6 +138,7 @@ Rectángulos, elipses, rombos y líneas.
 
 Está basado en una colección de objetos. Un objeto contiene valores almacenados en variables de ejemplares (instancias) de ese objeto. Los objetos se agrupan en clases. Al contrario que las entidades en el modelo E-R, cada objeto tiene su propia identidad única, independientemente de los valores que contenga.
 
+![Orientado objetos](../img/1_bd_Oo.png)
 
 ## 5.2. Modelo Lógico Basado en Registros.
 
@@ -209,37 +211,37 @@ Tenemos la información repartida en distintas localizaciones unidas todas ellas
 
 > Ventajas
 
-Rendimiento. Una clara ventaja es que es posible ubicar los datos en lugares donde
-se necesitan con más frecuencia, aunque también se permita a usuarios no locales
-acceder a los datos según sus necesidades. Esto hace que la información se recupere
-de forma más rápida y ágil en las ubicaciones locales. Además los sistemas trabajan
-en paralelo, lo cual permite balancear la carga en los servidores.
-Disponibilidad. En caso de que falle la base de datos de alguna localidad, el sistema
-no se colapsa, puede seguir funcionando excluyendo los datos de la localidad que
-haya fallado.
-Autonomía local. Un departamento puede controlar los datos que le pertenecen.
-Economía en la implantación. Es más barato crear una red de muchas máquinas
-pequeñas, que tener una sola máquina muy poderosa
-Modularidad. Se pueden modificar, agregar o quitar sistemas de la base de datos
-distribuida sin afectar a los demás sistemas (módulos).
++ **Rendimiento**. Una clara ventaja es que es posible ubicar los datos en lugares donde se necesitan con más frecuencia, aunque también se permita a usuarios no locales acceder a los datos según sus necesidades. Esto hace que la información se recupere de forma más rápida y ágil en las ubicaciones locales. Además los sistemas trabajan en paralelo, lo cual permite balancear la carga en los servidores.
++ **Disponibilidad**. En caso de que falle la base de datos de alguna localidad, el sistema no se colapsa, puede seguir funcionando excluyendo los datos de la localidad que haya fallado.
+
++ **Economía en la implantación**. Es más barato crear una red de muchas máquinas pequeñas, que tener una sola máquina muy poderosa.
++ **Modularidad**. Se pueden modificar, agregar o quitar sistemas de la base de datos distribuida sin afectar a los demás sistemas (módulos).
 
 > Desventajas
 
-Complejidad en el diseño de datos. Además de las dificultades que generalmente
-se encuentran al diseñar una base de datos, el diseño de una base de datos distribuida
-debe considerar la fragmentación, replicación y ubicación de los fragmentos en sitios
-específicos, se tiene que trabajar tomando en cuenta su naturaleza distribuida, por lo
-cual no podemos pensar en hacer joins que afecten a tablas de varios sistemas, etc.
-Complejidad técnica. Se debe asegurar que la base de datos sea transparente, se
-debe lidiar con varios sistemas diferentes que pueden presentar dificultades únicas.
-Economía en el mantenimiento. La complejidad y la infraestructura necesaria implica
-que se necesitará mayor mano de obra.
-Seguridad. Se debe trabajar en la seguridad de la infraestructura así como cada uno
-de los sistemas.
-Integridad. Se vuelve difícil mantener la integridad, aplicar las reglas de integridad a
-través de la red puede ser muy caro en términos de transmisión de datos.
-Falta de experiencia. Las bases de datos distribuidas son un campo relativamente
-nuevo y poco común por lo cual no existe mucho personal con experiencia o
-conocimientos adecuados.
-Carencia de estándares. Aún no existen herramientas o metodologías que ayuden a
-los usuarios a convertir un DBMS centralizado en un DBMS distribuido.
++ **Complejidad en el diseño de datos**. Además de las dificultades que generalmente se encuentran al diseñar una base de datos, el diseño de una base de datos distribuida
+debe considerar la fragmentación, replicación y ubicación de los fragmentos en sitios específicos, se tiene que trabajar tomando en cuenta su naturaleza distribuida, por lo cual no podemos pensar en hacer joins que afecten a tablas de varios sistemas, etc.
++ **Complejidad técnica**. Se debe asegurar que la base de datos sea transparente, se debe lidiar con varios sistemas diferentes que pueden presentar dificultades únicas.
++ **Economía en el mantenimiento**. La complejidad y la infraestructura necesaria implica que se necesitará mayor mano de obra.
++ **Seguridad**. Se debe trabajar en la seguridad de la infraestructura así como cada uno de los sistemas.
++ **Integridad**. Se vuelve difícil mantener la integridad, aplicar las reglas de integridad a través de la red puede ser muy caro en términos de transmisión de datos.
+
+# 6. Sistemas gestores de bases de datos.
+
+Un sistema gestor de bases de datos (SGBD) es una aplicación que permite a los usuarios definir, crear y mantener una base de datos, y proporciona acceso controlado a la misma.
+
+El objetivo fundamental de los SGBD es proporcionar eficiencia y seguridad a la hora de recuperar o insertar información en las bases de datos. Estos sistemas están diseñados para
+la manipulación de grandes bloques de información.
+
+En general, un SGBD proporciona los siguientes servicios:
+
++ Permite la **definición de la base de datos** mediante el lenguaje de definición de datos (**DDL – Data Description Language**). Este lenguaje permite especificar la estructura y el tipo de los datos, así como las restricciones sobre los datos. Todo esto se almacenará en la base de datos.
++ Permite la **inserción, actualización, eliminación y consulta de datos** mediante el lenguaje de manejo o manipulación de datos (**DML - Data Manipulation Language**).
++ Proporciona un acceso controlado a la base de datos mediante:
+  + Un sistema de seguridad, de modo que los usuarios no autorizados no puedan acceder a la base de datos, mediante el lenguaje de control de datos (**DCL - Data Control Language**);
+  + Un sistema de integridad que mantiene la integridad y la consistencia de los datos;
+  + Un sistema de control de concurrencia que permite el acceso compartido a la base de datos;
+  + Un sistema de control de recuperación que restablece la base de datos después de que se produzca un fallo del hardware o del software;
+  + Un diccionario de datos o catálogo accesible por el usuario que contiene la descripción de los datos de la base de datos.
+
+La principal herramienta de un SGBD es la interfaz de programación con el usuario. Esta interfaz consiste en un lenguaje muy sencillo mediante el cual el usuario interactua con el servidor. Este lenguaje comúnmente se denomina **SQL, Structure Query Language**, está estandarizado por la ISO 1, es decir, todas las BD que soporten SQL deben tener la misma sintaxis a la hora de aplicar el lenguaje.
