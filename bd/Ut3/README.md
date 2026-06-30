@@ -1,6 +1,15 @@
 # UT3 MODELO RELACIONAL <!-- omit in toc -->
 ---
+
 - [1. Introducción.](#1-introducción)
+- [2. Elementos y propiedades del modelo relacional](#2-elementos-y-propiedades-del-modelo-relacional)
+- [3. Transformación de un esquema E/R a esquema relacional.](#3-transformación-de-un-esquema-er-a-esquema-relacional)
+  - [3.1. Entidades.](#31-entidades)
+  - [3.2. Relaciones binarias.](#32-relaciones-binarias)
+    - [3.2.1. Relaciones N:M.](#321-relaciones-nm)
+    - [3.2.2 Relaciones 1:N.](#322-relaciones-1n)
+
+
 
 
 
@@ -70,7 +79,7 @@ Cada una de las entidades que participan genera una tabla. Además generamos otr
 
 Realicemos el paso a tablas de la relación N:M entre MÓDULO (1,n) y ALUMNO (1,n). Este tipo de relación siempre genera tabla y los atributos de la relación, pasan a la tabla que ésta genera.
 
-alumno(<u>num_expediente</u>,nombre,tlfno,fecha_nac)
+alumno([num_expediente](),nombre,tlfno,fecha_nac)
 
 modulo(<u>cod_modulo</u>,nombre)
 
