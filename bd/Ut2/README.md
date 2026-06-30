@@ -8,6 +8,13 @@
   - [2.1.1. Entidades fuertes.](#211-entidades-fuertes)
   - [2.1.2. Entidades débiles.](#212-entidades-débiles)
 - [2.2. Atributos.](#22-atributos)
+  - [2.2.1. Atributos Identificadores.](#221-atributos-identificadores)
+  - [2.2.2. Atributos descriptivos.](#222-atributos-descriptivos)
+  - [2.2.3. Atributos heredados.](#223-atributos-heredados)
+  - [2.2.4. Atributos compuestos.](#224-atributos-compuestos)
+  - [2.2.5. Atributos Multivaluados.](#225-atributos-multivaluados)
+    - [2.2.6. Atributos heredados por identidifacion.](#226-atributos-heredados-por-identidifacion)
+  - [2.3 Ejemplos de atributos.](#23-ejemplos-de-atributos)
 - [2.3. Relaciones.](#23-relaciones)
 
 
@@ -58,6 +65,85 @@ Se dice que una entidad es fuerte si puede existir por sí misma sin que dependa
 
 Si una entidad depende de la existencia de otra, será débil por existencia o por identificación.
 
+![Entidades Débiles](../img/2_entidadesDebiles.png)
+
+Vemos que **Factura** es una entidad fuerte, mientras que **LineaFactura** es debil, ya que una factura está compuesta por muchas **líneas de factura**, y por sí sola no podemos identificar a que factura corresponde esta línea.
+
+Vamos a visualizar con tablas:
+
+> Entidad Factura
+
+| ID Factura | Fecha | Cliente | ID Fiscal / NIF | Moneda | Total Factura |
+| :--- | :---: | :--- | :---: | :---: | :---: |
+| **FAC-001** | 2026-06-15 | Alimentos S.A. | A12345678 | EUR | 41,00 € |
+| **FAC-002** | 2026-06-18 | Tech Solutions | B87654321 | EUR | 185,00 € |
+| **FAC-003** | 2026-06-22 | Constructora Norte | A55566677 | EUR | 885,00 € |
+
+> Entidad Linea Factura
+
+| ID Línea | ID Factura  | Descripción Producto     | Cantidad | Precio Unitario | Total Línea |
+| :------: | :---------- | :----------------------- | :------: | :-------------: | :---------: |
+|  L-001   | **FAC-001** | Harina de trigo 1kg      |    10    |     1,50 €      |   15,00 €   |
+|  L-002   | **FAC-001** | Azúcar refinada 1kg      |    5     |     1,20 €      |   6,00 €    |
+|  L-003   | **FAC-001** | Aceite de girasol 1L     |    8     |     2,50 €      |   20,00 €   |
+|  L-004   | **FAC-002** | Ratón inalámbrico        |    2     |     25,00 €     |   50,00 €   |
+|  L-005   | **FAC-002** | Teclado mecánico         |    2     |     60,00 €     |  120,00 €   |
+|  L-006   | **FAC-002** | Alfombrilla XL           |    1     |     15,00 €     |   15,00 €   |
+|  L-007   | **FAC-003** | Cemento gris (saco)      |    50    |     7,00 €      |  350,00 €   |
+|  L-008   | **FAC-003** | Arena de río (m³)        |    3     |     45,00 €     |  135,00 €   |
+|  L-009   | **FAC-003** | Ladrillo cerámico (pack) |    5     |     80,00 €     |  400,00 €   |
+
+
 # 2.2. Atributos.
 
+Las entidades se representan mediante un conjunto de **atributos**. Éstos describen características o propiedades que posee cada miembro de un conjunto de entidades. El mismo atributo establecido para un conjunto de entidades o, lo que es lo mismo, para un tipo de entidad, almacenará información parecida para cada ocurrencia de entidad. Pero, cada ocurrencia de entidad tendrá su propio valor para cada atributo.
+
++ Representado con un circulo y el nombre del atributo.
++ Si el nombre es muy grande el nombre puede colocarse al lado del circulo. Si no podemos etiquetarlo dentro del circulo.
+
+## 2.2.1. Atributos Identificadores.
+
+También llamados como **clave principal** o *+*, estos atributos tienen la particularidad de no repetir valores dentro de la entidad y sirven para **identificar de forma univoca cada ocurrencia**. Tal como se aprecia en el gráfico anterior, el Documento es un identificador único debido a que este atributo identifica a cada cliente de manera única.
+
++ Se representa con un circulo relleno de negro.
+
+## 2.2.2. Atributos descriptivos.
+
+Los atributos descriptores son los más comunes que se pueden evidenciar en las entidades de un modelo entidad relación, estos atributos describen diversas propiedades de una entidad.
+
++ Se representa con un circulo en blanco.
+
+## 2.2.3. Atributos heredados.
+
+Estos atributos cuyos valores se calculan a partir de los valores de otros atributos. Por ejemplo, la edad se calcula a partir de la fecha de nacimiento y la fecha actual.
+
+## 2.2.4. Atributos compuestos.
+
+Un atributo compuesto es un atributo que puede ser descompuesto en otros atributos pertenecientes a distintos dominios. En muchas ocasiones un atributo compuesto puede ser un identificador de una entidad.
+
++ Se representa en forma de arbol los atributos compuestos.
+
+## 2.2.5. Atributos Multivaluados.
+
+Es un atributo que almacenan varios valores de un mismo dominio. En ocasiones se confunden con los atributos compuestos. Por ejemplo, las habilidades o teléfonos de un empleado.
+
++ Se representa con un `#`  al final nombre del atributo.
+
+### 2.2.6. Atributos heredados por identidifacion.
+
+Estos atributos son heredados de otra entidad cuando la relación entre ambas es por Identificación. Esto se verá más adelante.
+
++ Se representa con un circulo en gris.
+
+## 2.3 Ejemplos de atributos.
+
+![Tipos atributos](../img/2_tiposAtributos.png)
+
++ Clave principal: Dni.
++ Atributo descritptivo: Direccion.
++ Atributo Compuesto: Apellidos.
++ Atributo Multivaluado: Telefono.
++ Atributo heredado por Id; AñoNacimiento.
+
 # 2.3. Relaciones.
+
