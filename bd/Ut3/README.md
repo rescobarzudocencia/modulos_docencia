@@ -106,3 +106,4 @@ Realicemos el paso a tablas de la relación 1:N entre MÓDULO (1,1) y TEMA (1,n)
 modulo([codigo_modulo](#),nombre)
 tema([cod_tema](#),titulo,**cod_modulo**)
 
+
