@@ -5,5 +5,6 @@
 
 - [1. Introducción](Ut1/README.md)
   
+- [2. Modelo Entidad Relación](Ut2/README.md)  
 
 ---
