@@ -29,6 +29,8 @@
   - [6.3. Restricción de exclusión.](#63-restricción-de-exclusión)
   - [6.4. Restricción de inclusión.](#64-restricción-de-inclusión)
   - [6.5. Relaciones de Jeraquía.](#65-relaciones-de-jeraquía)
+    - [6.5.1. Tipos de relaciones de jerarquía.](#651-tipos-de-relaciones-de-jerarquía)
+    - [6.5.2. Ejemplos de relaciones de jerarquía.](#652-ejemplos-de-relaciones-de-jerarquía)
 
 
 
@@ -294,5 +296,44 @@ El modelo Entidad/Relación extendido incluye todo lo visto en el modelo Entidad
 
 Imaginemos, queremos hacer una BD sobre los animales de un Zoo. Tenemos las entidades ANIMAL, FELINO, AVE, REPTIL, INSECTO. FELINO, AVE, REPTIL e INSECTO tendrían el mismo tipo de relación con ANIMAL: «son un tipo de». Ahora bien, su representación mediante el E/R clásico sería bastante engorrosa:
 
+![E/R sin Jerarquía](../img/2_erSinJerarquia.png)
+
+Utilizando el modelo ERE el esquema anterior lo sustituimos por el siguiente que es mas facil de comprender.
+
+![E/R con Jerarquía](../img/2_erConJerarquia.png)
 
 
+### 6.5.1. Tipos de relaciones de jerarquía.
+
+Vamos a ver los distintos tipos de relaciones de jerarquía existentes:
+
++ **Total**: Subdividimos la entidad Empleado en: Ingeniero, Secretario y Técnico y en nuestra BD no hay ningún otro empleado que no pertenezca a uno de estos tres tipos.
++ **Parcial**: Subdividimos la entidad Empleado en: Ingeniero, Secretario y Técnico pero en nuestra BD puede haber empleados que no pertenezcan a ninguno de estos tres tipos.
++ **Solapada**: Subdividimos la entidad Empleado, en: Ingeniero, Secretario y Técnico y en nuestra BD puede haber empleados que sean a la vez Ingenieros y secretarios, o secretarios y técnicos, etc.
++ **Exclusiva**: Subdividimos la entidad Empleado en: Ingeniero, Secretario y Técnico. En nuestra BD ningún empleado pertenece a más de una subentidad.
+
+### 6.5.2. Ejemplos de relaciones de jerarquía.
+
+> **Jearquía solapda y parcial.**
+
+En esta BD un empleado podría ser simultáneamente técnico, científico y astronauta o técnico y astronauta, etc. (solapada). Además puede ser técnico, astronauta, científico o desempeñar otro empleo diferente (parcial).
+
+![Jerarquía Solapada Parcial](../img/2_jerarquiaSolapdaParcial.png)
+
+> **Jeraquía solapda y total.**
+
+En esta BD un empleado podría ser simultáneamente técnico, científico y astronauta o técnico y astronauta, etc. (solapada). Además puede ser solamente técnico, astronauta o científico (total).
+
+![Jerarquía solapada total](../img/2_jerarquiaSolapdaTotal.png)
+
+> **Jeraquía exclusiva y parcial.**
+
+En esta BD un empleado sólo puede desempeñar una de las tres ocupaciones (exclusiva) . Además puede ser técnico, o ser astronauta, o ser científico o también desempeñar otro empleo diferente, por ejemplo, podría ser FÍSICO (parcial).
+
+![Jerarquía exclusiva parcial](../img/2_jerarquiaExclusivaParcial.png)
+
+> **Jeraquía exclusiva y total.**
+
+Un empleado puede ser solamente técnico, astronauta o científico (total) y no ocupar más de un puesto (exclusiva).
+
+![Jerarquía exclusiva total](../img/2_jerarquiaExclusivaTotal.png)
