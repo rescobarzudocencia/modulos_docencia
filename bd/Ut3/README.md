@@ -65,7 +65,7 @@ Cada entidad se transforma en una tabla. El identificador (o identificadores) de
 
 Transformación de la Entidad AULA.
 
-aula(<u>cod_aula</u>,num_plazas,num_ordenadores)
+aula([cod_aula](#),num_plazas,num_ordenadores)
 
 ## 3.2. Relaciones binarias.
 
@@ -81,9 +81,9 @@ Realicemos el paso a tablas de la relación N:M entre MÓDULO (1,n) y ALUMNO (1,
 
 alumno([num_expediente](#),nombre,tlfno,fecha_nac)
 
-modulo(<u>cod_modulo</u>,nombre)
+modulo([cod_modulo](#),nombre)
 
-cursa(<u>**num_expediente,cod_modulo**</u>,nota)
+cursa([**num_expediente,cod_modulo**](#),nota)
 
 ### 3.2.2 Relaciones 1:N.
 
@@ -91,12 +91,18 @@ Podemos tener 2 casos:
 
 + **Caso 1**: Si la entidad del lado «1» presenta participación (0,1), entonces se crea una nueva tabla para la relación que incorpora como claves ajenas las claves de ambas entidades. La clave principal de la relación será sólo la clave de la entidad del lado «N».
   
- Realicemos el paso a tablas de la relación 1:N entre PROFESOR (1,n) y EMPRESA (0,1). Como en el lado «1» encontramos participación mínima 0, se generará una nueva tabla.
+ Realicemos el paso a tablas de la relación 1:N entre PROFESOR (1,n) y EMPRESA (0,1). Como en el lado «1» encontramos participación mínima 0, se generará una nueva tabla. Donde la clave principal es la clave principal de la entidad que participa con cardinalidad mínima 1. Si elegimos la de cardinalidad mínima 0, podemos obtener valores nulos, y una clave primaria no puede poseer valores nulos.
 
-empresa(<u>cod_empresa</u>,nombre)
+empresa([cod_empresa](#),nombre)
 
-profesor(<u>dni</u>,nombre,tlfno,direccion)
+profesor([dni](#),nombre,tlfno,direccion)
 
-trabaja(<u>**dni_profesor**</u>,**cod_empresa**)
+trabaja([**dni_profesor**](#),**cod_empresa**)
 
 + **Caso 2**: Para el resto de situaciones, la entidad del lado «N» recibe como clave ajena la clave de la entidad del lado «1». Los atributos propios de la relación pasan a la tabla donde se ha incorporado la clave ajena.
+
+Realicemos el paso a tablas de la relación 1:N entre MÓDULO (1,1) y TEMA (1,n). Como no hay participación mínima «0» en el lado 1, no genera tabla y la clave principal del lado «1» pasa como foránea al lado «n».
+
+modulo([codigo_modulo](#),nombre)
+tema([cod_tema](#),titulo,**cod_modulo**)
+
