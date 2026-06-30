@@ -72,6 +72,8 @@ x = funcion(x)
 print(x) #3.5
 print(type(x)) #<class 'float'> 
 ``` 
+![9 Librerias](../img/9librariasPython.jpg) 
+![100 Librerias](../img/libreriasPython.jpg)
 
 # 2. Instalación de Python
 La forma más recomendable es la instalación desde la página oficial de Python, aunque muchas distribuciones Linux ya vienen con la versión 3 instalada.

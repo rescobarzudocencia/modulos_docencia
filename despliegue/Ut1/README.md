@@ -46,6 +46,8 @@ Opciones de alojamiento
 + **Proveedores Cloud**: Para configuraciones avanzadas, proveedores como Amazon Web Services (AWS), Google Cloud o Microsoft Azure ofrecen infraestructuras escalables, máquinas virtuales y contenedores (Docker).
   
 + **Servidores VPS/Dedicalos**: Control total sobre la máquina con servicios como DigitalOcean o Linode.
+
+![Servidores gratis](../img/servidoresGratis.jpg)
   
 # 4. DNS.
 
@@ -116,5 +118,6 @@ Ejemplo:
 
 ![Puertos Importantes.](../img/puertos.jpeg)
 
+![Capas Puertos y Protocolos.](../img/appPuertosProtocolos.jpg)
 
 [Listado de puertos Wikipedia](https://es.wikipedia.org/wiki/Anexo:Puertos_de_red).
