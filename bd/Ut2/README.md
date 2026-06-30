@@ -23,6 +23,7 @@
     - [5.1.4. Atributos en una relación.](#514-atributos-en-una-relación)
   - [5.2. Rol de las entidades en las relaciones.](#52-rol-de-las-entidades-en-las-relaciones)
   - [5.3. Cardinalidades de las relaciones y la participación de las entidades.](#53-cardinalidades-de-las-relaciones-y-la-participación-de-las-entidades)
+  - [5.4. Relaciones de dependencia.](#54-relaciones-de-dependencia)
 - [6. El modelo E/R Extenido.](#6-el-modelo-er-extenido)
   - [6.1. Interrelacion de exclusividad.](#61-interrelacion-de-exclusividad)
   - [6.2. Interrelacion de inclusividad.](#62-interrelacion-de-inclusividad)
@@ -261,6 +262,26 @@ Cardinalidades:
 ![Cardinalidad N:N](../img/2_cardinalidadnn.png)
 
 Un empleado «trabaja» como mínimo 1 departamento y como máximo puede trabajar en varios. Ese varios se representa con la letra «n» → Participación(1,n) y se pone en el lado opuesto a EMPLEADO, es decir, junto a DEPARTAMENTO. Un departamento «tiene» como mínimo por 1 empleado y como máximo puede tener varios → Participación (1,n) y se pone en el lado opuesto a DEPARTAMENTO, es decir, junto a EMPLEADO. Para determinar la cardinalidad nos quedamos con las dos participaciones máximas y la «n» se pone en mayúsculas «N» y para diferenciar el otro «varios» en lugar de «N» ponemos «M» (Igual que cuando en matemáticas había dos variables no se ponía x e x sino x e y). Es decir → N:M.
+
+## 5.4. Relaciones de dependencia.
+
+Al definir las entidades hablamos de dos tipos de ellas: fuertes y débiles. Una entidad débil está unida a una entidad fuerte a través de una relación de dependencia. Hay dos tipos de relaciones de dependencia:
+
+> **Dependencia por existencia**.
+
+Se produce cuando una entidad débil necesita de la presencia de una fuerte para existir. Si desaparece la existencia de la entidad fuerte, la de la débil carece de sentido. La entidad debil puede identificarse sin necesidad de la clave principal de la entidad fuerte. Se representa con una barra atravesando el rombo y la letra `E` en su interior. Son relaciones poco frecuentes.
+
+![Relación exitencia](../img/2_relacionExistencia.png)
+
+En la figura se muestra el caso de que un empleado puede tener ninguno, uno o varios hijos, por lo que los datos de los hijos deben sacarse en una entidad aparte, aunque siguen siendo datos propios de un empleado. Si se eliminase un registro de un empleado, no tendría sentido seguir manteniendo en la base datos la información sobre sus hijos.
+
+> **Dependencia por identificación**.
+
+Se produce cuando una entidad débil necesita de la fuerte para identificarse. Por sí sola la débil no es capaz de identificar de manera unívoca sus ocurrencias. La clave de la entidad débil se forma al unir la clave de la entidad fuerte con los atributos identificadores de la entidad débil. Se representa con una barra atravesando el rombo y las letras `ID` en su interior. 
+
+![Relación identificación](../img/2_relacionIdentificacion.png)
+
+En la figura se observa que la provincia tiene uno o varios municipio y que un municipio pertenece a una sola provincia. Ahora bien si lo que identifica a los municipios es el código que aparece en el código postal, se tiene que las dos primeras cifras corresponden al código de la provincia y las tres últimas al del municipio. Por ejemplo, el C.P de Écija es 41400, dónde 41 es el código de la provincia y 400 el del municipio. De esta forma, habrá distintos municipios con código 400 en distintas provincias. Uno de estos municipios se distinguirá del resto al anteponerle las dos primeras cifras correspondientes al código de la provincial.
 
 # 6. El modelo E/R Extenido.
 
