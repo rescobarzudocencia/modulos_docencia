@@ -20,6 +20,7 @@
   - [9.1. Usuarios en Linux.](#91-usuarios-en-linux)
     - [9.1.1. Instalación de MariaDb.](#911-instalación-de-mariadb)
     - [9.1.2. Gestión de usuarios.](#912-gestión-de-usuarios)
+    - [9.1.3. Eliminar usuarios.](#913-eliminar-usuarios)
   - [9.2. Usuarios en Windows, Mysql Workbench.](#92-usuarios-en-windows-mysql-workbench)
 
 
@@ -479,11 +480,80 @@ Nos debe aparecer:
 
 ![Configuracion mariadb9](../img/4_mariadb9.png)
 
-
 ### 9.1.2. Gestión de usuarios.
 
+Por ahora hemos hecho todo como usuario root, con acceso completo a todas las bases de datos. A veces hay casos donde hay más restricciones que pueden ser requeridas, así que debemos conocer las formas de crear usuarios con permisos personalizados.
 
+> Crear usuarios
 
+Vamos a empezar por crear un usuario nuevo desde la consola de MySQL:
+
+```sql
+CREATE USER nombre_usuario@localhost IDENTIFIED BY 'tu_contrasena';
+```
+
+Si queremos ver los usuarios que hay podemos usar:
+
+```sql
+select User from mysql.user;
+```
+Si queremos ver las bases de datos creadas.
+
+```sql
+select databases;
+```
+
+El nuevo usuario no tiene permisos para hacer algo con las bases de datos. Por consecuencia si el usuario intenta identificarse (con la contraseña establecida), no será capaz de acceder a la consola de MySQL.
+
+Por ello, lo primero que debemos hacer es proporcionarle el acceso requerido al usuario con la información que requiere.
+
++ **GRANT** da privilegios.
+
+```sql
+GRANT ALL PRIVILEGES ON * . * TO 'nombre_usuario'@'localhost';
+```
+Los asteriscos en este comando hacen referencia a la base de datos y la tabla (respectivamente) a la cual el nuevo usuario tendrá acceso; específicamente este comando permite al usuario leer, editar, ejecutar y realizar todas las tareas en todas las bases de datos y tablas.
+
+Una vez que has finalizado con los permisos que deseas configurar para tus nuevos usuarios, hay que asegurarse siempre de refrescar todos los privilegios.
+
+```sql
+FLUSH PRIVILEGES;
+```
+> Ejemplos
+
+```sql
+-- Damos todos los privilegios al usuario administrador a todas las bases de datos y tablas, con contraseña jose.
+GRANT ALL PRIVILEGES ON *.* to administrador@localhost IDENTIFIED BY ‘JOSE’;
+-- Damos permisos de selec, insert y update a la base de datos facturacion y todas las tablas de la misma al usuario web concontraseña jose.
+GRANT SELECT, INSERT, UPDATE ON facturacion.* to web@localhost IDENTIFIED BY ‘jose’;
+-- Damos permisos select, insert y update a la base de datos facturacion y la tabla clientes al usuario comercial con contraseña Mercedes.
+GRANT SELECT, INSERT, UPDATE ON facturacion.clientes to comercial@localhost IDENTIFIED BY ‘Mercedes’;
+```
+Aquí podemos ver una pequeña lista de los posibles permisos que los usuarios pueden gozar.
+
++ **ALL PRIVILEGES**: esto permite a un usuario de MySQL acceder a todas las bases de datos asignadas en el sistema.
++ **CREATE**: permite crear nuevas tablas o bases de datos.
++ **DROP**: permite eliminar tablas o bases de datos.
++ **DELETE**: permite eliminar registros de tablas.
++ **INSERT**: permite insertar registros en tablas.
++ **SELECT**: permite leer registros en las tablas.
++ **UPDATE**: permite actualizar registros seleccionados en tablas.
+
+Para eliminar privilegios.
+
++ **REVOKE** quita privilegios,, funciona como GRANT.
+
+```sql
+REVOKE ALL PRIVILEGES ON *.* FROM administrador@localhost;
+```
+
+### 9.1.3. Eliminar usuarios.
+
+Así como puedes borrar bases de datos con DROP, también puedes usar el comando DROP para borrar usuarios:
+
+```sql
+DROP USER ‘usuario_prueba’@‘localhost’;
+```
 
 ## 9.2. Usuarios en Windows, Mysql Workbench.
 
