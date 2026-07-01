@@ -17,6 +17,10 @@
 - [7. Modificación de las tablas.](#7-modificación-de-las-tablas)
 - [8. Vistas.](#8-vistas)
 - [9. Gestión de Usuarios.](#9-gestión-de-usuarios)
+  - [9.1. Usuarios en Linux.](#91-usuarios-en-linux)
+    - [9.1.1. Instalación de MariaDb.](#911-instalación-de-mariadb)
+    - [9.1.2. Gestión de usuarios.](#912-gestión-de-usuarios)
+  - [9.2. Usuarios en Windows, Mysql Workbench.](#92-usuarios-en-windows-mysql-workbench)
 
 
 
@@ -374,4 +378,112 @@ ALTER TABLE nombre_tabla DISABLE CONSTRAINT restricción;
 
 # 8. Vistas.
 
+Las vistas permiten definir subconjuntos de datos formados con una o varias tablas y/o vistas. Tiene la apariencia de una tabla, pero ocupa menos espacio que éstas ya que solo se almacena la definición de la vista y no los datos que la forman. Gracias a las vistas podemos mostrar a los usuarios una visión parcial de los datos, de modo que podamos mostrar a los usuarios sólo aquellos datos que son de su interés.
+
+> Crear Vistas.
+
+```sql
+create view nombreVistas as subconsulta;
+
+Ejemplo:
+
+CREATE VIEW antonios AS
+SELECT nombre, apellido1, apellido2, edad FROM personas
+WHERE nombre = ‘ANTONIO’;
+```
+
+> Modificar Vistas.
+
+Sólo se utiliza la instrucción **ALTER VIEW** para recompilar explícitamente una vista que no es válida. Si desea cambiar la definición de una vista se debe ejecutar la sentencia **CREATE OR REPLACE nombre_vista**.
+
+> Borrado de Vistas.
+
+```sql
+drop view nombreVistas;
+```
+
 # 9. Gestión de Usuarios.
+
+Por ahora hemos hecho todo como usuario root, con acceso completo a todas las bases de datos. A veces hay casos donde hay más restricciones que pueden ser requeridas, así que debemos conocer las formas de crear usuarios con permisos personalizados.
+
+## 9.1. Usuarios en Linux.
+
+En este apartado vamos a centrarnos en la configuración de los usuarios en consola, para ello vamos a instalar MariaDb y realizar alli las tareas de administración de los usuarios.
+
+### 9.1.1. Instalación de MariaDb.
+
+Lo primero que tenemos que hacer es actualizar los repositorios y actualizar el sistema con el comando:
+
+```bash
+sudo apt update && sudo apt upgrade
+```
+
+Una vez finalizado procedemos a instalar el Servidor MariaDB
+
+```bash
+sudo apt install mariadb-server
+```
+
+Cuando termine la instalación ejecutamos un script para mejorar la instalación y la seguridad. Se pedirá establecer una contraseña para el usuario root, eliminar usuarios anónimos, deshabilitar el inicio de sesión remoto del root y eliminar bases de datos de prueba.
+
+```bash
+sudo mysql_secure_installation
+```
+
+Comenzara el script donde ira mostrando las siguientes pantallas:
+
+![Configuracion maiadb1](../img/4_mariadb1.png)
+
+Pulsamos Enter o Intro, al no poseer contraseña.
+
+![Configuracion maiadb2](../img/4_mariadb2.png)
+
+Pulsamos **n**.
+
+![Configuracion maiadb3](../img/4_mariadb3.png)
+
+Pulsamos **Y** y nos pide la contraseña de root, nos la pedirá 2 veces.
+
+![Configuracion maiadb4](../img/4_mariadb4.png)
+
+Eliminamos usuarios anónimos pulsamos **Y**.
+
+![Configuracion maiadb5](../img/4_mariadb5.png)
+
+Para deshabilitar el acceso de root remoto, conexión desde otra máquina. Por seguridad se deshabilita **Y**.
+
+![Configuracion maiadb6](../img/4_mariadb6.png)
+
+Eliminar las bases de datos de test **Y**.
+
+![Configuracion maiadb7](../img/4_mariadb7.png)
+
+Actualizamos los privilegios de las tablas **Y**.
+
+Para comprobar que hemos configurado bien ejecutamos
+
+```bash
+mysql -u root -p
+```
+Introducimos la contraseña y nos debe aparecer lo siguiente:
+
+![Configuracion mariadb8](../img/4_mariadb8.png)
+
+Como se ha visto anteriormente, vamos a ver los usuarios creados en nuestro servidor mediante la sentencia:
+
+```sql
+select User from mysql.user;
+```
+
+Nos debe aparecer:
+
+![Configuracion mariadb9](../img/4_mariadb9.png)
+
+
+### 9.1.2. Gestión de usuarios.
+
+
+
+
+## 9.2. Usuarios en Windows, Mysql Workbench.
+
