@@ -181,8 +181,49 @@ Las 3 soluciones posibles que podemos aplicar son las siguientes:
 
 #### 3.2.7.1. Ejemplo de especialización exclusiva/total.
 
+En este caso sería adecuado utilizar la solución 2 o 3. También sería posible utilizar la solución 1, pero al tratarse de una especialización exlusiva, tendríamos muchas columnas con valores NULL.
+
+![Ejemplo especialización exlusiva total](../img/3_ejemploEspecializacionExclusivaTotal.png)
+
+> Solución 2: Crear una tabla sólo para las subclases.
+
+episodio([id](#), título, sinopsis, imagen, archivo_vídeo, duración temporada, número)
+
+pelicula([id](#), título, sinopsis, imagen, archivo_vídeo, duración puntuación_imdb, director)
+
+> Solución 3: Crear una tabla para cada una de las entidades.
+
+video([id](#), título, sinopsis, imagen, archivo_vídeo, duración, tipo)
+
+episodio([**id**](#), temporada, número)
+
+pelicula([**id**](#),, puntuación_imdb, director)
+
 
 #### 3.2.7.2. Ejemplo de especialización inclusiva/total.
+
+En este caso podríamos utilizar cualquiera de las tres soluciones, dependerá del contexto del ejercicio y de cómo se relacionen estas entidades con el resto de entidades del diagrama.
+
+![Ejemplo especializacion inclusiva total](../img/3_ejemploEspecializacionInclusivaTotal.png)
+
+> Solución 1. Crear una única tabla para la superclase.
+
+libro([id](#), título, isbn, año_publicación, descripción, tipo, lugar_impresión, fecha_impresión, precio_papel, tamaño_archivo, precio_ebook)
+
+> Solución 2: Crear una tabla sólo para las subclases.
+
+libro_papel([id](#), título, isbn, año_publicación, descripción, lugar_impresión, fecha_impresión, precio)
+
+libro_ebook([id](#), título, isbn, año_publicación, descripción, tamaño_archivo, precio)
+
+> Solución 3: Crear una tabla para cada una de las entidades.
+
+libro([id](#), título, isbn, año_publicación, descripción, tipo)
+
+libro_papel([**id**](#), fecha_impresión, precio)
+
+libro_ebook([**id**](#), tamaño_archivo, precio)
+
 
 
 # 4. Normalización.
