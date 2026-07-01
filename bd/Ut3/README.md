@@ -22,7 +22,10 @@
     - [4.2.2. Dependencia funcional completa o total.](#422-dependencia-funcional-completa-o-total)
     - [4.2.3. Dependencia funcional transitiva.](#423-dependencia-funcional-transitiva)
   - [4.3. Formas Normales.](#43-formas-normales)
-    - [4.3.1. Primera Forma Normal: 1FN.](#431-primera-forma-normal-1fn)
+    - [4.3.1. Primera Forma Normal 1FN.](#431-primera-forma-normal-1fn)
+    - [4.3.2. Segunda Forma Normal 2FN.](#432-segunda-forma-normal-2fn)
+    - [4.3.3. Tercera Forma Normal 3FN.](#433-tercera-forma-normal-3fn)
+    - [4.3.4. Forma Normal de Boyce-Codd FNBC.](#434-forma-normal-de-boyce-codd-fnbc)
 
 
 
@@ -309,7 +312,7 @@ Existen las siguientes dependencias:
 
 ## 4.3. Formas Normales.
 
-### 4.3.1. Primera Forma Normal: 1FN.
+### 4.3.1. Primera Forma Normal 1FN.
 
 Una relación está en 1FN si y sólo só cada atributo es atómico.
 
@@ -336,6 +339,7 @@ Vemos que esta tabla no cumple la 1FN, ya que telefonos no es atómico.
 Aplicamos el proceso de 1FN
 
 Tabla Alumnos
+
 | id_alumno | nombre |
 | --------- | ------ |
 | 1         | Juan   |
@@ -352,3 +356,183 @@ Tabla Telefonos
 | 3         | 611444444 |
 | 3         | 622555555 |
 | 3         | 633666666 |
+
+### 4.3.2. Segunda Forma Normal 2FN.
+
+La Segunda Forma Normal trata de relaciones entre los atributos clave y los atributos no clave.
+
+**Una tabla está en Segunda Forma Normal** si **está en 1FN** y **además cada atributo que no forma parte de la clave primaria depende completamente de la clave primaria de la tabla**. La comprobación sólo hay que hacerla cuando la clave primaria está compuesta por varios atributos.
+
+> [!note]
+> Si la clave principal no es compuesta, formada por mas de un atributo la relación está en 2FN.
+
+> **Pasos a seguir para pasar las tablas a 2FN**.
+ 
+1. Se comprueba que todas estén en 1FN.
+2. Se crea una primera tabla con la clave de la inicial y todos los atributos que tienen una dependencia funcional total con ella.
+3. Se crea una segunda tabla para los atributos que no dependan de la totalidad de la clave compuesta.
+4. El identificador o clave primaria de la nueva tabla será la parte de la clave compuesta de que dependen el atributo o atributos seleccionados.
+  
+> **Ejemplo** : 
+
+Vemos que esta tabla no cumple la 2FN. 
+
+Tabla Matriculas.
+
+| id_alumno | id_asignatura | nombre_alumno | nombre_asignatura | nota |
+| --------- | ------------- | ------------- | ----------------- | ---- |
+| A01       | BD            | Juan          | Bases de Datos    | 8    |
+| A01       | PRO           | Juan          | Programación      | 9    |
+| A02       | BD            | Ana           | Bases de Datos    | 7    |
+| A02       | PRO           | Ana           | Programación      | 6    |
+
+Clave primaria: (id_alumno,id_asignatura).
+
+Problema
+
++ nombre_alumno depende únicamente de id_alumno.
++ nombre_asignatura depende únicamente de id_asignatura.
++ Solo nota depende de la clave completa (id_alumno, id_asignatura).
+
+Por tanto, la tabla no cumple la Segunda Forma Normal.
+
+Una vez aplicado 2FN.
+
+Tabla Alumnos.
+
+| id_alumno | nombre_alumno |
+| --------- | ------------- |
+| A01       | Juan          |
+| A02       | Ana           |
+
+Tabla Asignatura.
+
+| id_asignatura | nombre_asignatura |
+| ------------- | ----------------- |
+| BD            | Bases de Datos    |
+| PRO           | Programación      |
+
+Tabla Matricula.
+
+| id_alumno | id_asignatura | nota |
+| --------- | ------------- | ---- |
+| A01       | BD            | 8    |
+| A01       | PRO           | 9    |
+| A02       | BD            | 7    |
+| A02       | PRO           | 6    |
+
+### 4.3.3. Tercera Forma Normal 3FN.
+
+Una tabla está en T**ercera Forma Normal (3FN)** cuando está en 2FN y todo atributo que no forma parte de la clave primaria **depende de la clave de forma no transitiva**. La 3FN elimina las dependencias transitivas de los atributos de una tabla respecto de la clave primaria. Es decir, **no hay dependencia funcional entre dos atributos no clave**.
+
+> [!note]
+> No está en 3FN, cuando dentro de una tabla tenemos una subtabla.
+
+
+> **Pasos a seguir para pasar las tablas a 3FN**.
+
+1. Se comprueba que está en 2FN.
+2. Por cada atributo que dependa de otro que no sea clave, se crea una nueva tabla (si no existe) a la que se le pasan esos atributos, con clave del atributo del cual dependían. Este atributo se queda en la primera tabla como clave ajena.Si la nueva tabla sigue sin estar en 3FN se repite el proceso de nuevo hasta que obtengamos una 3FN.
+
+> **Ejemplo** : 
+
+La tabla Empleados no cumple la 3FN.
+
+Tabla Empleados.
+
+| id_empleado | nombre | id_departamento | nombre_departamento |
+| ----------- | ------ | --------------- | ------------------- |
+| 1           | Juan   | D01             | Informática         |
+| 2           | Ana    | D02             | Ventas              |
+| 3           | Pedro  | D01             | Informática         |
+| 4           | María  | D03             | Recursos Humanos    |
+
+Clave primaria: id_empleado
+
+Problema
+
++ nombre depende de id_empleado.
++ id_departamento depende de id_empleado.
++ nombre_departamento depende de id_departamento, no de id_empleado.
+
+```
+id_empleado
+      │
+      ▼
+id_departamento
+      │
+      ▼
+nombre_departamento
+```
+Una vez aplicado 3FN.
+
+Tabla Departmentos.
+
+| id_departamento | nombre_departamento |
+| --------------- | ------------------- |
+| D01             | Informática         |
+| D02             | Ventas              |
+| D03             | Recursos Humanos    |
+
+Tabla Empleados.
+
+| id_empleado | nombre | id_departamento |
+| ----------- | ------ | --------------- |
+| 1           | Juan   | D01             |
+| 2           | Ana    | D02             |
+| 3           | Pedro  | D01             |
+| 4           | María  | D03             |
+
+### 4.3.4. Forma Normal de Boyce-Codd FNBC.
+
+Una Relación esta en FNBC si está en 3FN y no existe solapamiento de claves candidatas. Solamente hemos de tener en cuenta esta forma normal cuando tenemos varias claves candidatas compuestas y existe solapamiento entre ellas. Pocas veces se da este caso.
+
+> **Ejemplo** : 
+
+La tabla Matriculas no cumple FNBC.
+
+Tabla Matriculas.
+
+| alumno | asignatura     | profesor |
+| ------ | -------------- | -------- |
+| Juan   | Bases de Datos | García   |
+| Pedro  | Bases de Datos | García   |
+| Ana    | Programación   | López    |
+| Luis   | Programación   | López    |
+
+La clave primaria es: (alumno, asignatura)
+
+Pero además existe la dependencia: profesor → asignatura
+
+Porque cada profesor imparte una única asignatura.
+
+Por ejemplo:
+
+García → Bases de Datos
+López → Programación
+
+No cumple FNBC
+
+Aunque la tabla cumple la 3FN, aparece esta dependencia:
+
+profesor → asignatura
+
+Sin embargo, profesor no es una clave candidata de la tabla.
+
+Despues de aplicar FNBC
+
+Tabla profesores.
+
+| profesor | asignatura     |
+| -------- | -------------- |
+| García   | Bases de Datos |
+| López    | Programación   |
+
+Tabla matriculas
+
+| alumno | profesor |
+| ------ | -------- |
+| Juan   | García   |
+| Pedro  | García   |
+| Ana    | López    |
+| Luis   | López    |
