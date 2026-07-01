@@ -9,6 +9,14 @@
   - [3.2. Tipos de dato con formato fecha.](#32-tipos-de-dato-con-formato-fecha)
   - [3.3. Tipos de dato con formato string.](#33-tipos-de-dato-con-formato-string)
 - [4. Creación de la base de datos.](#4-creación-de-la-base-de-datos)
+  - [4.1. Cotejamiento de la base de datos.](#41-cotejamiento-de-la-base-de-datos)
+- [5. Creación de las tablas.](#5-creación-de-las-tablas)
+  - [5.1. CONSTRAINT (Restricciones)](#51-constraint-restricciones)
+  - [5.2. Nombrar restricciones.](#52-nombrar-restricciones)
+- [6. Borrado de las tablas.](#6-borrado-de-las-tablas)
+- [7. Modificación de las tablas.](#7-modificación-de-las-tablas)
+- [8. Vistas.](#8-vistas)
+- [9. Gestión de Usuarios.](#9-gestión-de-usuarios)
 
 
 
@@ -22,7 +30,7 @@ SQL posee dos características muy apreciadas, potencia y versatilidad, que cont
 
 El lenguaje SQL está compuesto por comandos, cláusulas, operadores, funciones y literales. Todos estos elementos se combinan en las instrucciones y se utilizan para crear, actualizar y manipular bases de datos. 
 
-En SQL no se distingue entre mayúsculas y minúsculas. Da lo mismo como se escriba. El final de una instrucción o sentencia lo marca el signo de punto y coma.
+En SQL no se distingue entre mayúsculas y minúsculas. Da lo mismo como se escriba. El final de una instrucción o sentencia lo marca el signo de **punto y coma**.
 
 Las sentencias SQL (SELECT, INSERT, …) se pueden escribir en varias líneas siempre que las palabras no sean partidas. Los comentarios en el código SQL pueden ser de 2 tipos:
 
@@ -112,3 +120,258 @@ create database nombreBaseDatos;
 ```sql
 drop database nombreBaseDatos;
 ```
+> Ver las bases de datos creadas.
+
+```sql
+show databases;
+```
+> Usar una base de datos para usarla.
+
+```sql
+use nombreBaseDatos;
+```
+Como vamos a trabajar con scripts, donde vamos a tener la creación de la base de datos, la creación de las tablas y la inserción de los datos. Lo conveniente es borrar la base de datos primero si existe, para ello utilizaremos:
+
+```sql
+DROP DATABASE IF EXISTS nombreBaseDatos;
+```
+
+## 4.1. Cotejamiento de la base de datos.
+
+El cotejamiento de una base de datos es un conjunto de reglas que define cómo se comparan y ordenan los caracteres y cadenas de texto, como la distinción entre mayúsculas y minúsculas, o el orden de los acentos y letras especiales como la 'ñ'. Determina el juego de caracteres y la configuración específica que se usará para el contenido de la base de datos, como el uso de **utf8_spanish_ci** para español. 
+
+El cotejamiento de la base de datos afecta a:
+
++ **Comparación de caracteres**: Define cómo se tratan las diferencias entre caracteres. Por ejemplo, si el cotejamiento es "sensible a mayúsculas" (_cs), "A" y "a" se consideran diferentes, mientras que si es "insensible a mayúsculas" (_ci), se tratan como iguales.
++ **Orden de los caracteres**: Establece el orden para ordenar datos alfabéticamente. Un cotejamiento puede colocar la 'ñ' entre la 'n' y la 'o', o tratarla como una letra separada, lo que afecta la forma en que se ordenan las palabras.
++ **Consideraciones del idioma**: Es crucial para manejar correctamente el contenido en diferentes idiomas. Un cotejamiento específico para español, como utf8_spanish_ci, incluye reglas para caracteres como la 'ñ' y las vocales acentuadas.
++ **Configuración**: Se establece al crear la tabla o la base de datos y se puede modificar después, aunque es importante hacerlo con cuidado para evitar problemas de compatibilidad. 
+
+> Ejemplo:
+
+```sql
+CREATE DATABASE IF NOT EXISTS `carnea` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+```
+# 5. Creación de las tablas.
+
+Los objetos básicos con los que trabaja SQL son las tablas, que como ya sabemos es un conjunto de filas y columnas cuya intersección se llama celda. Es ahí donde se almacenarán los elementos de información, los datos que queremos recoger. Antes de crear la tabla es conveniente planificar algunos detalles: 
+
++ Qué nombre le vamos a dar a la tabla. 
++ Qué nombre le vamos a dar a cada una de las columnas. 
++ Qué tipo y tamaño de datos vamos a almacenar en cada columna. 
++ Qué restricciones tenemos sobre los datos. 
++ Alguna otra información adicional que necesitemos. 
+
+La sintaxis básica del comando que permite crear una tabla es la siguiente: 
+
+```sql
+CREATE TABLE nombre_tabla (
+  columna1  tipo_dato  [ restricciones de columna1 ],
+  columna2  tipo_dato  [ restricciones de columna2 ],
+  columna3  tipo_dato  [ restricciones de columna3 ],
+  ...
+  [ restricciones de tabla ]
+);
+```
+
+Donde las restricciones de la columna son:
+
+```sql
+CONSTRAINT nombre_restricción {
+  [NOT] NULL | UNIQUE | PRIMARY KEY | DEFAULT valor | CHECK (condición)
+}
+```
+Y las restricciones de la tabla son:
+
+```sql
+CONSTRAINT nombre_restricción {
+  PRIMARY KEY (columna1 [,columna2] ... )
+| UNIQUE (columna1 [,columna2] ... )
+| FOREIGN KEY (columna1 [,columna2] ... )
+    REFERENCES nombre_tabla (columna1 [,columna2] ... )
+    [ON DELETE {CASCADE | SET NULL}]
+| CHECK (condición)
+}
+```
+## 5.1. CONSTRAINT (Restricciones)
+
+El significado de las distintas restricciones:
+
++ **NOT NULL**: no puede tomar valores nulos.
++ **UNIQUE**: el atributo o atributos no podrá tener valores duplicados.
++ **PRIMARY KEY**: indica que el atributo o atributos es la clave primaria. La clave primaria ya lleva implícito no tomar valores nulos ni duplicados.
++ **FOREIGN KEY**: indica que el atributo o atributos actúan como clave foránea de la clave principal de la tabla, viene siempre acompañada de **REFERENCES**.
++ **REFERENCES**: para indicar a qué clave principal de qué tabla hace referencia la clave foránea.
++ **ON DELETE CASCADE**:  acompaña a **FOREIGN KEY** y **REFERENCES** , e indica que al eliminar una fila de la tabla principal, se eliminen automáticamente todas las filas relacionadas en las tablas secundarias.
++ **CHECK**: indicar restricciones en un conjunto de valores que pueda tomar un atributo de una tabla.
++ **AUTO_INCREMENT**: indica que el campo se incrementa automáticamente, por defecto comienza en 1. Si queremos que comience en una cantidad específica hay que indicarlo con  **ALTER TABLE nombre_tabla AUTO_INCREMENT=numero**;
++ **DISABLE**: desactiva temporalmente el **CONSTRAINT**.
++ **ENABLE**: activa un CONSTRAINT no activo.
+
+
+Para la creación de las restricciones podemos usar los operadors de la tabla, en los ejemplos veremos como se usan:
+
+|Operador|Descripcion|
+|--------|-----------|
+|<       | menor que|
+|>       | mayor que |
+|<>      | distinto |
+|<=      | menor o igual|
+|>=      | mayor o igual|
+|=       | igual   |
+|BETWEEN | especifica un intervalo de valores| 
+|LIKE    | se utiliza para comparar |
+|IN      | se utiliza para especificar si unos datos estan en un conjunto|
+
+
+## 5.2. Nombrar restricciones.
+
+Para nombrar las restricciones podemos seguir los siguientes criterios:
+
+Para la Restricción de Clave principal (solo una en cada tabla):
+```sql
+CONSTRAINT tabla_campo_pk PRIMARY KEY ...
+```
+Para Restricciones de Clave foránea (puede haber varias en cada tabla):
+```sql
+CONSTRAINT tabla_campo_fk1 FOREING KEY ...
+CONSTRAINT tabla_campo_fk2 FOREING KEY ...
+CONSTRAINT tabla_campo_fk3 FOREING KEY ...
+```
+Para Restricciones de tipo CHECK (puede haber varias en cada tabla)
+```sql
+CONSTRAINT tabla_campo_ck1 CHECK ...
+CONSTRAINT tabla_campo_ck2 CHECK ...
+```
+Para Restricciones de tipo UNIQUE (puede haber varias en cada tabla)
+```sql
+CONSTRAINT tabla_campo_uq1 UNIQUE ...
+CONSTRAINT tabla_campo_uq2 UNIQUE ...
+```
+
+> Ejemplos :
+
+```sql
+CREATE TABLE COCHES (
+  matricula             VARCHAR2(8),
+  marca                 VARCHAR2(15) NOT NULL,
+  color                 VARCHAR2(15),
+  codTaller             VARCHAR2(10),
+  codProp               VARCHAR2(10),
+  CONSTRAINT coches_mat_pk PRIMARY KEY (matricula),
+  CONSTRAINT coches_codtaller_fk1 FOREIGN KEY (codTaller)
+      REFERENCES TALLER(codTaller),
+  CONSTRAINT coches_codprop_fk2 FOREIGN KEY (codProp)
+      REFERENCES PROPIETARIO(codProp),
+  CONSTRAINT coches_color_ck1
+      CHECK (color IN ('ROJO','AZUL','BLANCO','GRIS','VERDE','NEGRO'))
+);
+```
+```sql
+ CREATE TABLE EMPLEADO (
+	NOMBRE VARCHAR(25), 
+	EDAD TINYINT, 
+	COD_PROVINCIA TINYINT,
+	SEXO VARCHAR(2),
+	CONSTRAINT ck_sexo CHECK (SEXO IN(‘H’,’M’)), 
+	CONSTRAINT pk_empleado PRIMARY KEY (NOMBRE), 
+	CONSTRAINT ck_edad CHECK(EDAD BETWEEN 18 AND 35), 
+	CONSTRAINT fk_empleado FOREIGN KEY (COD_PROVINCIA) REFERENCES 	PROVIN (CODIGO) ON DELETE CASCADE
+);
+```
+# 6. Borrado de las tablas.
+
+Podemos eliminar una tabla siempre y cuando contemos con privilegios para ello. En tal caso debemos escribir:
+
+```sql
+DROP TABLE NombreTabla [CASCADE];
+```
+**CASCADE** elimina las restricciones de integridad referencial que remitan a la clave primaria de la tabla borrada.
+
+Si queremos eliminar el contenido de una tabla usaremos:
+
+```sql
+TRUNCATE TABLE NombreTabla;
+```
+
+# 7. Modificación de las tablas.
+
+> Cambiar el nombre de una tabla.
+
+```sql
+RENAME TABLE NombreViejo TO NombreNuevo;
+```
+
+> Añadir columnas a una tabla, se añaden al final.
+
+```sql
+ALTER TABLE NombreTabla ADD
+    ( ColumnaNueva1 Tipo_Dato [ModificadordeTipo],              
+      ColumnaNueva2 Tipo_Dato [ModificadordeTipo],
+    …
+      ColumnaNuevaN Tipo_Dato [ModificadordeTipo] );
+
+Ejemplo:
+
+ALTER TABLE VEHICULOS ADD (
+  fechaMatric           DATE,
+  tipoFaros             VARCHAR2(20) NOT NULL
+);
+```
+> Modificar columnas de una tabla
+
+```sql
+ALTER TABLE nombre_tabla MODIFY (
+  columna1  tipo_dato  [ restricciones de columna1 ][,
+  columna2  tipo_dato  [ restricciones de columna2 ]
+  ... ]
+);
+
+Ejemplo:
+
+ALTER TABLE AUTOMOVILES MODIFY (
+  color VARCHAR2(20) NOT NULL, 
+  codTaller VARCHAR2(15));
+```
+
+> Eliminar columnas de una tabla.
+
+```sql
+ALTER TABLE NombreTabla DROP COLUMN (Columna1 [, Columna2, …] );
+```
+> Si queremos renombrar columnas de una tabla: 
+
+```sql
+ALTER TABLE NombreTabla RENAME COLUMN NombreAntiguo TO NombreNuevo;
+``` 
+> Podemos añadir y eliminar las siguientes restricciones de una tabla: CHECK, PRIMARY KEY, NOT NULL, FOREIGN KEY y UNIQUE. Para añadir restricciones usamos la orden: 
+```sql
+ALTER TABLE nombretabla ADD CONSTRAINT nombrerestricción ... 
+```
+> Para eliminar restricciones usamos la orden:
+```sql
+ALTER TABLE nombretabla DROP CONSTRAINT nombrerestriccion ...
+```       
+> Modificar restricciones.
+
+No podemos modificar direcctamente una restricción pero el proceso es:
+
+1. Borrar la restricción.
+2. Crearla de nuevo.
+
+> Activar restricciones.
+
+```sql
+ALTER TABLE nombre_tabla ENABLE CONSTRAINT restricción;
+```
+
+> Eliminar restricciones.
+
+
+```sql
+ALTER TABLE nombre_tabla DISABLE CONSTRAINT restricción;
+```
+
+# 8. Vistas.
+
+# 9. Gestión de Usuarios.
