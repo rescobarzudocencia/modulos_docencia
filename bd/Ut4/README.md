@@ -22,6 +22,7 @@
     - [9.1.2. Gestión de usuarios.](#912-gestión-de-usuarios)
     - [9.1.3. Eliminar usuarios.](#913-eliminar-usuarios)
   - [9.2. Usuarios en Windows, Mysql Workbench.](#92-usuarios-en-windows-mysql-workbench)
+    - [9.2.1. Crear una conexión con usuario en Mysql Workbench.](#921-crear-una-conexión-con-usuario-en-mysql-workbench)
 
 
 
@@ -557,3 +558,73 @@ DROP USER ‘usuario_prueba’@‘localhost’;
 
 ## 9.2. Usuarios en Windows, Mysql Workbench.
 
+Iniciamos el programa y entramos como root que es el usuario que tenemos configurado para entrar al servidor de MySQL.
+
+Vamos al menú **Server/User** and Privileges, nos muestra la siguiente pantalla:
+
+![WB1](../img/4_wb1.png)
+
+Podemos ver los usuarios que hay creados en el sistema. Si seleccionamos alguno se activa la parte derecha donde podemos cambiar la configuración.
+
+>[!important]
+No cambiar nada.
+
+Para añadir usuarios pulsamos con el botón **Add Account**, apareciendo la siguiente pantalla:
+
+![WB2](../img/4_wb2.png)
+
+Donde vamos a configurar el usuario, en **Login Name** es el nombre de nuestro usuario que vamos a crear y en **Paswword** la contraseña, además hay que confirmarla en **Confirm Password**. 
+
+La autentificación la dejamos **Standard**. 
+
+**Limit to Hosts Matching** escribir **Localhost**.
+
+En **Administrative Roles**, vamos a dar roles de administrador.
+
+![WB3](../img/4_wb3.png)
+
+En **Schema Privileges**, es donde vamos a asignarle la base de datos y los permisos sobre ella.
+
+![WB4](../img/4_wb4.png)
+
+Pulsando sobre **Add Entry..**,  nos aparece la siguiente ventana:
+
+![WB5](../img/4_wb5.png)
+
++ **All Schema**: da permisos a todas las Bases de datos.
++ **Schemas matching pattern**: podemos poner un patrón donde damos permisos a las Bases de Datos que contengan ese patrón.
++ **Selected schema**: seleccionamos la Base de Datos.
+
+Una vez seleccionada la Base de Datos nos muestra los permisos la cual va a tener el usuario sobre la base de datos.
+
+![WB6](../img/4_wb6.png)
+
+Y elegimos las que vamos a asignarle, después pulsamos **Apply**, para aplicar los cambios.
+
+Una vez creados vamos a comprobar que nuestro usuario funciona para ello vamos a crear una nueva conexión con el servidor con el usuario creado.
+
+### 9.2.1. Crear una conexión con usuario en Mysql Workbench.
+
+En la pantalla principal pulsamos sobre el `+` para crear la nueva conexión:
+
+![WB7](../img/4_wb7.png)
+
+Aparece la pantalla donde vamos a configurar la nueva conexión.
+
+![WB8](../img/4_wb8.png)
+
+En **conection name** introducimos el nombre de la conexión.
+
+**Username** el nombre del usuario y en **Password** en **Store inVault** la contraseña de dicho usuario.
+
+Después pulsamos sobre Ok.
+
+Y ya nos aparece la nueva conexión.
+
+![WB9](../img/4_wb9.png)
+
+Pulsamos sobre la nueva conexión y nos debe entrar con dicho usuario.
+
+![WB10](../img/4_wb10.png)
+
+Y vemos que solo tiene acceso a la Base de Datos que le habíamos indicado.
