@@ -16,6 +16,13 @@
       - [3.2.7.1. Ejemplo de especialización exclusiva/total.](#3271-ejemplo-de-especialización-exclusivatotal)
       - [3.2.7.2. Ejemplo de especialización inclusiva/total.](#3272-ejemplo-de-especialización-inclusivatotal)
 - [4. Normalización.](#4-normalización)
+  - [4.1. Formas Normales.](#41-formas-normales)
+  - [4.2. Conceptos importantes.](#42-conceptos-importantes)
+    - [4.2.1. Dependencia Funcional.](#421-dependencia-funcional)
+    - [4.2.2. Dependencia funcional completa o total.](#422-dependencia-funcional-completa-o-total)
+    - [4.2.3. Dependencia funcional transitiva.](#423-dependencia-funcional-transitiva)
+  - [4.3. Formas Normales.](#43-formas-normales)
+    - [4.3.1. Primera Forma Normal: 1FN.](#431-primera-forma-normal-1fn)
 
 
 
@@ -224,6 +231,124 @@ libro_papel([**id**](#), fecha_impresión, precio)
 
 libro_ebook([**id**](#), tamaño_archivo, precio)
 
-
-
 # 4. Normalización.
+
+Una vez obtenido el esquema relacional resultante del esquema E/R que representa la base de datos, normalmente tendremos una buena base de datos. Pero otras veces, debido a fallos en el diseño o a problemas indetectables, tendremos un esquema que puede producir que una base de datos tenga los siguientes problemas:
+
++ **Redundancia**. Se llama así a los datos que se repiten continua e innecesariamente por las tablas de las bases de datos. Cuando es excesiva es evidente que el diseño hay que revisarlo, es el primer síntoma de problemas y se detecta fácilmente.
++ **Ambigüedades**. Datos que no clarifican suficientemente el registro al que representan. Los datos de cada registro podrían referirse a más de un registro o incluso puede ser imposible saber a qué ejemplar exactamente se están refiriendo. Es un problema muy grave y difícil de detectar.
++ **Pérdida de restricciones de integridad**. Normalmente debido a **dependencias funcionales**. Más adelante se explica este problema. Se arreglan fácilmente siguiendo una serie de pasos concretos.
++ **Anomalías en operaciones de modificación de datos**. El hecho de que al insertar un solo elemento haya que repetir tuplas en una tabla para variar unos pocos datos. O que eliminar un elemento suponga eliminar varias tuplas necesariamente (por ejemplo que eliminar un cliente suponga borrar seis o siete filas de la tabla de clientes, sería un error muy grave y por lo tanto un diseño terrible).
+
+> [!TIP]
+> NORMALIZACIÓN es el proceso de simplificación de los datos.
+> Pretende conseguir:
+> 
+> * Tener toda la información alamacenada en el menor espacio posible.
+> * Eliminar datos repetidos.
+> * Eliminar errores lógicos.
+> * Datos ordenados.
+
+## 4.1. Formas Normales.
+
+Las formas normales se corresponden a una teoría de normalización iniciada por el propio Codd y continuada por otros autores (entre los que destacan Boyce y Fagin). Codd definió en 1970 la Primera Forma Normal, desde ese momento aparecieron la Segunda, Tercera, la Boyce-Codd, la Cuarta y la
+Quinta Forma Normal.
+
+En la teoría de bases de datos relacionales, las **formas normales (FN)** proporcionan los criterios para determinar el grado de vulnerabilidad de una tabla a inconsistencias y anomalías lógicas. Cuanto más alta sea la forma normal aplicable a una tabla, menos vulnerable será a inconsistencias y anomalías. Edgar F. Codd originalmente definió las tres primeras formas normales (**1FN, 2FN, y 3FN**) en 1970. Estas formas normales se han resumido como **requiriendo que todos los atributos sean atómicos, dependan de la clave completa y en forma directa (no transitiva)**. La forma normal de Boyce-Codd (**FNBC**) fue introducida en 1974 por los dos autores que aparecen en su denominación. Las cuarta y quinta formas normales (**4FN y 5FN**) se ocupan específicamente de la representación de las relaciones muchos a muchos y uno a muchos entre los atributos y fueron introducidas por Fagin en 1977 y 1979 respectivamente.Cada forma normal incluye a las anteriores.
+
+![Formas Normales](../img/3_fromasNormales.png)
+
+## 4.2. Conceptos importantes.
+
+### 4.2.1. Dependencia Funcional.
+
+Se dice que un conjunto de atributos **Y depende funcionalmente de otro conjunto de atributos X** si cada valor de X tiene asociado en todo momento un único valor de Y. Se denota X-->Y. Al conjunto X se le denomina **determinante** o **implicante**. Al conjunto Y se le llama **implicado**.
+
+También: Y depende funcionalmente de **X si cada valor de X tiene asociado siempre el mismo valor de Y** en
+una relación R que contiene a X y Y como atributos.
+
+![Dependencia funcional](../img/3_dependenciaFuncional.png)
+
+Vemos como a un código de alumno le corresponde un unico Alumno.
+
+Otro ejemplo sería el DNI con el nombre de una persona.
+
+> Ejemplo:
+
+producto([codigo](#),nombre,precio,descripcion)
+
+codigo--> nombre, puesto que un código de producto solo puede tener asociado un único nombre.
+
+### 4.2.2. Dependencia funcional completa o total.
+
+Un conjunto de atributos Y tiene una **dependencia funcional completa** sobre otro conjunto de atributos X si Y tiene dependencia funcional de X y además [no se puede obtener de X un subconjunto de atributos más pequeño que consiga una dependencia funcional de Y](#) (es decir, no hay en X un
+determinante formado por atributos más pequeños). Se denota X=>Y.
+
+> Ejemplo :
+
+producto([id_pedido,id_producto](#),cantidad,nombre_producto)
+
++ La combinación de `ID_Pedido + ID_Producto` determina la `Cantidad`. Esta es una **dependencia funcional completa**, porque necesitas conocer ambos datos juntos para saber exactamente qué producto se vendió en qué cantidad.
++ Sin embargo, el `Nombre_Producto` solo depende de `ID_Producto` (una parte de la clave principal). Esto es una **dependencia parcial** (no es completa), lo cual genera redundancia y suele resolverse dividiendo la información en diferentes tabla.
+
+> [!note]
+> Si la clave no es compuesta siempre existe dependencia funcional completa.
+
+### 4.2.3. Dependencia funcional transitiva.
+
+Dados tres conjuntos de atributos X, Y y Z, se dice que X tiene una dependencia funcional transitiva sobre Z cuando Y depende funcionalmente de X (X-->Y), Z depende funcionalmente de Y (Y -->Z), y además X no depende funcionalmente de Y. Se denota X -->-->Z.
+
+> Ejemplo :
+
+empleado([id_empleado](#),departamento,ubicacion_oficina)
+
+Existen las siguientes dependencias:
+
+1. id_empleado --> departamento
+2. departamento --> ubicacion_oficina
+
+## 4.3. Formas Normales.
+
+### 4.3.1. Primera Forma Normal: 1FN.
+
+Una relación está en 1FN si y sólo só cada atributo es atómico.
+
+> [!note]
+> Atributo es **atómico** si sus elementos se pueden considerar como unidades indivisibles.
+
+> **Pasos a seguir para pasar las tablas a 1FN**.
+
+1. Se localizan los atributos que forman la clave principal.
+2. Se descompone la tabla realizando dos proyecciones:
+   1. Relación 1: **Clave + atributos únicos**: La clave con los atributos que tiene valores únicos, tomando la tabla nueva el nombre de la tabla original.
+   2. Relación 2: **Clave + atributos múltiples**. La nueva clave está formada por ambos campos. Se crea otra tabla con la clave y los atributos que tienen valores múltiples, distribuyendo cada valor en una fila, con lo que cada fila tendrá un valor elemental parael atributo. La tabla que se genera tendrá un nombre mnemotécnico compuesto por la abreviatura de los atributos que la definen.
+
+> **Ejemplo** : 
+
+Vemos que esta tabla no cumple la 1FN, ya que telefonos no es atómico.
+
+| id_alumno | nombre | teléfonos                       |
+| --------- | ------ | ------------------------------- |
+| 1         | Juan   | 600111111, 699222222            |
+| 2         | Ana    | 666333333                       |
+| 3         | Pedro  | 611444444, 622555555, 633666666 |
+
+Aplicamos el proceso de 1FN
+
+Tabla Alumnos
+| id_alumno | nombre |
+| --------- | ------ |
+| 1         | Juan   |
+| 2         | Ana    |
+| 3         | Pedro  |
+
+Tabla Telefonos
+
+| id_alumno | teléfono  |
+| --------- | --------- |
+| 1         | 600111111 |
+| 1         | 699222222 |
+| 2         | 666333333 |
+| 3         | 611444444 |
+| 3         | 622555555 |
+| 3         | 633666666 |
