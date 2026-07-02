@@ -17,5 +17,5 @@
 
 - [7. Procedimientos, funciones, cursores y trigger.](Ut7/README.md)  
 
-- [8. Postgre.](Ut8/README.md)  
+- [8. PostgreSQL.](Ut8/README.md)  
 ---
