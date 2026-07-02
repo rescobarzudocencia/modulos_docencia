@@ -1,4 +1,4 @@
-# UT6 PROCEDIMIENTOS, FUNCIONES, CURSORES Y TRIGGER <!-- omit in toc -->
+# UT7 PROCEDIMIENTOS, FUNCIONES, CURSORES Y TRIGGER <!-- omit in toc -->
 ---
 - [1. Procedimientos.](#1-procedimientos)
   - [1.1. Delimiter.](#11-delimiter)
