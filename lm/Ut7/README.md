@@ -42,7 +42,7 @@ En el buscador de extensiones escribimos el nombre y podemos instalar, además s
 + **Spanish Language Pack ..** para poner en español el editor. La instalamos y reiniciamos.
 + **Git Graph** lo usaremos para subir el contenido a nuestro repositorio. Lo muestra de forma gráfica. Debe estar instalado Git.
 + **Prettier - Code formatter** colorea y formatea el código que escribamos.
-+ **Bracket Pair Colorization ...** nos colorea tanto las llaves como los parentesis indicado el comienzo y el fin, muy util cuando estamos revisando el código.
++ **Bracket Pair Colorization ...** nos colorea tanto las llaves como los paréntesis indicado el comienzo y el fin, muy útil cuando estamos revisando el código.
 + **Live Server** crea un servidor Web donde podemos comprobar el funcionamiento de nuestra pagina web.
 + **Markdown All in One** extensión para Markdown, cada vez mas usado para la documentación en Github.
 
@@ -51,7 +51,7 @@ En el buscador de extensiones escribimos el nombre y podemos instalar, además s
 
 ## 1.2. Crear usuario en Github.
 
-Nos vamos a la pagina de [Github](https://github.com/) y creamos nuestro usuario, debemos crear como nombre de usuario el usuario Seneca del alumnado.
+Nos vamos a la pagina de [Github](https://github.com/) y creamos nuestro usuario, debemos crear como nombre de usuario el usuario Séneca del alumnado.
 
 Una vez crado nos logueamos con nuestro usuario, y vamos a crear el repositorio.
 
@@ -68,7 +68,7 @@ Aparecerá la siguiente página, en la imagen se ve un ejemplo de como se debe c
 + **Repository name** es donde hay que escribir el nombre del repositorio, en el ejemplo `ernestoinca.github.io` donde `ernestoinca` hay que sustituirlo por `nombreUsuarioAlumno/a`.
 + **Description **escribimos una breve descripción del contenido de nuestro repositorio.
 + **Choose visibility** debemos dejarlo como `Public` para que esté público.
-+ **Add README** lo ponemos a `On`, crearà un fichero README.md, donde vamos a ir describiendo el contenido del repositorio, debe estar escrito en **Markdown**. En la Unidad 8 hay una [introducción a Markdown](../Ut8/README.md).
++ **Add README** lo ponemos a `On`, creando un fichero README.md, donde vamos a ir describiendo el contenido del repositorio, debe estar escrito en **Markdown**. En la Unidad 8 hay una [introducción a Markdown](../Ut8/README.md).
 + **Add .gitignore** es un fichrero opcional donde se indica el contenido que no queremos que se tenga encuenta. Como pueden ser ficheros temporales, ejecutables, etc...
 + **Add license opcional** puedes o no indicar una licencia.
 
@@ -93,13 +93,13 @@ La forma facil es clonar el repositorio a nuestro ordenador y abrirlo con el edi
 
 Para clonar debemos hacer:
 
-1. Nos vamos al repositorio y pulsamos sobre el botón verde `<> Code.`.
-2. Se abre una pagina y abajo puslamos sobre `Dowload ZIP`.
+1. Nos vamos al repositorio y pulsamos sobre el botón verde `<> Code`.
+2. Se abre una pagina y abajo pulsamos sobre `Dowload ZIP`.
 
 ![Descarga repositorio](../img/8_descargaGithubio.png)
 
-3. Descargarà el contenido del repositorio. Normalmente lo descarga en `Descargas`.
-4. Descomprimimos el fichero en una ubicación que tengamos controlado y alli podemos trabajar sobre el repositorio. Por ejemplo yo lo he descomprimido en `Documentos\practicas\LM`.
+3. Descarga el contenido del repositorio. Normalmente lo descarga en `Descargas`.
+4. Descomprimimos el fichero en una ubicación que tengamos controlado y allí podemos trabajar sobre el repositorio. Por ejemplo yo lo he descomprimido en `Documentos\practicas\LM`.
 
 ### 1.3.2. Trabajar con el repositorio y subirlo a Github.
 
@@ -127,6 +127,13 @@ Para trabajar sobre el repositorio debemos realizar:
 
 6. Nos aseguramos que ya esta subido nuestros ficheros.
 7. Al cabo de un rato debe de cambiar el contenido de `https://ernestoinca.github.io/`.
+
+![Despliegue](../img/8_despliege.png)
+
+> [!important]
+> Cuando subamos los archivos hay que tener cuidado, ya que podemos subir la carpeta donde dentro tenemos todo nuestro contenido, el repositorio es un servidor Web, y para mostrar su contenido va ha buscar siempre un fichero index.html, si no lo encontrase no mostraría nada.
+
+Se recomienda el uso de [Github Desktop](https://desktop.github.com/download/), ya que facilita la actualización del repositorio.
 
 # 2. Git.
 
