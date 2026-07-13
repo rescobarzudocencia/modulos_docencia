@@ -145,7 +145,7 @@ Una vez instalado procedemos a crear nuestro entorno virtual.
 
 > **Crear el entorno virtual**
 
-**python -m venv tutorial-env**
+**python3 -m venv tutorial-env**
 
 Esto creará el directorio **tutorial-env** si no existe, y también creará directorios dentro de él que contienen una copia del intérprete de Python y varios archivos de soporte.
 
@@ -165,18 +165,22 @@ Para desactivar el entorno virtual hay que ejecutar:
 
 ## 2.3. Manejo de paquetes
 
-Puede instalar, actualizar y eliminar paquetes usando un programa llamado pip. De forma
-predeterminada, pip instalará paquetes desde el índice de Paquetes de Python. Puede navegar por el
-índice de paquetes de Python yendo a él en su navegador web, desde el siguiente enlace:
+Puede instalar, actualizar y eliminar paquetes usando un programa llamado pip. De forma predeterminada, pip instalará paquetes desde el índice de Paquetes de Python. Puede navegar por el índice de paquetes de Python yendo a él en su navegador web, desde el siguiente enlace:
 
 https://pypi.org/
 
+Debemos tener instalado el gestor de paquetes para python `pip`.
+
+Lo instalamos con: `sudo apt install python3-pip`.
+
 Esto nos es util cuando estamos utilizando Entornos Virtuales, ya que vamos a ir instalando los diferentes paquetes necesarios para que nuestro entorno funcione.
 
-+ Para instalar un paquete: **python -m pip install novas o pip install novas**
-+ Instalar un paquete de una versión determinada: **python -m pip install requests==2.6.0 o pip install requests==2.6.0**
-+ Actualizar un paquete a la ultima versión: **python -m pip - - upgrade requests o pip - -upgrade requests**
-+ Eliminar paquetes: **pip unistall pandas**
++ Para instalar un paquete: **pip install novas**.
++ Instalar un paquete de una versión determinada: **pip install requests==2.6.0**.
++ Actualizar un paquete a la ultima versión: **pip install --upgrade nombre_del_paquete**.
++ Eliminar paquetes: **pip unistall pandas**.
++ Ver paquetes instalados: **pip list**.
   
-https://docs.python.org/es/3/tutorial/venv.html
+
+[Entornos virtuales y paquetes.](https://docs.python.org/es/3/tutorial/venv.html)
 
