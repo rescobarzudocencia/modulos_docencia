@@ -198,9 +198,6 @@ print(keyword.kwlist)
 # 'return', 'try', 'while', 'with', 'yield']
 ``` 
 
-
-
-
 ## 3.1 Camelcase vs Pascalcase
 
 Son convenciones utilizadas para nombrar las variables, funciones, clases etc.., son usadas para unir palabras sin usar espacios en blanco.
@@ -262,7 +259,8 @@ print(f"Hola me llamo {nombre} {apellidos} y mi correo es {correo}")
 print("Hola me llamo {} {} y mi correo es {}".format(nombre, apellidos, correo))
 # Al estar dentro de una cadena ponemos los espacios normalmente
 ```
-
+>[!NOTE]
+Es la forma más moderna y limpia de insertar variables dentro de un texto. Solo debes agregar una `f` antes de las comillas y poner la variable entre llaves`{}`.
 
 # 4. Tipos de datos y operadores
 ## 4.1 Tipos de datos
