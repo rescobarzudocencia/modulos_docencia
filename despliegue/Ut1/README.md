@@ -6,11 +6,8 @@
 - [4. DNS.](#4-dns)
   - [4.1. Características de DNS.](#41-características-de-dns)
   - [4.2. Ficheros hosts.](#42-ficheros-hosts)
-- [5. Puertos en redes informáticas.](#5-puertos-en-redes-informáticas)
-
-
-
-
+- [5. Direccionamiento IP.](#5-direccionamiento-ip)
+  - [5.1. Puertos en redes informáticas.](#51-puertos-en-redes-informáticas)
 
 
 # 1. Introducción.
@@ -92,7 +89,114 @@ Algunos servidor Dns (pueden cambiar su Ip):
 + 1.1.1.1 primario y 1.0.0.1 secundario de Cloudflare.
 + 208.67.222.222 primario y 208.67.220.220 secundario de OpenDns.
 
-# 5. Puertos en redes informáticas.
+# 5. Direccionamiento IP.
+
+Para organizar el tráfico de paquetes por una red se requiere de un protocolo para el nivel de red.
+
+Trabajaremos el protocolo IP (Internet Protocol), que se encarga de la entrega no confiable de paquetes utilizando técnicas de encaminamiento (o enrutamiento).
+
+Para que IP funcione, es necesario que los equipos de una red tengan una dirección IP, que identifica a un equipo dentro de una red TCP/IP.
+
+> [!important]
+>Dentro de una red no puede haber dos dispositivos con la >misma dirección IP ya que provocaría un conflicto de IP.
+
+> Estructura de una dirección IP
+
+Las direcciones Ipv4 tienen la siguiente estructura:
+
+![Estructura IP](../img/estructuraIP.png)
+
+Cada número es un octeto (8 btis) que se suele representar con un número en decimal. Por lo tanto cada octeto de la dirección IP será un número que podrá tomar un valor entre 0 y 255.
+
+También se puede representar en binario, en bloques de 8 bits separados por puntos.
+
+![Estructura IP Binario](../img/binarioIP.png)
+
+> Máscara de subred
+
+Las direcciones IP, están organizadas jerárquicamente. La parte más a la izquierda de la dirección IP se llama **identificador de red**(azul), y la parte más ala derecha es el **identificador de equipo**(rojo).
+
+![IP Color](../img/ipcolor.png)
+
+En este ejemplo podemos ver que nuestro equipo es el **75** dentro de la red **192.168.0**. Todos los equipos de una misma red tienen el mismo identificador de red, y distintos identificadores de equipos.
+
+La cantidad de octetos destinados al identificador de red y a la del equipo, es una cantidad variable que depende de la mascara de subred, indicandonos **qué parte de la IP es el identificador de red y qué parte es el identificador de  equipo**.
+
+> Notaciones de la mascara de red
+
+Tres formas de expresar la misma dirección IP:
+
+a) notación decimal: cuatro octetos decimales acompañando a la dirección IP:
+
+         172.16.3.45 / 255.255.255.0
+
+b) notación binaria: octetos enforma binaria separados por puntos
+
+         10101100.00010000.0000011.00101101
+         11111111.11111111.11111111.00000000
+
+c) notación prefija: un numero decimal que indica el numero de “unos“ que tendria la mascara de red.
+
+         172.16.3.45 / 24
+
+> Redes con CLASE
+
+Todo espacio de direcciones Ipv4 está inicialmente dividido en diferentes clases según su primer octeto. Si la máscara de subred de los equipos de una red es distinta a éstas.
+
+![Clases IP](../img/clasesIP.png)
+
+> Direcciones IP privadas
+
+Existen dos tipos de direcciones IP, las privadas y las públicas. Las públicas son visibles en ineternet, y las privadas usadas en redes locales LAN ,no visibles en Internet.
+
+![IP privadas](../img/ipprivadas.png)
+
+> Dirección de subred
+
+La **primera dirección IP** de una red, representa a la red, y **no puede asignarse a un equipo**.
+Todos los equipos de la red física cuya dirección de subred sea la misma, estarán en la misma red. La calculamos de la siguiente forma:
+
+![Direccion Red](../img/direccionRed.png)
+
+> Direccion de difusión (broadcast)
+
+Es la **última dirección IP** de una red, representa a la red, y **no puede asignarse a un equipo**.
+Sirve para cuando un equipo quiere enviar un paquete de difusión a todos los equipos de su subred. Se calcula:
+
+![Direccion Broadcas](../img/direccionBroadcast.png)
+
+> Direcciones IP reservadas para direcciones de enlace local
+
+Se asignan al azar a equipos de una LAN en la que no hay servidor DHCP para configurar automáticamente las direcciones IP o no se configuran manualente.
+
+Este proceso se realiza despues de 30 segundos. Se les llama tambén direcciones APIPA 
+(Automatic Private Ip Address)
+
+     Definido en RFC 3927(direcciones de enlace local)
+            169.254.0.0 – 169.254.255.255 / 16
+
+
+> Direcciones IP reservadas para localhost
+
+El documento RFC 3330 define que debe existir un rango de direcciones reservado para hacerreferencia al propio equipo de la red o localhost. El rango llamado de direcciones loopback (de bucle de retorno), es el siguiente:
+
+       127.0.0.0 – 127.255.255.255
+
+Aunque en la práctica sólo se utilice la dirección 127.0.0.1/32 para localhost.
+
+Para comprobarlo el comando seria:
+
+      ping 127.0.0.1
+
+>Direccion sin especificar
+
+     0.0.0.0
+Utilizada:
+
++ Como ruta estandar estática con una mascara de subred 0.0.0.0, cubre todas las direcciones. Ruta por defecto para la salida de paquetes.
++ Como dirección de origen para la trasnmisión Ipv4 de una lan.
+
+## 5.1. Puertos en redes informáticas.
 
 En redes informáticas, un puerto es la interfaz virtual que permite a un equipo comunicarse con programas o servicios específicos. Cada servicio se asocia a un número de puerto estándar para enrutar correctamente el tráfico de datos en protocolos como TCP o UDP.
 
