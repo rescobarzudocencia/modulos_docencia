@@ -191,6 +191,10 @@ Pie de página.
 
 </body>
 ```
+> Layouts Web
+
+![Web Layout](../img/layoutsWeb.jpg)
+
 
 # 4. Elementos de HTML
 
