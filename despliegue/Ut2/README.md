@@ -171,6 +171,8 @@ La instalación de docker-compose es un proceso muy sencillo. Si somos usuarios 
 
 Si somos usuarios de Linux su instalación se realiza únicamente con dos pasos:
 
+
+
 ```bash
 # Descarga del fichero mediante la orden curl y colocación en el directorio adecuado. 
 sudo curl -L "https://github.com/docker/compose/releases/download/2.40.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
