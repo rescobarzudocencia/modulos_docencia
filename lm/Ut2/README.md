@@ -396,7 +396,7 @@ Para escribir texto en negrita tenemos que incluirlo dentro de las etiquetas `<u
 
 <u>Texto en subrallado</u>
 ```html
-<i>Texto en subrallado</i>
+<u>Texto en subrallado</u>
 ```
 
 > **Subíindices y superíndices**
