@@ -196,6 +196,7 @@ Pie de página.
 </footer>
 
 </body>
+</html>
 ```
 > Layouts Web
 
@@ -381,7 +382,7 @@ Para escribir texto en negrita tenemos que incluirlo dentro de las etiquetas `<b
 
 > **Itálica**
 
-Para escribir texto en negrita tenemos que incluirlo dentro de las etiquetas `<i>` (italic) y su cierre `</i>`. 
+Para escribir texto en italica tenemos que incluirlo dentro de las etiquetas `<i>` (italic) y su cierre `</i>`. 
 
 
 <i>Texto en italica</i>
@@ -391,7 +392,7 @@ Para escribir texto en negrita tenemos que incluirlo dentro de las etiquetas `<i
 
 > **Subrayado**
 
-Para escribir texto en negrita tenemos que incluirlo dentro de las etiquetas `<u>` (underlined) y su cierre `</u>`. 
+Para escribir texto subrayado tenemos que incluirlo dentro de las etiquetas `<u>` (underlined) y su cierre `</u>`. 
 
 
 <u>Texto en subrallado</u>
@@ -623,7 +624,7 @@ alt="Escudo del instituto Vélez de Écija">
 Ejemplo de imagen desde una ruta
 
 ```html
-<img src="/images/inexistente.png" alt="Este texto es visible cuando no hay imagen">
+<img src="images/inexistente.png" alt="Este texto es visible cuando no hay imagen">
 ```
 Podemos alinear la foto en la página como queramos mediante `align`, utilizando los atributos `left` para alinearla a la izquierda o `right` para alinearla a la derecha: otras formas de alinear imágenes son posibles pero están dentro de CSS, así que por ahora no las veremos.
 
