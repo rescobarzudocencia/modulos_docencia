@@ -168,6 +168,11 @@ Donde encontramos los siguientes parámetros:
 + **ErrorLog**: Fichero donde se guardan los errores.
 + **CustomLog**: Fichero donde se guarda los accesos al sitio.
 
+> [!important]
+> Es recomendable que los ficheros logs de cada sitio virtual se guarde en ficheros referentes a dicho sitio. Si no modificamos dichos nombres y para todos los sitios virtuales dejamos el mismo nombre, todo se guarda en el mismo fichero, que después para poder encontrar errores puede hacerse bastante tedioso.
+
+
+
 Por defecto el directorio donde se guardan los logs es `/var/log/apache2`.
 
 Podemos habilitar o deshabilitar nuestros host virtuales utilizando los comandos `a2ensite` y `a2dissite`.
