@@ -659,10 +659,24 @@ El funcionamiento de forma esquemática de HTTPS la podríamos resumir en el sig
 
 Seguramente tengamos ya el certificado SSL autofirmado instalado en nuestro equipo, porque **ssl-cert** se instala al instalar Apache. Lo comprobamos con:
 
-**aptitude search ssl-cert**, nos aparecerá. 
-Si no está instalado se instala con **sudo apt install aptitude**.
+```bash
+aptitude search ssl-cert
+```
+nos aparecerá. 
 
-Al instalar el paquete ssl-cert se generan automáticamente (con el comando openssl) un par de certificados:
+![SSl Cert](../img/ssl_cert.png)
+
+Si no está instalado **aptitude** se instala con 
+
+```bash
+sudo apt install aptitude
+```
+E instalamos SSL Cert con el comando
+
+```bash
+sudo apt install ssl-cert
+```
+Al instalar el paquete **ssl-cert** se generan automáticamente (con el comando openssl) un par de certificados:
 
 + `/etc/ssl/private/ssl-cert-snakeoil.key` (privado) → Clave privada.
 + `/etc/ssl/certs/ssl-cert-snakeoil.pem` (público) → Certificado.
@@ -670,11 +684,11 @@ Al instalar el paquete ssl-cert se generan automáticamente (con el comando open
 Para comprobarlo nos vamos al directorio y ejecutamos:
 
 1. El certificado X.509 está en formato PEM (base64), compruébalo editando el fichero:
-2. 
+
 ```bash
    more  ssl-cert-snakeoil.pem
 ```
-1. Para mostrar su contenido utiliza la siguiente instrucción desde el directorio correspondiente:
+2. Para mostrar su contenido utiliza la siguiente instrucción desde el directorio correspondiente:
 ```bash
 openssl x509 -in ssl-cert-snakeoil.pem -inform PEM -text
 ```
@@ -718,7 +732,7 @@ openssl req -new -x509 -nodes -sha1 -days 365 -key clave-ssl.key > servidor.pem
 
 > Utilización de HTTPS en Apache2 con certificado autofirmado
 
-Cuando instalamos apache2 sólo se activa el protocolo HTTP y se abre el puerto 80/tcp, para utilizar el protocolo HTTPS debemos activar el módulo ssl y reiniciar Apache:
+Cuando instalamos apache2 sólo se activa el protocolo HTTP y se abre el puerto **80/tcp**, para utilizar el protocolo HTTPS debemos activar el módulo ssl y reiniciar Apache:
 
 ```bash
 a2enmod ssl
@@ -726,8 +740,8 @@ a2enmod ssl
 service apache2 restart
 ```
 
-Si vemos el contenido del fichero ports.conf comprobaremos que Apache sólo escucha peticiones
-en el puerto 443/tcp cuando el módulo ssl está activado:
+Si vemos el contenido del fichero **ports.conf** comprobaremos que Apache sólo escucha peticiones
+en el puerto **443/tcp** cuando el módulo ssl está activado:
 
 ```apache
 Listen 80
@@ -770,6 +784,20 @@ El significado de las directivas, que pueden incluirse en la Configuración Glob
 + **SSLEngine**: Habilita/Deshabilita el uso del motor del protocolo SSL del servidor.
 + **SSLCertificateFile**: Indica la ruta del certificado del servidor.
 + **SSLCertificateKeyFile**: Indica la ruta de la clave privada de cifrado del servidor.
+
+
+Ejemplo de Virtual Host
+
+```apache
+<VirtualHost *:443>
+    ServerName tu-dominio.com
+    DocumentRoot /var/www/html
+
+    SSLEngine on
+    SSLCertificateFile /ruta/a/tu_certificado.crt
+    SSLCertificateKeyFile /ruta/a/tu_clave_privada.key
+</VirtualHost>
+```
 
 También se puede emplear la directiva **SSLRequireSSL** (equivalente a “Require ssl”) en una sección `<Directory>` para negar una conexión que no use el protocolo HTTPS. Por ejemplo, para denegar la entrada al sitio web “secreto” si no se accede con https://localhost/secreto :
 
