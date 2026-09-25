@@ -636,6 +636,7 @@ El margen entre `h1` y `h2` no será 50px+20px = 70px.
 
 **El margen entre `h1` y `h2` será igual al mayor de los márgenes, es decir 50px.**
 
+[Ejemplo anterior para descarga](assets/colapso.zip)
 
 
 # 8. Display
