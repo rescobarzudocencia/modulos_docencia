@@ -1,4 +1,7 @@
-# DAW2-DIW
+# DISEÑO DE INTERFACES WEB
+
+![Diseño interface web](interfazWeb.jpg)
+
 Módulo de **Diseño de Interfaces Web** del ciclo de Desarrollo de Aplicaciones Web
 
 1. [Planificación de interfaces gráficas](01_Tema1/README.md) 
