@@ -815,6 +815,7 @@ O también podemos emplear el display `grid`:
 }
 ```
 [Ejemplo de Flex.](assets/flex.zip)
+
 [Ejemplo de Grid.](assets/grid.zip)
 
 Si sólo tenemos un item y queremos que esté centrado en el `body`, tanto horizontal como vertical, podemos hacer
