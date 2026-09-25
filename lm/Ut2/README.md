@@ -779,7 +779,7 @@ Ejemplo:
 En el siguiente ejemplo puedes ver todos los inputs en un formulario:
 
 
-[Ejemplo Forumulario](https://rescobarzudocencia.github.io/ejemplos/formulario.html)
+[Ejemplo Forumulario](https://rescobarzudocencia.github.io/ejemplos/lm/formulario.html)
 
 
 ## 4.11 Uso de multimedia en HTML
