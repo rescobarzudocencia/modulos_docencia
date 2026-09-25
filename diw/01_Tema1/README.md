@@ -890,6 +890,7 @@ body {
   background-image: var(--background-img);
 }
 ```
+[Ejemplo Claro Oscuro.](assets/claroOscuro.zip)
 
 # 11. Reset CSS
 
@@ -901,7 +902,35 @@ Más información y `ejemplos de reset` en:
 
 - [Sitio de Manz.dev](https://lenguajecss.com/cascada-css/herencia/reset-css/)
 
+Ejemplo de un reset:
+```css
+/* Modern Reset básico */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
+* {
+  margin: 0;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+```
 # 12. Linter para CSS
 
 En el caso de utilizar un entorno de desarrollo basado en `node.js` para desarrollar nuestro proyecto, podemos instalar un analizador estático o *linter* de código llamado `stylelint` para nuestro código css.
