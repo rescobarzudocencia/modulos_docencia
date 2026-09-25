@@ -760,7 +760,7 @@ Otro aspecto deseado a menudo es el de centrar horizontalmente algún elemento e
 
 ```css
 section {
-  margin: 0 auto
+  margin: 0 auto;
 }
 ``` 
 
@@ -785,7 +785,8 @@ Por ejemplo para disponer los items en una fila, con espacio entre ellos, podemo
 ```css
 /* Contenedor de items */
 .contenedor { 
-  display: flex;
+  display: flex; /*Activa el contexto flexbox en el contenedor*/
+  flex-direcction:column; /*Define filas horizontales(row) o colmunas(coplumn) */
   flex-wrap: wrap;     /* Para pasar a otra fila inferior si no hay sitio */  
   justify-content: space-between;
 }
@@ -813,7 +814,8 @@ O también podemos emplear el display `grid`:
   height: 300px;  
 }
 ```
-
+[Ejemplo de Flex.](assets/flex.zip)
+[Ejemplo de Grid.](assets/grid.zip)
 
 Si sólo tenemos un item y queremos que esté centrado en el `body`, tanto horizontal como vertical, podemos hacer
 
