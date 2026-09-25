@@ -31,9 +31,9 @@
   - [7.2. Fuentes según el formato de archivo](#72-fuentes-según-el-formato-de-archivo)
   - [7.3. Fuentes de iconos](#73-fuentes-de-iconos)
   - [7.4. Efectos](#74-efectos)
-- [5. Listas](#5-listas)
-- [6. Tablas](#6-tablas)
-- [8. Variables en CSS](#8-variables-en-css)
+- [8. Listas](#8-listas)
+- [9. Tablas](#9-tablas)
+- [10. Variables en CSS](#10-variables-en-css)
 
 
 
@@ -1096,7 +1096,7 @@ Se vería así
 Referencia: https://www.w3schools.com/css/css_font_google.asp
 
 
-# 5. Listas
+# 8. Listas
 
 La propiedad más usada es
 
@@ -1119,7 +1119,7 @@ ol {
 }
 ```
 
-# 6. Tablas
+# 9. Tablas
 
 Los principales elementos a los cuales dar estilo son:
 
@@ -1165,7 +1165,7 @@ Si la tabla es ancha y se va a visualizar en dispositivos móviles, debemos aseg
 ```
 
 
-# 8. Variables en CSS
+# 10. Variables en CSS
 
 
 Las **CSS Custom Properties** (conocidas como variables CSS) son un mecanismo de CSS que permite dar un valor personalizado a las propiedades CSS. El objetivo principal es evitar escribir múltiples veces un mismo valor, y en su lugar, ponerle un nombre más lógico, semántico y fácil de recordar, que hará referencia al valor real. De esta forma será mucho más legible y más fácil de mantener.
