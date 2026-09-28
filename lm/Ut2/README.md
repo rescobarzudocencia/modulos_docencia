@@ -757,19 +757,19 @@ Ejemplo 2:
   <!-- Cuerpo de la tabla con los datos -->
   <tbody>
     <tr>
-      <th scope="row">Teclado Mecánico</th>
+      <th>Teclado Mecánico</th>
       <td>Periféricos</td>
       <td>15</td>
       <td>$80.00</td>
     </tr>
     <tr>
-      <th scope="row">Monitor 4K</th>
+      <th>Monitor 4K</th>
       <td>Pantallas</td>
       <td>8</td>
       <td>$350.00</td>
     </tr>
     <tr>
-      <th scope="row">Ratón Inalámbrico</th>
+      <th>Ratón Inalámbrico</th>
       <td>Periféricos</td>
       <td>25</td>
       <td>$25.00</td>
@@ -779,7 +779,7 @@ Ejemplo 2:
   <!-- Pie de la tabla (resumen o totales) -->
   <tfoot>
     <tr>
-      <th scope="row" colspan="2">Total Unidades</th>
+      <th colspan="2">Total Unidades</th>
       <td>48</td>
       <td>—</td>
     </tr>
