@@ -780,7 +780,7 @@ Ejemplo 2:
   <tfoot>
     <tr>
       <th colspan="2">Total Unidades</th>
-      <td colspan="2">48</td>
+      <td>48</td>
       
     </tr>
   </tfoot>
