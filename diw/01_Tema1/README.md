@@ -621,6 +621,7 @@ Ejemplo:
 <html>
 <head>
   <style>
+  /* margin: arriba derecha abajo izquierda*/
   h1 {  margin: 0 0 50px 0; }
   h2 {  margin: 20px 0 0 0; }
   </style>
