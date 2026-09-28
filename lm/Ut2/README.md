@@ -747,10 +747,10 @@ Ejemplo 2:
   <!-- Encabezado de la tabla -->
   <thead>
     <tr>
-      <th scope="col">Producto</th>
-      <th scope="col">Categoría</th>
-      <th scope="col">Cantidad</th>
-      <th scope="col">Precio Unitario</th>
+      <th>Producto</th>
+      <th>Categoría</th>
+      <th>Cantidad</th>
+      <th>Precio Unitario</th>
     </tr>
   </thead>
 
@@ -780,8 +780,8 @@ Ejemplo 2:
   <tfoot>
     <tr>
       <th colspan="2">Total Unidades</th>
-      <td>48</td>
-      <td>—</td>
+      <td colspan="2">48</td>
+      
     </tr>
   </tfoot>
 </table>
@@ -829,8 +829,7 @@ Ejemplo 2:
   <tfoot>
     <tr>
       <th scope="row" colspan="2">Total Unidades</th>
-      <td>48</td>
-      <td>—</td>
+      <td colspan="2">48</td>
     </tr>
   </tfoot>
 </table>
