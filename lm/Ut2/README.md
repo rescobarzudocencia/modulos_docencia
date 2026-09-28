@@ -643,7 +643,7 @@ Resumen de las etiquetas:
 | `<table>` |	Tabla |
 |`<tr>`	|Fila|
 |`<td>`	|Celda|
-|`<th>`	|Encabezado|
+|`<th>`	|Celda de Encabezado|
 |`<caption>`	|Título|
 |`<thead>`	|Cabecera|
 |`<tbody>`	|Cuerpo|
@@ -659,9 +659,52 @@ Atributos importantes:
 |rowspan	|Une Filas|
 
 
-Ejemplo:
+Ejemplo 1:
+
+```html
 
 <table>
+<!-- Fila 1 -->
+    <tr>
+        <th> encabezado 1</th>
+        <th> encabezado 2</th>
+        
+    </tr>
+    <tr>
+        <td>Fila 1, columna 1</td>
+        <td>Fila 1, columna 2</td>
+    </tr>
+<!-- Fila 2 -->
+    <tr>
+        <td>Fila 2, columna 1</td>
+        <td>Fila 2, columna 2</td>
+    </tr>
+</table>
+<h2>Tabla (uniendo celdas)</h2>
+<table>
+    <tr>
+        <td>Fila 1, columna 1</td>
+        <td colspan="3"> Fila 1, columnas 2, 3 y 4</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Fila 2, columna 1 <br><br>Fila 3, columna 1</td>
+        <td>Fila 2 columna 2</td>
+        <td>Fila 2 columna 3</td>
+        <td>Fila 2 columna 4</td>
+    </tr>
+    <tr>
+        <td>Fila 3 columna 2</td>
+        <td>Fila 3 columna 3</td>
+        <td>Fila 3 columna 4</td>
+</tr>
+</table>
+```
+
+<table>
+    <tr>
+        <th> encabezado 1</th>
+        <th> encabezado 2</th>
+    </tr>
 <!-- Fila 1 -->
 <tr>
 <td>Fila 1, columna 1</td>
@@ -680,7 +723,7 @@ Ejemplo:
 <td colspan="3"> Fila 1, columnas 2, 3 y 4</td>
 </tr>
 <tr>
-<td rowspan="2">Fila 2, columna 1 <br>+<br>Fila 3, columna 1</td>
+<td rowspan="2">Fila 2, columna 1 <br><br>Fila 3, columna 1</td>
 <td>Fila 2 columna 2</td>
 <td>Fila 2 columna 3</td>
 <td>Fila 2 columna 4</td>
@@ -691,6 +734,107 @@ Ejemplo:
 <td>Fila 3 columna 4</td>
 </tr>
 </table>
+
+
+
+Ejemplo 2:
+
+```html
+<table>
+  <!-- Título o descripción de la tabla -->
+  <caption>Lista de Productos y Ventas</caption>
+
+  <!-- Encabezado de la tabla -->
+  <thead>
+    <tr>
+      <th scope="col">Producto</th>
+      <th scope="col">Categoría</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Precio Unitario</th>
+    </tr>
+  </thead>
+
+  <!-- Cuerpo de la tabla con los datos -->
+  <tbody>
+    <tr>
+      <th scope="row">Teclado Mecánico</th>
+      <td>Periféricos</td>
+      <td>15</td>
+      <td>$80.00</td>
+    </tr>
+    <tr>
+      <th scope="row">Monitor 4K</th>
+      <td>Pantallas</td>
+      <td>8</td>
+      <td>$350.00</td>
+    </tr>
+    <tr>
+      <th scope="row">Ratón Inalámbrico</th>
+      <td>Periféricos</td>
+      <td>25</td>
+      <td>$25.00</td>
+    </tr>
+  </tbody>
+
+  <!-- Pie de la tabla (resumen o totales) -->
+  <tfoot>
+    <tr>
+      <th scope="row" colspan="2">Total Unidades</th>
+      <td>48</td>
+      <td>—</td>
+    </tr>
+  </tfoot>
+</table>
+```
+
+
+
+<table>
+  <!-- Título o descripción de la tabla -->
+  <caption>Lista de Productos y Ventas</caption>
+
+  <!-- Encabezado de la tabla -->
+  <thead>
+    <tr>
+      <th scope="col">Producto</th>
+      <th scope="col">Categoría</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Precio Unitario</th>
+    </tr>
+  </thead>
+
+  <!-- Cuerpo de la tabla con los datos -->
+  <tbody>
+    <tr>
+      <th scope="row">Teclado Mecánico</th>
+      <td>Periféricos</td>
+      <td>15</td>
+      <td>$80.00</td>
+    </tr>
+    <tr>
+      <th scope="row">Monitor 4K</th>
+      <td>Pantallas</td>
+      <td>8</td>
+      <td>$350.00</td>
+    </tr>
+    <tr>
+      <th scope="row">Ratón Inalámbrico</th>
+      <td>Periféricos</td>
+      <td>25</td>
+      <td>$25.00</td>
+    </tr>
+  </tbody>
+
+  <!-- Pie de la tabla (resumen o totales) -->
+  <tfoot>
+    <tr>
+      <th scope="row" colspan="2">Total Unidades</th>
+      <td>48</td>
+      <td>—</td>
+    </tr>
+  </tfoot>
+</table>
+
 
 ## 4.10 Formularios
 
