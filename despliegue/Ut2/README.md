@@ -15,7 +15,7 @@
   - [4.1. Descarga de imágenes.](#41-descarga-de-imágenes)
   - [4.2. Mostrar imágenes descargadas.](#42-mostrar-imágenes-descargadas)
   - [4.3. Borrado de imágenes.](#43-borrado-de-imágenes)
-  - [4.4. Obteniendo inofrmación de las imágenes.](#44-obteniendo-inofrmación-de-las-imágenes)
+  - [4.4. Obteniendo información de las imágenes.](#44-obteniendo-información-de-las-imágenes)
   - [4.5. Otros comandos.](#45-otros-comandos)
 - [5. Contenedores.](#5-contenedores)
   - [5.1. Asignando nombre a los contenedores.](#51-asignando-nombre-a-los-contenedores)
@@ -210,7 +210,7 @@ docker search ubuntu
 
 ![Docker buscar imagen ubuntu](../img/dockerSearchUbuntu.png)
 
-De la información que nos muestra una de las columnas más importantes es la de ST**ARS que son las estrellas que tiene dicha imagen, en modo gráfico también. 
+De la información que nos muestra una de las columnas más importantes es la de **STARS** que son las estrellas que tiene dicha imagen, en modo gráfico también. 
 
 Descargamos las imágenes con el comando 
 
@@ -236,7 +236,7 @@ docker pull mysql:5.7
 
 > [!IMPORTANT]
 >
->Me permite **bajar todas las versiones de una imagen** de una >sola vez. Esto **puede ser peligroso** si una imagen tiene >muchas >versiones disponibles. Lo conseguiremos con la opción >`-a` o `--all-tags`.
+>Podemos **bajar todas las versiones de una imagen** de una sola vez. Esto **puede ser peligroso** si una imagen tiene muchas versiones disponibles. Lo conseguiremos con la opción `-a` o `--all-tags`.
 
 ## 4.2. Mostrar imágenes descargadas.
 
@@ -281,7 +281,7 @@ docker rmi -f httpd
 ```
 Este proceso de borrado, sobre todo si tenemos muchas imágenes,  puede ser un proceso engorroso. Para facilitar esto disponemos de la orden **docker image prune** que tiene tres opciones básicas:
 
-+ **-a** o **--all** para borrar todas las imágenes que no están siendo usadas por contenedores
++ **-a** o **--all** para borrar todas las imágenes que no están siendo usadas por contenedores.
 + **-f** o **--force** para que no nos solicite confirmación. Es una operación que puede borrar muchas imágenes de una tacada y debemos ser cuidadosos. Os recomiendo no usar esta opción.
 + **--filter** para especificar ciertos filtros a las imágenes.
 
@@ -294,7 +294,7 @@ docker image prune -a
 docker image prune --filter until="240h"
 ```
 
-## 4.4. Obteniendo inofrmación de las imágenes.
+## 4.4. Obteniendo información de las imágenes.
 
 Una vez tenemos ya las imágenes descargadas es muy interesante conocerlas al máximo para poder utilizarlas. Para ello tenemos **dos fuentes principales**:
 
@@ -350,7 +350,7 @@ Además de los comandos que hemos visto en los apartados anteriores la orden **d
 Los contenedores son creados a partir de las **imágenes**. Eso lo podemos conseguir de la siguiente manera:
       
 + **docker pull nombre_imagen:version** que descargará desde el repositorio una imagen con la versión indicada o la última versión (**latest**) si no indicamos versión.
-+ Y la orden fundamental para ejecutar contenedores que es **docker run **cuya función principal es poner en ejecución contenedores en base a una imagen de referencia que le indicaremos. Una **CUESTIÓN IMPORTANTE** que debemos de tener en cuenta al usar docker run es que si vamos a **ejecutar un contenedor** que usa como base una **imagen que no tenemos**, esta **se descargará de manera automática**. Para buscar las imágenes que queremos la opción que os recomiendo es usar el buscador de Docker Hub.
++ Y la orden fundamental para ejecutar contenedores que es **docker run** cuya función principal es poner en ejecución contenedores en base a una imagen de referencia que le indicaremos. Una **CUESTIÓN IMPORTANTE** que debemos de tener en cuenta al usar docker run es que si vamos a **ejecutar un contenedor** que usa como base una **imagen que no tenemos**, esta **se descargará de manera automática**. Para buscar las imágenes que queremos la opción que os recomiendo es usar el buscador de Docker Hub.
 
 Esta orden **docker run** tiene una sintaxis sencilla pero multitud de opciones de las que explicaremos algunas. No obstante la estructura general es la siguiente:
 
@@ -535,7 +535,7 @@ docker cp web:/usr/local/apache2/htdocs/index.html $HOME/test.html
 ```
 
 > [!NOTE] 
-> Los contenedores vienen con solo lo imprescindible instalado. Si quiero instalr algo debo normalmente hacer antes un apt update (ya que la mayoría son basados en Debian).
+> Los contenedores vienen con solo lo imprescindible instalado. Si quiero instalar algo debo normalmente hacer antes un apt update (ya que la mayoría son basados en Debian).
 
 ## 5.4. Obtener información de los contenedores.
 
@@ -577,7 +577,7 @@ docker ps --filter publish=8080
 
 ### 5.4.2. Docker inspect.
 
-Si la información que hemos obtenido usando docker ps , que es una información general, no es suficiente para nuestro objetivo deberemos usar la docker inspect que nos va a dar una información detallada del contenedor que seleccione. Lo podemos hacer de las siguientes formas:
+Si la información que hemos obtenido usando docker ps, que es una información general, no es suficiente para nuestro objetivo deberemos usar la docker inspect que nos va a dar una información detallada del contenedor que seleccione. Lo podemos hacer de las siguientes formas:
 ```bash
 # Por nombre. Por ejemplo: Mostrar información detallada del contenedor cuyo nombre es jenkins
 docker inspect jenkins
@@ -633,7 +633,7 @@ docker logs --tail 5 jenkins
 
 Con el paso del tiempo iremos ejecutando muchos contenedores y llegará un momento en que tengamos la necesidad de realizar operaciones como las siguientes:
 
-+ Parar un contenedor que no estamos necesitando o que , puede ser, esté ejecutando un servicio que ocupe un puerto que queremos ocupar con otro servicio o contenedor.
++ Parar un contenedor que no estamos necesitando o que, puede ser, esté ejecutando un servicio que ocupe un puerto que queremos ocupar con otro servicio o contenedor.
 + Eliminar un contenedor que instalamos y que ya no necesitamos. Puede ser que ya ni nos acordemos del motivo por el cual teníamos "eso" en nuestro sistema (a mí al menos me pasa).
 + Queremos iniciar un contenedor que estaba parado pero que vamos a volver a necesitar.
 + Queremos reiniciar un contenedor para que nuevas opciones de configuración sean aplicadas.
@@ -713,6 +713,7 @@ Esa "**ZONA RESERVADA**" de docker cambia de un sistema operativo a otro y tambi
 + **/var/lib/docker/volumes** en las distribuciones de Linux si lo hemos instalado desde paquetes estándar.
 * **/var/snap/docker/common/var-lib-docker/volumes** en Linux si hemos instalado docker mediante snap (no recomendado).
 + **C:\ProgramData\docker\volumes** en las instalaciones de Windows.
+  
 + **/var/lib/docker/volumes** también en Mac aunque se requiere que haya una conexión previa a la máquina virtual que se crea.
       
 Este tipo de volúmenes se suele usar en los siguiente casos:
@@ -796,7 +797,7 @@ docker volume prune --filter label=valor
 ```
 
 > [!NOTE] 
-> No se pueden eliminar volúmenes en uso por contenedores, salvo que usemos el flag -f o --force y no es algo recomendado.
+> No se pueden eliminar volúmenes en uso por contenedores, salvo que usemos el flag **-f** o **--force** y no es algo recomendado.
 
 ### 6.3.3 Obtención de información de los volúmenes.
 
@@ -898,7 +899,7 @@ Para otro editores de código,IDES y lenguajes de programación el proceso es si
 
 # 7. Redes en Docker.
 
-Docker ha creado sin que nosotros seamos conscientes una "red docker" y establecido las** reglas iptables necesarias para que esos contenedores tengan conectividad** con el exterior, para que tengan conectividad entre ellos si pertenecen a la misma red docker, y para que sean accesibles desde el exterior si es que hemos hecho la redirección de puertos pertinente.
+Docker ha creado sin que nosotros seamos conscientes una "red docker" y establecido las **reglas iptables necesarias para que esos contenedores tengan conectividad** con el exterior, para que tengan conectividad entre ellos si pertenecen a la misma red docker, y para que sean accesibles desde el exterior si es que hemos hecho la redirección de puertos pertinente.
 
 En este módulo profundizaremos en este aspecto docker centrándonos en un tipo concreto de red docker, la red **bridge** que es la de uso más común para el desarrollo.
 
@@ -974,7 +975,7 @@ docker network create -d bridge --subnet 172.24.0.0./16 --gateway 172.24.0.1 red
 La orden **docker network create** tiene más opciones para las redes de tipo bridge y muchas más para redes de otro tipo. Pero como estamos en un curso de docker aplicado al desarrollo estas opciones son más que suficientes para poder montar nuestros entornos y los de nuestros alumnos.
 
 > [!NOTE] 
-> Cada red docker que crea, crea un puente de red específico para cada red que podemos ver con ifconfig / ip a
+> Cada red docker que crea, crea un puente de red específico para cada red que podemos ver con ifconfig (windows) ip a (linux)
 
 > Eliminación de redes
 
