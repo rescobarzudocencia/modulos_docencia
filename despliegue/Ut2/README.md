@@ -390,8 +390,8 @@ Al crear el contenedor se nos da un acceso a un shell del mismo. Es importante d
 
 > **Ejemplo 2**
 ```bash
-# Crear un contenedor de ubuntu:18.04 y listar el contendido de la carpeta /
-docker run ubuntu:18.04 ls /
+# Crear un contenedor de ubuntu:latest y listar el contendido de la carpeta /
+docker run ubuntu ls /
 ```
 bin boot dev etc ...
 
