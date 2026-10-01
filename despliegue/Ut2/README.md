@@ -252,6 +252,7 @@ La información que se nos muestra se organiza en forma tabular y nos proporcion
 + **IMAGE**: Nombre de la imagen en el repositorio., con la versión de la imagen descargada Por ejemplo: mysq:5.7
 + **ID**: Un identificador que es único para cada imagen. Siempre podemos usar este ID en vez del nombre.
 + **DISK SIZE**: Tamaño de la imagen.
++ **EXTRA**: Si aparece esta columna coloreada y con la letra `U`, está indicando que la imagen se está usando en un contenedor. Si no aparacenada dicha imagen aún no ha sido usada para crear un contenedor.
 
 ## 4.3. Borrado de imágenes.
 
