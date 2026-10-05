@@ -834,6 +834,11 @@ Ejemplo 2:
   </tfoot>
 </table>
 
+> [!NOTE]
+>
+>Para poder ver los bordes de la tabla añadiremos 
+> `<table border="1">`.
+> Aunque esta etiqueta se definirá en CSS.
 
 ## 4.10 Formularios
 
