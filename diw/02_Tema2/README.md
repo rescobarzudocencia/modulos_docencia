@@ -169,6 +169,29 @@ Primer elemento `p` adjacente de un `div`.
 > 
 > Sólo se tienen en cuenta los hermanos siguientes, no los anteriores.
 
+> Ejemplo de Adyacencia
+
+```css
+CSS
+
+h2 + p {
+  color: crimson;
+  font-weight: bold;
+}
+```
+
+
+```html
+HTML
+
+<div>
+  <h2>Título de la sección</h2>
+  <p>Este párrafo está justo después del H2 (se aplicará el estilo).</p>
+  <p>Este segundo párrafo NO está inmediatamente después del H2, así que no se ve afectado.</p>
+</div>
+```
+
+
 **Todos los hermanos adjacentes** **`~`**
 
 - `div ~ p`

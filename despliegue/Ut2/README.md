@@ -57,6 +57,10 @@
   - [10.3. La orden docker-compose.](#103-la-orden-docker-compose)
   - [10.4.  Ejemplos.](#104--ejemplos)
 - [11. Portainer.io](#11-portainerio)
+- [12. WORPRESS.](#12-worpress)
+  - [12.1. Versiones.](#121-versiones)
+  - [12.2. Administración de Wordpress.](#122-administración-de-wordpress)
+  - [12.3. Tienda Online.](#123-tienda-online)
 
 
 # 1.Introducción.
@@ -1526,3 +1530,32 @@ docker compose -f portainer-compose.yaml up -d
 ```
 
 Una vez desplegado accedemos a el : https://localhost:9443
+
+
+
+
+# 12. WORPRESS.
+
+WordPress es un sistema de gestión de contenidos (CMS) de código abierto que impulsa aproximadamente el 43% de las webs en el mundo. Permite crear, gestionar y diseñar cualquier tipo de sitio web—desde blogs personales hasta tiendas online— de forma visual y sin necesidad de saber programar.
+
+## 12.1. Versiones.
+
+Existen dos opciones principales para utilizar esta plataforma, diferenciadas por su nivel de alojamiento y control:
+
++ **WordPress.org (Autohospedado)**: Descargas el software gratuito  [WordPress.org](https://es.wordpress.org/download/), pero necesitas contratar tu propio dominio y proveedor de alojamiento (hosting). Ofrece control total sobre tu web.
+  
++ **WordPress.com (Alojado)**: Es un servicio gestionado donde creas tu cuenta y ellos se encargan de la infraestructura [WordPress.com](https://wordpress.com/es/). Ofrece varios planes (desde una opción básica gratuita hasta planes avanzados para empresas).
+
+## 12.2. Administración de Wordpress.
+
+
+Actividad donde vamos a desplegar utilizando Docker Compose un contenedor Wrorpress, para su administración.
+
+Podemos utilizar la imagen oficial de Docker Hub.
+
+[Imagen Oficial Wordpress](https://hub.docker.com/_/wordpress)
+
+
+## 12.3. Tienda Online.
+
+Con Wordpress montar una tienda OnLine es bastante fácil solo tenemos que instalar el plugin **Woocomerce**.
