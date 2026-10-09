@@ -267,6 +267,9 @@ El listado de reglas CSS que establecemos es interpretado de forma secuencial. E
 
 ## 4.2. Especificidad
 
+La especificidad en CSS es el sistema que usa el navegador para decidir qué regla de estilo se aplica a un elemento cuando hay varios selectores en conflicto apuntando al mismo sitio.
+
+
 | Peso | Tipo                                          | Ejemplo                          |
 | ---: | --------------------------------------------- | -------------------------------- |
 | 1000 | en línea                                      | `<h1 style="color: pink;"></h1>` |
