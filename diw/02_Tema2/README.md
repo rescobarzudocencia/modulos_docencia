@@ -433,9 +433,7 @@ Un elemento puede tener un orden de pila positivo o negativo. Por defecto, el va
 
 ![z-index](assets/z-index.webp)
 
-> [!NOTE] 
-> 
-> `z-index` sólo funciona en elementos posicionados (`absolute`, `relative`, `fixed`, or `sticky`) y elementos flexibles (elementos que son hijos directos de un elemento `display: flex`).
+
 
 > **Conceptos clave a tener en cuenta:**
 
@@ -443,7 +441,7 @@ Un elemento puede tener un orden de pila positivo o negativo. Por defecto, el va
    
 2. **Jerarquía numérica**: Cuanto mayor sea el número de z-index, más cerca del usuario estará el elemento (capas superiores superponen a las inferiores). Se pueden usar números positivos, negativos o el valor 0.
 
-3. **Contexto de apilamiento** (Stacking Context): Si un elemento padre tiene un z-index inferior al de otro padre, sus elementos hijos nunca podrán superponerse al otro padre, sin importar cuán alto sea el z-index del hijo.
+3. **Contexto de apilamiento (Stacking Context)**: Si un elemento padre tiene un z-index inferior al de otro padre, sus elementos hijos nunca podrán superponerse al otro padre, sin importar cuán alto sea el z-index del hijo.
 
 # 6. Alineación horizontal y vertical
 
