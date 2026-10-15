@@ -447,6 +447,72 @@ Un elemento puede tener un orden de pila positivo o negativo. Por defecto, el va
 
 Existen numerosas formas de alinear un elemento tanto horizontalmente como verticalmente.
 
+Alinear elementos horizontal y verticalmente en CSS es una de las tareas más comunes. Hoy en día, la forma más moderna, limpia y recomendada para lograrlo es utilizando Flexbox o CSS Grid.
+
+A continuación se presentan las mejores formas de hacerlo según cada caso de uso:
+
+1. La forma más fácil e ideal: Flexbox
+Sirve para alinear cualquier elemento (texto, cajas, botones, etc.) dentro de un contenedor.
+
+```css
+.contenedor {
+  display: flex;
+  justify-content: center; /* Alineación horizontal (eje principal) */
+  align-items: center;     /* Alineación vertical (eje secundario) */
+  height: 100vh;           /* Es importante definir una altura al contenedor */
+}
+```
+2. La forma más corta: CSS Grid (1 sola regla)
+Es la solución más concisa para centrar un elemento hijo dentro de su padre.
+
+```css
+.contenedor {
+  display: grid;
+  place-items: center; /* Alinea horizontal y verticalmente al mismo tiempo */
+  height: 100vh;
+}
+```
+3. Centrado absoluto (Posicionamiento clásico)
+Ideal cuando necesitas colocar un elemento superpuesto o fuera del flujo normal de la página (por ejemplo, modales, iconos sobre imágenes, etc.).
+
+```css
+.contenedor {
+  position: relative;
+  height: 100vh;
+}
+
+.elemento-centrado {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Mueve el elemento hacia atrás la mitad de su propio ancho y alto */
+}
+```
+
+4. Solo alineación de texto (Bloques de texto simples)
+Si solo necesitas alinear el texto de un bloque:
+
+```css
+.texto {
+  text-align: center; /* Alineación horizontal */
+  
+  /* Para centrar verticalmente una sola línea de texto: */
+  height: 50px;
+  line-height: 50px; /* Mismo valor que el 'height' */
+}
+```
+
++ Usa Flexbox (justify-content: center y align-items: center) para componentes complejos, menús y maquetación general.
+
++ Usa CSS Grid (place-items: center) si solo quieres centrar rápidamente una caja en medio de la pantalla o de otra caja.
+
+
+
+
+
+
+
+
 Para más información consultar https://www.w3schools.com/css/css_align.asp
 
 # 7. Recursos
