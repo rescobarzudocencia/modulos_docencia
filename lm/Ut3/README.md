@@ -166,15 +166,6 @@ li {
     text-decoration:underline; /* Decoración del texto: subrayado */
 }
 ```
-> **Agrupamientos**
-
-Cuando tenemos varios elementos a los cuales aplica el mismo formato, en lugar de definir la regla para uno de ellos, se separan por comas, por ejemplo:
-
-```css
-h1, h2, h3 {
-    color: red;
-}
-```
 
 # 3. Sintaxis básica
 
@@ -277,6 +268,17 @@ a[href^="https"] {
 }
 ```
 Con esto hacemos que elenlace se vea en color azul.
+
+
+> **Agrupamientos**
+
+Cuando tenemos varios elementos a los cuales aplica el mismo formato, en lugar de definir la regla para uno de ellos, se separan por comas, por ejemplo:
+
+```css
+h1, h2, h3 {
+    color: red;
+}
+```
 
 > **Selectores de descendencia**
 
