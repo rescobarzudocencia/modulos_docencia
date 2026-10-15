@@ -31,9 +31,7 @@
   - [7.2. Fuentes según el formato de archivo](#72-fuentes-según-el-formato-de-archivo)
   - [7.3. Fuentes de iconos](#73-fuentes-de-iconos)
   - [7.4. Efectos](#74-efectos)
-- [8. Listas](#8-listas)
-- [9. Tablas](#9-tablas)
-- [10. Variables en CSS](#10-variables-en-css)
+- [8. Variables en CSS](#8-variables-en-css)
 
 
 
@@ -251,7 +249,7 @@ Declaración en HTML.
 
 ```html
 
-<h1 class="nombre_id">
+<h1 id="nombre_id">
 ```
 
 > **Selector de atributo**
@@ -1098,76 +1096,8 @@ Se vería así
 Referencia: https://www.w3schools.com/css/css_font_google.asp
 
 
-# 8. Listas
 
-La propiedad más usada es
-
-- `list-style-type`
-
-
-Ejemplos:
-
-```css
-ul {
-  list-style-type: none;
-  list-style-type: circle;
-  list-style-type: square;
-}
-
-ol {
-  list-style-type: none;
-  list-style-type: upper-roman;
-  list-style-type: lower-alpha;
-}
-```
-
-# 9. Tablas
-
-Los principales elementos a los cuales dar estilo son:
-
-- **`table`**: Tabla
-- **`tr`**: Fila
-- **`th`**: Celda de cabecera
-- **`td`**: Celda de datos
-
-Es habitual usar la pseudoclase `:nth-child()` para colorear las filas. Por ejemplo:
-
-```css
-table, td, th {
-  border: 1px solid black;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th {
-  height: 70px;
-}
-
-td {
-  text-align: center;     /* Alineación horizontal */
-  vertical-align: middle; /* Alineación vertical */
-}
-
-tr:nth-child(even) {      /* Filas pares */
-  background-color: #f2f2f2;
-}
-```
-
-Si la tabla es ancha y se va a visualizar en dispositivos móviles, debemos asegurarnos de insertarla dentro de un `div` con la propiedad `overflow-x: auto` para mostrar un scroll horizontal que permita al usuario desplazarse a derecha e izquierda de la tabla. 
-
-```html
-<div style="overflow-x: auto;">
-  <table>
-  ...
-  </table>
-</div>
-```
-
-
-# 10. Variables en CSS
+# 8. Variables en CSS
 
 
 Las **CSS Custom Properties** (conocidas como variables CSS) son un mecanismo de CSS que permite dar un valor personalizado a las propiedades CSS. El objetivo principal es evitar escribir múltiples veces un mismo valor, y en su lugar, ponerle un nombre más lógico, semántico y fácil de recordar, que hará referencia al valor real. De esta forma será mucho más legible y más fácil de mantener.
