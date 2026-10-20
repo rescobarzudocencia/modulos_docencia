@@ -21,8 +21,9 @@
     - [3.2.2. Propiedades de color y fondo](#322-propiedades-de-color-y-fondo)
     - [4.2.3. Propiedades de las Listas](#423-propiedades-de-las-listas)
     - [4.2.4. Propiedades de las tablas](#424-propiedades-de-las-tablas)
-    - [4.2.5. Propiedad float](#425-propiedad-float)
-    - [4.2.6. Propiedad position](#426-propiedad-position)
+    - [4.2.6. Propiedades de las imágenes.](#426-propiedades-de-las-imágenes)
+    - [4.2.7. Propiedad float.](#427-propiedad-float)
+    - [4.2.8. Propiedad position](#428-propiedad-position)
 - [5. Modelo de cajas](#5-modelo-de-cajas)
   - [5.1. Flex](#51-flex)
 - [6. Unidades de longitud](#6-unidades-de-longitud)
@@ -870,7 +871,19 @@ Si la tabla es ancha y se va a visualizar en dispositivos móviles, debemos aseg
   </table>
 </div>
 ```
-### 4.2.5. Propiedad float
+
+### 4.2.6. Propiedades de las imágenes.
+
+|Valor |Descripción|
+|------| ----------|
+|`width`| ancho de la imagen|
+|`height`| altoo de la imagen|
+|`box-shadow`| añade sombras alrededor de la imagen|
+|`filter`| añadir filtros, como blur, escala de grises|
+|`objet-fit`| escalar el contenido sin deformarlo dentro de dimensiones fijas|
+
+
+### 4.2.7. Propiedad float.
 
 Es utilizado para maquetar elementos de [bloque](../Ut2/README.md#431-elementos-de-bloque-block).
 
@@ -886,7 +899,7 @@ Los elmentos de bloque mas utilizado son `<header>`, `<footer>`, `<aside>`, `<na
 [Ejemplo con 3 contenedores ](float.zip), descarga y prueba a cambiar los valores para ver el resultado. (Para descargar pulsa con el boton derecho sobre el enlace, en el menú elige "**Guardar enlace como ...**")
 
 
-### 4.2.6. Propiedad position
+### 4.2.8. Propiedad position
 
 Determina como se posiciona un elemento en el documento.
 
