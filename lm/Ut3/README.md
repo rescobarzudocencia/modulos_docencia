@@ -4,6 +4,7 @@
 - [1. Introducción](#1-introducción)
 - [2. Hojas de estilo CSS](#2-hojas-de-estilo-css)
   - [2.1. Sintaxis básica](#21-sintaxis-básica)
+  - [2.2. Comentarios en Css.](#22-comentarios-en-css)
 - [3. Colores](#3-colores)
   - [3.1. Identificación](#31-identificación)
   - [3.2. Valores RGB](#32-valores-rgb)
@@ -182,6 +183,19 @@ En la siguiente imagen se muestra el ejemplo de una regla CSS con las partes com
 
 ![reglas css](../img/reglas_css.jpg)
 
+## 2.2. Comentarios en Css.
+
+Para añadir comentarios utilizamos `/* Esto es un comentario */`.
+
+Ejemplo:
+
+```css
+/* Regla que al pasar el puntero por un enlace cambia el color de fondo a azul y el color del enlace a blanco */
+a:hover {
+  background:  blue; 
+  color:       white; 
+}
+```
 # 3. Colores
 
 ## 3.1. Identificación
