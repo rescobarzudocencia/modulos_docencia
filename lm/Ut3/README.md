@@ -191,6 +191,7 @@ En la siguiente imagen se muestra el ejemplo de una regla CSS con las partes com
 - Por **valores RGB**: rgb(255, 99, 71)
 - Por **valores HSL**: hsl(9, 100%, 64%)
 
+[Codigo de colores.](https://htmlcolorcodes.com/es/)
 
 **Ejemplo**
 ```html
