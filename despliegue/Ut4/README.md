@@ -189,7 +189,6 @@ Los parámetros más importantes que debemos descomentar en el servidor FTP son 
 + **local_umask=022** –> Esta directiva nos permite habilitar los permisos nuevos cuando copiemos datos al servidro FTP, por defecto el umask es 077 pero podremos modificarlo por el valor que nosotros queramos, 022 es el umask más utilizado en otros servidores FTP.
 + **ftpd_banner** –> Esta directiva permite poner un banner de inicio de sesión.
 + **chroot_list_enable=YES** –> Nos permite habilitar el chroot de los diferentes usuarios del sistema, para que solamente un usuario entre en su carpeta /home/usuario y en ninguna más, es una medida de seguridad, pero hay que usarla con mucho cuidado ya que si un usuario tiene permisos en directorios superiores tendrá acceso al resto.
-+ **chroot_list_enable=YES** –> Nos permite crear una lista con los usuarios en chroot, todos los que aparezcan aquí podrán conectarte.
 + **chroot_list_file=/etc/vsftpd.chroot_list** –> Es la lista de usuarios con sus rutas predeterminadas.
 
 El servidor  utiliza los usuarios de sistema, con lo que añadir nuevos usuarios consiste en  crear usuarios en el sistema.
