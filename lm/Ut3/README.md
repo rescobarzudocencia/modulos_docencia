@@ -478,7 +478,6 @@ También hemos usado otras propiedades no relacionadas con el color como `overfl
 
 # 4. Selectores.
 
-
 ## 4.1. Selectores
 
 Los selectoroes son la forma en que se apunta a los elelmentos HTML a los cuales queremos dar formato.
@@ -507,6 +506,44 @@ Utiliza el carácter de asterisco "*" y se aplica la regla a todos los elementos
 ```
 
 Suele usarse para limpiar el formato de todo el dcocumento.
+
+Los navegadores insertan ciertos estilos por defecto. Esto es fácil de comprobar, si sólo escribes HTML sin indicar ningún estilo CSS. Observarás que la página muestra algunos elementos con cierto estilo, como por ejemplo, que los `<body>` tienen márgenes o que los `<h1>` tienen un cierto tamaño y margen.
+
+Muchos programadores prefieren resetear todos los estilos del navegador, de modo que sea mucho más sencillo que los estilos sean similares entre diferentes navegadores.
+
+Más información y `ejemplos de reset` en:
+
+- [Sitio de Manz.dev](https://lenguajecss.com/cascada-css/herencia/reset-css/)
+
+Ejemplo de un reset:
+```css
+/* Modern Reset básico */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+```
 
 > **Selector de clase**
 
