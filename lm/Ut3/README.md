@@ -3,29 +3,30 @@
 
 - [1. Introducción](#1-introducción)
 - [2. Hojas de estilo CSS](#2-hojas-de-estilo-css)
-- [3. Sintaxis básica](#3-sintaxis-básica)
-  - [3.1. Selectores](#31-selectores)
-  - [3.2 Propiedades de los elementos](#32-propiedades-de-los-elementos)
-    - [3.2.1 Propiedades de texto](#321-propiedades-de-texto)
+  - [2.1. Sintaxis básica](#21-sintaxis-básica)
+- [3. Colores](#3-colores)
+  - [3.1. Identificación](#31-identificación)
+  - [3.2. Valores RGB](#32-valores-rgb)
+  - [3.3. Valores RGBA](#33-valores-rgba)
+  - [3.4. Valores HSL](#34-valores-hsl)
+  - [3.5. Valores HSLA](#35-valores-hsla)
+  - [3.6. Valores OKLCH](#36-valores-oklch)
+  - [3.7. Gradientes de color](#37-gradientes-de-color)
+  - [3.8. Uso](#38-uso)
+- [4. Selectores.](#4-selectores)
+  - [4.1. Selectores](#41-selectores)
+  - [4.2 Propiedades de los elementos](#42-propiedades-de-los-elementos)
+    - [4.2.1 Propiedades de texto](#421-propiedades-de-texto)
     - [3.2.2. Propiedades de color y fondo](#322-propiedades-de-color-y-fondo)
-    - [3.2.3. Propiedades de las Listas](#323-propiedades-de-las-listas)
-    - [3.2.4. Propiedades de las tablas](#324-propiedades-de-las-tablas)
-    - [3.2.5. Propiedad float](#325-propiedad-float)
-    - [3.2.6. Propiedad position](#326-propiedad-position)
-- [4. Modelo de cajas](#4-modelo-de-cajas)
-  - [4.1. Flex](#41-flex)
-- [5. Unidades de longitud](#5-unidades-de-longitud)
-  - [5.1. Unidades de longitud absoluta](#51-unidades-de-longitud-absoluta)
-  - [5.2. Unidades de longitud relativa](#52-unidades-de-longitud-relativa)
-- [6. Colores](#6-colores)
-  - [6.1. Identificación](#61-identificación)
-  - [6.2. Valores RGB](#62-valores-rgb)
-  - [6.3. Valores RGBA](#63-valores-rgba)
-  - [6.4. Valores HSL](#64-valores-hsl)
-  - [6.5. Valores HSLA](#65-valores-hsla)
-  - [6.6. Valores OKLCH](#66-valores-oklch)
-  - [6.7. Gradientes de color](#67-gradientes-de-color)
-  - [6.8. Uso](#68-uso)
+    - [4.2.3. Propiedades de las Listas](#423-propiedades-de-las-listas)
+    - [4.2.4. Propiedades de las tablas](#424-propiedades-de-las-tablas)
+    - [4.2.5. Propiedad float](#425-propiedad-float)
+    - [4.2.6. Propiedad position](#426-propiedad-position)
+- [5. Modelo de cajas](#5-modelo-de-cajas)
+  - [5.1. Flex](#51-flex)
+- [6. Unidades de longitud](#6-unidades-de-longitud)
+  - [6.1. Unidades de longitud absoluta](#61-unidades-de-longitud-absoluta)
+  - [6.2. Unidades de longitud relativa](#62-unidades-de-longitud-relativa)
 - [7. Fuentes](#7-fuentes)
   - [7.1. Fuentes según su diseño](#71-fuentes-según-su-diseño)
   - [7.2. Fuentes según el formato de archivo](#72-fuentes-según-el-formato-de-archivo)
@@ -117,9 +118,9 @@ Ejemplo:
 
 ```
 
-> **Estilos externos ( Recomendados)**
+> **Estilos externos (Obligatorio su uso)**
 
-Si creamos aparte nuestra hoja de estilo llamada "misestilos.css", en nuestro documento HTML lo primero será indicar dónde esta la misma para poder hacer uso de los estilos definidos en la misma, para ello usamos dentro de la cabecera (head) la siguiente etiqueta con los siguientes atributos:
+Si creamos aparte nuestra hoja de estilo llamada "misestilos.css", en nuestro documento HTML lo primero será indicar dónde esta la misma para poder hacer uso de los estilos definidos en la misma, para ello usamos dentro de la cabecera (**head**) la siguiente etiqueta con los siguientes atributos:
 
 ```html
 <link rel="stylesheet" type="text/css" href="misestilos.css"/>
@@ -164,8 +165,7 @@ li {
     text-decoration:underline; /* Decoración del texto: subrayado */
 }
 ```
-
-# 3. Sintaxis básica
+## 2.1. Sintaxis básica
 
 Las declaraciones de estilos CSS se hace a través de **reglas**. Está compuesto por dos partes diferenciadas:
 
@@ -182,8 +182,304 @@ En la siguiente imagen se muestra el ejemplo de una regla CSS con las partes com
 
 ![reglas css](../img/reglas_css.jpg)
 
+# 3. Colores
 
-## 3.1. Selectores
+## 3.1. Identificación
+
+- Por **nombre**:  tomato
+- Por **valor hexadecimal**: #ff6347
+- Por **valores RGB**: rgb(255, 99, 71)
+- Por **valores HSL**: hsl(9, 100%, 64%)
+
+
+**Ejemplo**
+```html
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1 style="background-color: Tomato; text-align: center;">Tomato</h1>
+
+<h1 style="text-align: center;">Sin Transparencia</h1>
+
+<h1 style="background-color:#ff6347;">#ff6347</h1>
+<h1 style="background-color:rgb(255, 99, 71);">rgb(255, 99, 71)</h1>
+<h1 style="background-color:hsl(9, 100%, 64%);">hsl(9, 100%, 64%)</h1>
+
+<h1 style="text-align: center;">Con Transparencia</h1>
+
+<h1 style="background-color:#ff634777;">#ff634777</h1>
+<h1 style="background-color:rgba(255, 99, 71, 0.5);">rgba(255, 99, 71, 0.5)</h1>
+<h1 style="background-color:hsla(9, 100%, 64%, 0.5);">hsla(9, 100%, 64%, 0.5)</h1>
+
+</body>
+</html>
+```
+
+![Ejemplo colores](../../diw/01_Tema1/assets/ejemplo-colores.png)
+
+> [!TIP] 
+>
+> Existe el color `transparent`, que puede ser usado tanto para primer como segundo plano.
+>
+> ```css
+> color: transparent;
+> background-color: transparent;
+>```
+
+
+## 3.2. Valores RGB
+
+En CSS, un color se puede especificar como un valor RGB mediante esta fórmula:
+
+**rgb ( rojo, verde , azul )**
+
+
+- Cada parámetro (rojo, verde y azul) define la **intensidad del color entre 0 y 255**.
+- Por ejemplo, rgb(255, 0, 0) se muestra en rojo, porque el rojo está configurado en su valor más alto (255) y los demás están configurados en 0.
+- Para mostrar negro, establezca todos los parámetros de color en 0, así: rgb(0, 0, 0).
+- Para mostrar blanco, establezca todos los parámetros de color en 255, así: rgb(255, 255, 255)
+- Para mostrar alguna nivel de gris, establezca todos los parámetros de color con igual valor, así: rgb(200, 200, 200)
+
+
+## 3.3. Valores RGBA
+
+Los valores de color RGBA son una extensión de los valores de color RGB con un **canal alfa**, que especifica la **opacidad de un color**.
+
+Un valor de color RGBA se especifica con:
+
+**rgba ( rojo, verde , azul, alfa )**
+
+El parámetro alfa es un número entre:
+-  **0,0**: completamente **transparente**
+-  **1,0**: completamente **opaco**
+
+
+> [!NOTE] 
+> 
+> La [`función rgb()`](https://lenguajecss.com/css/colores/funcion-rgb/) también admite una forma más moderna, en la cual separamos los valores por espacios y podemos indicar la opacidad después del separador de /, siendo 0 o 0% totalmente transparente y 1 o 100% totalmente opaco. Ejemplo:
+> 
+> ```css
+> background-color: rgb(100% 50% 25% / 50%);
+> background-color: rgb(255 127 63 / 0.5);  
+>```
+
+## 3.4. Valores HSL
+
+En CSS, un color se puede especificar usando tono, saturación y luminosidad (HSL) en la forma:
+
+**hsl ( tono , saturación , luminosidad )**
+
+- El tono es un grado en la **rueda de colores de 0 a 360 grados**. 0 es rojo, 120 es verde y 240 es azul.
+- **La saturación es un valor porcentual**. 0% significa un tono de gris y 100% es el color completo.
+- **La luminosidad es un valor porcentual**. 0% es negro, 50% no es ni claro ni oscuro, 100% es blanco
+
+
+**Tono** o Hue
+
+![Rueda color](../../diw/01_Tema1/assets/color-wheel.png)
+
+- Referencia: https://developer.mozilla.org/en-US/docs/Web/CSS/hue
+
+**Saturación** y **Luminosidad**
+
+![Munsell system](../../diw/01_Tema1/assets/doble-cono-hsl.png)
+
+
+## 3.5. Valores HSLA
+
+Los valores de color HSLA son una extensión de los valores de color HSL con un **canal alfa**, que especifica la **opacidad de un color**.
+
+Un valor de color HSLA se especifica con:
+
+**hsla ( tono, saturación , luminosidad, alfa )**
+
+El parámetro alfa es un número entre:
+-  **0,0**: completamente **transparente**
+-  **1,0**: completamente **opaco**
+
+> [!NOTE] 
+> 
+> La [`función hsl()`](https://lenguajecss.com/css/colores/funcion-hsl/) también admite una forma más moderna, en la cual separamos los valores por espacios y podemos indicar la opacidad después del separador de /, siendo 0 o 0% totalmente transparente y 1 o 100% totalmente opaco. Ejemplo:
+> 
+> ```css
+> background-color: hsl(180deg 50% 25% / 75%);
+> background-color: hsl(180 50% 25% / 0.75); 
+>```
+
+## 3.6. Valores OKLCH
+
+Las pantallas modernas no pueden mostrar todos los colores visibles para el ojo humano. El subconjunto de colores estándar actual se denomina **sRGB** y solo puede reproducir el **35% de estos colores visibles para el ojo humano**.
+
+**Las nuevas pantallas solucionan este problema, ya que añaden un 30% más de colores nuevos**; este conjunto de colores se denomina **P3** (también conocido como gama amplia). En cuanto a su adopción, todos los dispositivos Apple modernos, y muchas pantallas OLED, son compatibles con el color P3. Por lo tanto, esto no es algo del futuro lejano; es algo que ya está sucediendo.
+
+Afortunadamente, OKLCH tiene una buena legibilidad, admite P3 y superiores, así como cualquier color visible para el ojo humano.
+
+`**oklch()**` es una nueva forma de definir colores CSS. En oklch(L C H) u oklch(L C H / a), cada elemento corresponde a lo siguiente:
+
+- `L` es la **luminosidad percibida** (0-1). "Percibido" significa que tiene una luminosidad constante para nuestros ojos, a diferencia de L en hsl().
+- `C` es el **croma**, desde el gris hasta el color más saturado.
+- `H` es el ángulo de **tono** (0-360).
+- `a` es la **opacidad** (0-1 o 0-100%).
+
+**Ejemplo:**
+
+```css
+a:hover {
+  background:   oklch(0.45 0.26 264); /* blue */
+  color:        oklch(1 0 0);     /* white */
+  color:        oklch(0 0 0 / 50%); /* black with 50% opacity */
+}
+``` 
+
+**Beneficios de OKLCH**
+
+1. OKLCH libera a los diseñadores de la necesidad de elegir manualmente cada color. Pueden definir una fórmula, elegir algunos colores y se genera automáticamente una paleta completa del sistema de diseño.
+2. OKLCH se puede utilizar para colores P3 de amplia gama. Por ejemplo, los dispositivos nuevos (como los de Apple) pueden mostrar más colores que los antiguos monitores sRGB, y podemos usar OKLCH para especificar estos nuevos colores.
+3. A diferencia de hsl(), OKLCH es mejor para las modificaciones de color y la generación de paletas. Utiliza la luminosidad perceptual, por lo que se evitan los resultados inesperados, como los que se producían con darken() en Sass.
+4. Además, gracias a su luminosidad predecible, OKLCH ofrece una mejor ***a11y***. 
+5. A diferencia de rgb() o hex (#ca0000), OKLCH es legible. Puedes saber rápida y fácilmente qué color representa un valor de OKLCH simplemente observando los números. OKLCH funciona como HSL, pero codifica la luminosidad mejor que HSL.
+
+> [!NOTE]
+> El término **a11y** es una abreviatura numérica de la palabra "accessibility" (**accesibilidad** en inglés). Se llama así porque hay 11 letras entre la "a" y la "y" en la palabra accessibility.
+>
+
+
+> [!TIP]
+>
+> **Más información:**
+>
+> - [OKLCH in CSS: why we moved from RGB and HSL](https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl)
+> - [OKLCH Color Picker & Converter](https://oklch.com/#0.7,0.1,295,100)
+
+
+## 3.7. Gradientes de color
+
+Un gradiente de color es la transición gradual entre dos o más colores. En CSS tenemos 3 tipos de gradientes:
+
+- **LINEAL**
+- **RADIAL**
+- **CÓNICO**
+
+
+Para generar dichos gradientes usamos las funciones:
+
+- `linear-gradient()`
+- `radial-gradient()`
+- `conic-gradient()`
+
+![gradientes](../../diw/01_Tema1/assets/gradientes.png)
+
+En su forma más sencilla, usando sólo dos colores, tenemos los siguientes ejemplos:
+
+```css
+background: linear-gradient( red, blue );
+background: radial-gradient( red, blue );
+background: conic-gradient( red, blue );
+```
+
+> [!NOTE]
+>
+> Para usar gradientes en CSS, no se usa la propiedad `background-color`, sino la propiedad **`background-image`**.
+
+Para ver usos más elaborados consultar los siguientes enlaces:
+
+- [MDN: linear-gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient)
+- [MDN: radial-gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/radial-gradient)
+- [MDN: conic-gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/conic-gradient)
+
+## 3.8. Uso
+
+El color está presente en numerosas propiedades. A continuación, se muestran unas cuantas:
+
+- `color`
+- `border`
+- `background`
+- `background-color`
+- `background-image`
+
+**Ejemplo 1:**
+
+A continuación se muestra como crear un fondo de página con un gradiente en forma de arco iris, usando la propiedad `background-image`.
+
+![Gradiente Arco Iris](../../diw/01_Tema1/assets/gradiente.png)
+
+```css
+body {
+  height: 100vh;
+  background-image: linear-gradient(to bottom right,
+    red 0%,
+    orange 15%,
+    yellow 30%,
+    lightgreen 45%,
+    cyan 60%,
+    rgb(4 138 183) 75%,
+    rgb(180 4 180) 100%);
+}
+```
+
+
+**Ejemplo 2:**
+
+Un ejemplo más elaborado. En este caso aplicamos el gradiente lineal a un elemento `h1`. Para ello necesitaremos hacer uso de las siguientes propiedades adicionales:
+
+```css
+h1 {
+  background-clip: text;
+  color: transparent;
+}
+```
+
+![Gradiente H1](../../diw/01_Tema1/assets/gradiente-h1.png)
+
+
+También hemos usado otras propiedades no relacionadas con el color como `overflow` y `text-wrap`, con la finalidad de ofrecer funcionalidades de gestión del desbordamiento y ajuste de línea. 
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        div {
+            overflow-x: scroll;
+        }
+
+        h1 {
+            margin-block: 0;
+            width: 1100px;
+            text-wrap: nowrap;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-weight: 700;
+            font-size: 10rem;
+            background: linear-gradient(.25turn, red, orange, blue, green, cyan, violet);
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>Hola mundo</h1>
+    </div>
+</body>
+
+</html>
+```
+
+# 4. Selectores.
+
+
+## 4.1. Selectores
 
 Los selectoroes son la forma en que se apunta a los elelmentos HTML a los cuales queremos dar formato.
 
@@ -392,9 +688,9 @@ Al pasar el ratón por encima del enlace se pondrá rojo y se subrayará.
 | `:not()`       | Negación               |
 | `:empty`       | Elemento vacío         |
 
-## 3.2 Propiedades de los elementos
+## 4.2 Propiedades de los elementos
 
-### 3.2.1 Propiedades de texto
+### 4.2.1 Propiedades de texto
 
 A continuación vemos las propiedades mas usadas cuando queremos dar formato a los textos.
 
@@ -437,7 +733,7 @@ A continuación vemos las propiedades mas usadas cuando queremos dar formato de 
 
 Los colores son explicados en el apartado 6 de esta unidad [Colores](#6-colores)
 
-### 3.2.3. Propiedades de las Listas
+### 4.2.3. Propiedades de las Listas
 
 A continuación vemos las propiedades mas usadas cuando queremos dar formato a las listas.
 
@@ -468,7 +764,7 @@ ol {
   list-style-type: lower-alpha;
 }
 ```
-### 3.2.4. Propiedades de las tablas
+### 4.2.4. Propiedades de las tablas
 
 A continuación vemos las propiedades mas usadas cuando queremos dar formato a las tablas.
 
@@ -522,7 +818,7 @@ Si la tabla es ancha y se va a visualizar en dispositivos móviles, debemos aseg
   </table>
 </div>
 ```
-### 3.2.5. Propiedad float
+### 4.2.5. Propiedad float
 
 Es utilizado para maquetar elementos de [bloque](../Ut2/README.md#431-elementos-de-bloque-block).
 
@@ -538,7 +834,7 @@ Los elmentos de bloque mas utilizado son `<header>`, `<footer>`, `<aside>`, `<na
 [Ejemplo con 3 contenedores ](float.zip), descarga y prueba a cambiar los valores para ver el resultado. (Para descargar pulsa con el boton derecho sobre el enlace, en el menú elige "**Guardar enlace como ...**")
 
 
-### 3.2.6. Propiedad position
+### 4.2.6. Propiedad position
 
 Determina como se posiciona un elemento en el documento.
 
@@ -553,7 +849,7 @@ Determina como se posiciona un elemento en el documento.
 
 [Ejemplo de uso de position ](position.zip), descarga y prueba a cambiar los valores para ver el resultado. (Para descargar puls con el boton derecho sobre el enlace, en el menú elige "**Guardar enlace como ...**")
 
-# 4. Modelo de cajas
+# 5. Modelo de cajas
 
 
 ![modelo cajas](../img/modelo_cajas.png)
@@ -581,7 +877,7 @@ Cada caja se compone de cuatro capas, de adentro hacia afuera:
 
 [Ejemplo de uso de cajas.](cajas.zip)
 
-## 4.1. Flex
+## 5.1. Flex
 
 Flexbox **(display:flex)** es un sistema de CSS que permite organizar elementos:
 
@@ -615,12 +911,12 @@ Principales propiedades de Flexbox:
 [Ejemplo de uso de flex ](flex.zip)
 
 
-# 5. Unidades de longitud
+# 6. Unidades de longitud
 Las unidades de longitud en CSS definen medidas de distancia y se dividen en dos grandes grupos: 
 + **absolutas** (fijas, ideales para impresión)
 + **relativas** (escalables, ideales para el diseño web responsivo)
 
-## 5.1. Unidades de longitud absoluta
+## 6.1. Unidades de longitud absoluta
 
 Son medidas fijas que mantienen su tamaño real independientemente del dispositivo, por lo que no suelen adaptarse a diferentes pantallas. 
 
@@ -632,7 +928,7 @@ Son medidas fijas que mantienen su tamaño real independientemente del dispositi
 + **pc (picas)**: 
 
 
-## 5.2. Unidades de longitud relativa
+## 6.2. Unidades de longitud relativa
 
 Dependen de otro valor de referencia (el tamaño de la fuente, el elemento padre o la pantalla), lo que las hace perfectas para diseños adaptables.
 
@@ -647,300 +943,6 @@ Dependen de otro valor de referencia (el tamaño de la fuente, el elemento padre
 + **vw**: Porcentaje del ancho total de la pantalla o ventana.
 + **vh**: Porcentaje de la altura total de la pantalla o ventana.
 + **vmin / vmax**: Toma el valor más pequeño o más grande entre el ancho y la altura, respectivamente. 
-# 6. Colores
-
-## 6.1. Identificación
-
-- Por **nombre**:  tomato
-- Por **valor hexadecimal**: #ff6347
-- Por **valores RGB**: rgb(255, 99, 71)
-- Por **valores HSL**: hsl(9, 100%, 64%)
-
-
-**Ejemplo**
-```html
-<!DOCTYPE html>
-<html>
-<body>
-
-<h1 style="background-color: Tomato; text-align: center;">Tomato</h1>
-
-<h1 style="text-align: center;">Sin Transparencia</h1>
-
-<h1 style="background-color:#ff6347;">#ff6347</h1>
-<h1 style="background-color:rgb(255, 99, 71);">rgb(255, 99, 71)</h1>
-<h1 style="background-color:hsl(9, 100%, 64%);">hsl(9, 100%, 64%)</h1>
-
-<h1 style="text-align: center;">Con Transparencia</h1>
-
-<h1 style="background-color:#ff634777;">#ff634777</h1>
-<h1 style="background-color:rgba(255, 99, 71, 0.5);">rgba(255, 99, 71, 0.5)</h1>
-<h1 style="background-color:hsla(9, 100%, 64%, 0.5);">hsla(9, 100%, 64%, 0.5)</h1>
-
-</body>
-</html>
-```
-
-![Ejemplo colores](../../diw/01_Tema1/assets/ejemplo-colores.png)
-
-> [!TIP] 
->
-> Existe el color `transparent`, que puede ser usado tanto para primer como segundo plano.
->
-> ```css
-> color: transparent;
-> background-color: transparent;
->```
-
-
-## 6.2. Valores RGB
-
-En CSS, un color se puede especificar como un valor RGB mediante esta fórmula:
-
-**rgb ( rojo, verde , azul )**
-
-
-- Cada parámetro (rojo, verde y azul) define la **intensidad del color entre 0 y 255**.
-- Por ejemplo, rgb(255, 0, 0) se muestra en rojo, porque el rojo está configurado en su valor más alto (255) y los demás están configurados en 0.
-- Para mostrar negro, establezca todos los parámetros de color en 0, así: rgb(0, 0, 0).
-- Para mostrar blanco, establezca todos los parámetros de color en 255, así: rgb(255, 255, 255)
-- Para mostrar alguna nivel de gris, establezca todos los parámetros de color con igual valor, así: rgb(200, 200, 200)
-
-
-## 6.3. Valores RGBA
-
-Los valores de color RGBA son una extensión de los valores de color RGB con un **canal alfa**, que especifica la **opacidad de un color**.
-
-Un valor de color RGBA se especifica con:
-
-**rgba ( rojo, verde , azul, alfa )**
-
-El parámetro alfa es un número entre:
--  **0,0**: completamente **transparente**
--  **1,0**: completamente **opaco**
-
-
-> [!NOTE] 
-> 
-> La [`función rgb()`](https://lenguajecss.com/css/colores/funcion-rgb/) también admite una forma más moderna, en la cual separamos los valores por espacios y podemos indicar la opacidad después del separador de /, siendo 0 o 0% totalmente transparente y 1 o 100% totalmente opaco. Ejemplo:
-> 
-> ```css
-> background-color: rgb(100% 50% 25% / 50%);
-> background-color: rgb(255 127 63 / 0.5);  
->```
-
-## 6.4. Valores HSL
-
-En CSS, un color se puede especificar usando tono, saturación y luminosidad (HSL) en la forma:
-
-**hsl ( tono , saturación , luminosidad )**
-
-- El tono es un grado en la **rueda de colores de 0 a 360 grados**. 0 es rojo, 120 es verde y 240 es azul.
-- **La saturación es un valor porcentual**. 0% significa un tono de gris y 100% es el color completo.
-- **La luminosidad es un valor porcentual**. 0% es negro, 50% no es ni claro ni oscuro, 100% es blanco
-
-
-**Tono** o Hue
-
-![Rueda color](../../diw/01_Tema1/assets/color-wheel.png)
-
-- Referencia: https://developer.mozilla.org/en-US/docs/Web/CSS/hue
-
-**Saturación** y **Luminosidad**
-
-![Munsell system](../../diw/01_Tema1/assets/doble-cono-hsl.png)
-
-
-## 6.5. Valores HSLA
-
-Los valores de color HSLA son una extensión de los valores de color HSL con un **canal alfa**, que especifica la **opacidad de un color**.
-
-Un valor de color HSLA se especifica con:
-
-**hsla ( tono, saturación , luminosidad, alfa )**
-
-El parámetro alfa es un número entre:
--  **0,0**: completamente **transparente**
--  **1,0**: completamente **opaco**
-
-> [!NOTE] 
-> 
-> La [`función hsl()`](https://lenguajecss.com/css/colores/funcion-hsl/) también admite una forma más moderna, en la cual separamos los valores por espacios y podemos indicar la opacidad después del separador de /, siendo 0 o 0% totalmente transparente y 1 o 100% totalmente opaco. Ejemplo:
-> 
-> ```css
-> background-color: hsl(180deg 50% 25% / 75%);
-> background-color: hsl(180 50% 25% / 0.75); 
->```
-
-## 6.6. Valores OKLCH
-
-Las pantallas modernas no pueden mostrar todos los colores visibles para el ojo humano. El subconjunto de colores estándar actual se denomina **sRGB** y solo puede reproducir el **35% de estos colores visibles para el ojo humano**.
-
-**Las nuevas pantallas solucionan este problema, ya que añaden un 30% más de colores nuevos**; este conjunto de colores se denomina **P3** (también conocido como gama amplia). En cuanto a su adopción, todos los dispositivos Apple modernos, y muchas pantallas OLED, son compatibles con el color P3. Por lo tanto, esto no es algo del futuro lejano; es algo que ya está sucediendo.
-
-Afortunadamente, OKLCH tiene una buena legibilidad, admite P3 y superiores, así como cualquier color visible para el ojo humano.
-
-`**oklch()**` es una nueva forma de definir colores CSS. En oklch(L C H) u oklch(L C H / a), cada elemento corresponde a lo siguiente:
-
-- `L` es la **luminosidad percibida** (0-1). "Percibido" significa que tiene una luminosidad constante para nuestros ojos, a diferencia de L en hsl().
-- `C` es el **croma**, desde el gris hasta el color más saturado.
-- `H` es el ángulo de **tono** (0-360).
-- `a` es la **opacidad** (0-1 o 0-100%).
-
-**Ejemplo:**
-
-```css
-a:hover {
-  background:   oklch(0.45 0.26 264); /* blue */
-  color:        oklch(1 0 0);     /* white */
-  color:        oklch(0 0 0 / 50%); /* black with 50% opacity */
-}
-``` 
-
-**Beneficios de OKLCH**
-
-1. OKLCH libera a los diseñadores de la necesidad de elegir manualmente cada color. Pueden definir una fórmula, elegir algunos colores y se genera automáticamente una paleta completa del sistema de diseño.
-2. OKLCH se puede utilizar para colores P3 de amplia gama. Por ejemplo, los dispositivos nuevos (como los de Apple) pueden mostrar más colores que los antiguos monitores sRGB, y podemos usar OKLCH para especificar estos nuevos colores.
-3. A diferencia de hsl(), OKLCH es mejor para las modificaciones de color y la generación de paletas. Utiliza la luminosidad perceptual, por lo que se evitan los resultados inesperados, como los que se producían con darken() en Sass.
-4. Además, gracias a su luminosidad predecible, OKLCH ofrece una mejor ***a11y***. 
-5. A diferencia de rgb() o hex (#ca0000), OKLCH es legible. Puedes saber rápida y fácilmente qué color representa un valor de OKLCH simplemente observando los números. OKLCH funciona como HSL, pero codifica la luminosidad mejor que HSL.
-
-> [!NOTE]
-> El término **a11y** es una abreviatura numérica de la palabra "accessibility" (**accesibilidad** en inglés). Se llama así porque hay 11 letras entre la "a" y la "y" en la palabra accessibility.
->
-
-
-> [!TIP]
->
-> **Más información:**
->
-> - [OKLCH in CSS: why we moved from RGB and HSL](https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl)
-> - [OKLCH Color Picker & Converter](https://oklch.com/#0.7,0.1,295,100)
-
-
-## 6.7. Gradientes de color
-
-Un gradiente de color es la transición gradual entre dos o más colores. En CSS tenemos 3 tipos de gradientes:
-
-- **LINEAL**
-- **RADIAL**
-- **CÓNICO**
-
-
-Para generar dichos gradientes usamos las funciones:
-
-- `linear-gradient()`
-- `radial-gradient()`
-- `conic-gradient()`
-
-![gradientes](../../diw/01_Tema1/assets/gradientes.png)
-
-En su forma más sencilla, usando sólo dos colores, tenemos los siguientes ejemplos:
-
-```css
-background: linear-gradient( red, blue );
-background: radial-gradient( red, blue );
-background: conic-gradient( red, blue );
-```
-
-> [!NOTE]
->
-> Para usar gradientes en CSS, no se usa la propiedad `background-color`, sino la propiedad **`background-image`**.
-
-Para ver usos más elaborados consultar los siguientes enlaces:
-
-- [MDN: linear-gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient)
-- [MDN: radial-gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/radial-gradient)
-- [MDN: conic-gradient](https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/conic-gradient)
-
-## 6.8. Uso
-
-El color está presente en numerosas propiedades. A continuación, se muestran unas cuantas:
-
-- `color`
-- `border`
-- `background`
-- `background-color`
-- `background-image`
-
-**Ejemplo 1:**
-
-A continuación se muestra como crear un fondo de página con un gradiente en forma de arco iris, usando la propiedad `background-image`.
-
-![Gradiente Arco Iris](../../diw/01_Tema1/assets/gradiente.png)
-
-```css
-body {
-  height: 100vh;
-  background-image: linear-gradient(to bottom right,
-    red 0%,
-    orange 15%,
-    yellow 30%,
-    lightgreen 45%,
-    cyan 60%,
-    rgb(4 138 183) 75%,
-    rgb(180 4 180) 100%);
-}
-```
-
-
-**Ejemplo 2:**
-
-Un ejemplo más elaborado. En este caso aplicamos el gradiente lineal a un elemento `h1`. Para ello necesitaremos hacer uso de las siguientes propiedades adicionales:
-
-```css
-h1 {
-  background-clip: text;
-  color: transparent;
-}
-```
-
-![Gradiente H1](../../diw/01_Tema1/assets/gradiente-h1.png)
-
-
-También hemos usado otras propiedades no relacionadas con el color como `overflow` y `text-wrap`, con la finalidad de ofrecer funcionalidades de gestión del desbordamiento y ajuste de línea. 
-
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        body {
-            overflow: hidden;
-        }
-
-        div {
-            overflow-x: scroll;
-        }
-
-        h1 {
-            margin-block: 0;
-            width: 1100px;
-            text-wrap: nowrap;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            font-weight: 700;
-            font-size: 10rem;
-            background: linear-gradient(.25turn, red, orange, blue, green, cyan, violet);
-            background-clip: text;
-            color: transparent;
-        }
-    </style>
-</head>
-
-<body>
-    <div>
-        <h1>Hola mundo</h1>
-    </div>
-</body>
-
-</html>
-```
-
 
 # 7. Fuentes
 
