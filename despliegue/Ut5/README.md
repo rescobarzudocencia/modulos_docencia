@@ -151,6 +151,7 @@ En la siguiente imagen podemos ver donde obtenemos la URL del repositorio, pulsa
 
 
 ```mermaid
+%%{init: { 'mermaid': {'interaction': false}}}%%
 gitGraph
 commit
 ```

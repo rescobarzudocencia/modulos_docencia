@@ -18,7 +18,7 @@
   - [4.1. Selectores](#41-selectores)
   - [4.2 Propiedades de los elementos](#42-propiedades-de-los-elementos)
     - [4.2.1 Propiedades de texto](#421-propiedades-de-texto)
-    - [3.2.2. Propiedades de color y fondo](#322-propiedades-de-color-y-fondo)
+    - [4.2.2. Propiedades de color y fondo](#422-propiedades-de-color-y-fondo)
     - [4.2.3. Propiedades de las Listas](#423-propiedades-de-las-listas)
     - [4.2.4. Propiedades de las tablas](#424-propiedades-de-las-tablas)
     - [4.2.6. Propiedades de las imágenes.](#426-propiedades-de-las-imágenes)
@@ -766,7 +766,7 @@ A continuación vemos las propiedades mas usadas cuando queremos dar formato a l
 | `direction`       | Dirección del texto               | `ltr`, `rtl`                                    |
 | `vertical-align`  | Alineación vertical               | `top`, `middle`, `bottom`                       |
 
-### 3.2.2. Propiedades de color y fondo
+### 4.2.2. Propiedades de color y fondo
 
 A continuación vemos las propiedades mas usadas cuando queremos dar formato de color y fondo de los documentos.
 
@@ -784,7 +784,7 @@ A continuación vemos las propiedades mas usadas cuando queremos dar formato de 
 | `linear-gradient()`     | Fondo degradado lineal   | colores                           |
 | `radial-gradient()`     | Fondo degradado radial   | colores                           |
 
-Los colores son explicados en el apartado 6 de esta unidad [Colores](#6-colores)
+Los colores son explicados en el apartado 6 de esta unidad [Colores](#3-colores)
 
 ### 4.2.3. Propiedades de las Listas
 
