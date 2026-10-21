@@ -975,6 +975,8 @@ Principales propiedades de Flexbox:
 
 [Ejemplo de uso de flex ](flex.zip)
 
+[Guia de uso de Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+
 
 # 6. Unidades de longitud
 Las unidades de longitud en CSS definen medidas de distancia y se dividen en dos grandes grupos: 

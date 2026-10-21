@@ -724,6 +724,7 @@ Ejemplos de elementos de bloque en línea:
 
 Estudiaremos estos tipos de `display` en un tema posterior.
 
+[Guia de uso de Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 
 ## 8.5. None, para ocultar un elemento
 
