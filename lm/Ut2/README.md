@@ -161,6 +161,10 @@ Pie de página.
 <head>
     <meta charset="UTF-8">
     <title>Uso de comentarios</title>
+    <meta name="description" content="Descripción del contenido de la pagina web.">
+    <meta name="author" content="Autor de la pagina web">
+    <meta name="keywords" content="Palabras para que los buscadores identifiquen la pagina web.">
+
 </head>
 <body>
 
