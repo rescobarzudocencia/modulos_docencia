@@ -924,6 +924,7 @@ Ejemplo:
 | `maxlength`   | Máximo caracteres   |
 | `min` / `max` | Límites             |
 | `checked`     | Marcado por defecto |
+| `required`    | Campo obligatorio   |
 
 
 [Para mas información visite este enlace](https://lenguajehtml.com/html/formularios/etiqueta-html-form/)
