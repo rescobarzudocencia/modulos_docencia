@@ -1304,14 +1304,14 @@ Dentro de cada una de estas secciones tenemos multitud de opciones. Es imposible
 
 ```yaml
 version: '3'
-	# Empieza la sección de servicios.
- 	services:
- 		# Declaro un servicio con nombre miapache
- 		miapache:
- 		# Ese contenedor usará como imagen de base la imagen httpd(Servidor Apache) de Docker Hub.
- 			image: httpd
- 			# Le doy nombre al contenedor cuando arranque (equivalente al flag --name de docker run) 
-			container_name: web
+ # Empieza la sección de servicios.
+  services:
+  # Declaro un servicio con nombre miapache
+  miapache:
+  # Ese contenedor usará como imagen de base la imagen httpd(Servidor Apache) de Docker Hub.
+    image: httpd
+    # Le doy nombre al contenedor cuando arranque (equivalente al flag --name de docker run) 
+    container_name: web
 ```
 > Especificar las variables de entorno para los contenedores.
 
