@@ -396,12 +396,15 @@ Para escribir texto en italica tenemos que incluirlo dentro de las etiquetas `<i
 
 > **Subrayado**
 
-Para escribir texto subrayado tenemos que incluirlo dentro de las etiquetas `<u>` (underlined) y su cierre `</u>`. 
+Para escribir texto subrayado tenemos que incluirlo dentro de las etiquetas `<ins>` (underlined) y su cierre `</ins>`. O `<u>` y `</u>`.
 
 
 <u>Texto en subrallado</u>
+
+<ins>Texto subrallado 2</ins>
 ```html
 <u>Texto en subrallado</u>
+<ins>Texto subrallado 2</ins>
 ```
 
 > **Subíindices y superíndices**
