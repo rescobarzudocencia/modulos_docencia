@@ -11,6 +11,7 @@
 - [4. Uso básico de Git.](#4-uso-básico-de-git)
   - [4.1. Como crear un repositorio.](#41-como-crear-un-repositorio)
   - [4.2. Clonado de un repositoro.](#42-clonado-de-un-repositoro)
+  - [4.3. Guardando datos en el repositorio.](#43-guardando-datos-en-el-repositorio)
 
 
 
@@ -148,6 +149,20 @@ git clone https://github.com/libgit2/libgit2 mylibgit
 En la siguiente imagen podemos ver donde obtenemos la URL del repositorio, pulsaando sobre el botón verde Code:
 
 ![git clone repositorio](../img/gitclonarrepo.png)
+
+
+## 4.3. Guardando datos en el repositorio.
+
+
+> Estado de un repositorio.
+
+Otro comando muy útil, es el que nos permite saber el estado en el que está nuestro repositorio, el area de trabajo (donde están nuestros archivos) y el área de staging (donde git guarda cambios antes de almacenarlos en el repositorio). Si no te suena lo que es, repasa el lo que son los tres estados en el capitulo de introducción.
+
+```bash
+git status
+```
+
+
 
 
 ```mermaid

@@ -1347,7 +1347,7 @@ version: '3'
       container_name: web
       # Establezco la redirección de puertos
       ports:
-	- 8080:80
+         - 8080:80
 ```
 
 > Persisto los datos usando Bind Mount para un servidor Web
