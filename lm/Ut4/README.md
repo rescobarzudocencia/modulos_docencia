@@ -173,7 +173,7 @@ Son convenciones utilizadas para nombrar las variables, funciones, clases etc..,
 
 ## 4.1 Camelcase.
 
-Se nombra la primera palabra en minúscula y la segunda en mayuscula.
+Se nombra la primera palabra en minúscula y la segunda empieza en  mayuscula.
 
 ```
 mivariableEjemplo
@@ -187,7 +187,7 @@ Se usa principalmente para nombrar elementos que epresentan datos específicos o
 
 ## 4.2 Pascalcase.
 
-Se nombra la primera palabra en mayuscula y la segunda en mayuscula.
+Se nombra la primera palabra empieza en mayuscula y la segunda también empieza en mayuscula.
 
 ```
 MivariableEjemplo
