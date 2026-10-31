@@ -204,12 +204,17 @@ Se reserva para nombres de estructuras de alto nivel y tipos en la mayoría de l
 
 ## 5.1. Variables.
 
-A partir de ES6 se recomienda utilizar la palabra clave **let** en lugar de **var** para la declaración de variables. La razón es que **let** declara la variable en un ámbito de bloque al igual que la mayoría de los lenguajes de programación, lo cual es menos propenso a errores en el momento de la ejecución del código. Por contra, las variables declaradas con **var** siguen existiendo fuera del bloque en el cual fueron declaradas, estando únicamente limitadas en su visibilidad por la función en la que fueron declaradas.
+A partir de ES6 se recomienda utilizar la palabra clave **let** en lugar de **var** para la declaración de variables. 
+
+La razón es que **let** declara la variable en un ámbito de bloque al igual que la mayoría de los lenguajes de programación, lo cual es menos propenso a errores en el momento de la ejecución del código. 
+
+Por contra, las variables declaradas con **var** siguen existiendo fuera del bloque en el cual fueron declaradas, estando únicamente limitadas en su visibilidad por la función en la que fueron declaradas.
 
 ```js
 var a=1;
 let b=2;
 ```
+Todas las variables deben ser declaradas con `let`.
 
 ## 5.2. Constantes.
 
@@ -266,6 +271,9 @@ c.toString();                      // "50", es string
 
 Colección de valores separados por comas y dentro de corchetes. En Javascript, a diferencia de otros lenguajes, los valores no tienen  que ser del mismo tipo.
 
+Para acceder a un elemento del array se acede con `array[indice]`, en javascript comienza con `indice = 0`.
+
+
 ```js
 let a;
 a = [ 100, 200, 23 ]; 
@@ -291,7 +299,9 @@ La sintaxis es: `array.join(separador)`.
 
 ```js
 let array = ['Tierra', 'Mar', 'Aire'];
+
 array.join (' y ');    // "Tierra y Mar y Aire"
+
 ['Tierra', 'Mar', 'Aire'].join (' y ');    // "Tierra y Mar y Aire"
 ```
 Si el método join no recibe ningún parámetro entonces la separación se realiza mediante comas:
