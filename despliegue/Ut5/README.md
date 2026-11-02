@@ -17,7 +17,7 @@
 
 # 1. Introducción.
 
-Esta documentación es un resumen de la documentación oficial de Git que podemos encontrarla en esl siguiente enlace https://git-scm.com/book/es/v2.
+Esta documentación es un resumen de la documentación oficial de Git que podemos encontrarla en el siguiente enlace https://git-scm.com/book/es/v2.
 
 Taller de Git del aula del software Libre de la Universidad de Cordoba : https://aulasoftwarelibre.github.io/taller-de-git/
 

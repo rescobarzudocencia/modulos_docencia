@@ -761,7 +761,7 @@ Para la creación de volúmenes vamos a usar la orden docker volume create que t
 
 Entre las opciones que podemos incluir a la hora de crear los volúmenes están:
 
-+ **--driver** o **-d** para especificar el driver elegido para el volumen. Si no especificamos nada el driver utilizado es el local que es el que nos interesa desde el punto de vista de desarrollo porque desarrollamos en nuestra máquina. Al ser Linux en mi caso ese driver local es **overlay2** pero existen otras posibilidades como **aufs, btrfs, zfs, devicemapper o vfs**. Si estamos interesados en conocer al detalle cada uno de ellos aquí tenemos más información.
++ **--driver** o **-d** para especificar el driver elegido para el volumen. Si no especificamos nada el driver utilizado es el local que es el que nos interesa desde el punto de vista de desarrollo porque desarrollamos en nuestra máquina. Pero existen otras posibilidades como **aufs, btrfs, zfs, devicemapper o vfs**. 
 + **--label** para especificar los metadatos del volumen mediante parejas clave-valor.
 + **--opt** o **-o** para especificar opciones relativas al driver elegido. Si son opciones relativas al sistema de ficheros  puedo usar una sintaxis similar a las opciones de la orden mount.
 + **--name** para especificar un nombre para el volumen. Es una alternativa a especificarlo al final que es la  forma que está descrita en la imagen superior.
@@ -769,7 +769,7 @@ Entre las opciones que podemos incluir a la hora de crear los volúmenes están:
 Vamos a ilustrar este funcionamiento con varios ejemplos:
 ```bash
 # Creación de un volumen llamado datos (driver local sin opciones)
-docker volume create data
+docker volume create datos
 # Creación de un volumen data especificando el driver local
 docker volume create -d local data
 # Creación de un volumen llamando web añadiendo varios metadatos
