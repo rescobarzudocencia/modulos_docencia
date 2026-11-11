@@ -39,12 +39,14 @@
   - [6.4. Asociando almacenamiento a los contenedores.](#64-asociando-almacenamiento-a-los-contenedores)
   - [6.5. Uso de los volúmenes y bind mounts.](#65-uso-de-los-volúmenes-y-bind-mounts)
   - [6.6. Bind mounts para desarrollo. Depurando aplicaciones.](#66-bind-mounts-para-desarrollo-depurando-aplicaciones)
+  - [6.7. Ejercicio de clase.](#67-ejercicio-de-clase)
 - [7. Redes en Docker.](#7-redes-en-docker)
   - [7.1. Tipos de redes en Docker.](#71-tipos-de-redes-en-docker)
   - [7.2. Gestionando redes.](#72-gestionando-redes)
   - [7.3. Obteniendo información de las redes.](#73-obteniendo-información-de-las-redes)
   - [7.4. Asociando redes a contenedores.](#74-asociando-redes-a-contenedores)
   - [7.5. Iptables en contenedores.](#75-iptables-en-contenedores)
+  - [7.6. Ejercicio de clase.](#76-ejercicio-de-clase)
 - [8. Imágenes propias.](#8-imágenes-propias)
   - [8.1. Desde un contenedor en ejecución.](#81-desde-un-contenedor-en-ejecución)
 - [9. El fichero Dockerfile](#9-el-fichero-dockerfile)
@@ -902,6 +904,31 @@ Para otro editores de código,IDES y lenguajes de programación el proceso es si
 
 [Depurando una aplicación web Python Django](https://youtu.be/LJ1_hxw1c38?list=PL-8CyWabyNa85xowmOeBMCspbrn6qNWgl)
 
+## 6.7. Ejercicio de clase.
+
+> Uso de Bind Mount
+
++ Vamos a crear dentro de `/home/usuario/Documentos/`, sustituir `usuario` por el nombre de usuario que tengas en el sistema, un directorio llamado `web`. En el crearemos un fichero `index.html`, con el contenido `<h1> BIND MOUNTS</h1>`.
++ Creamos nuestro contenedor con el siguiente comando:
+
+```bash 
+docker run -d --name BindMount -v /home/usuario/Documentos/web:/usr/local/apache2/htdocs -p 8082:80 httpd
+```
++ Accedemos al contenedor con `httpd://localhost:8082`. Nos debe aparecer `BIND MOUNTS`. Cambia el contenido del index actualiza la pestaña del navegador.
+  
+> Uso de Volúmenes Gestionados por Docker
+
++ Creamos el volumen `datos` con el comando `docker volume create datos`.
++ Para ver la información del volumen ejecutamos `docker inspect datos`, nos aparecerá la información en formato Json. Buscamos `Mountpoint`, y nos indica la ruta donde va almacenar los datos de este volumen. Que es `/var/lib/docker/volumenes/datos/_data`.
++ Creamos nuestro contenedor con el siguiente comando:
+  
+```bash 
+docker run -d --name Volumen --mount type=volume,src=datos,dst=/usr/local/apache2/htdocs -p 8083:80 httpd
+```
++ Accedemos al contenedor con `httpd://localhost:8083`. Comprobamos que esta funcionando nuestro contenedor.
++ Vamos al directorio donde guarda los datos y vemos que existe un `index.html`, lo editamos cambiamos el mensaje y actualizamos el navegador.
+
+
 # 7. Redes en Docker.
 
 Docker ha creado sin que nosotros seamos conscientes una "red docker" y establecido las **reglas iptables necesarias para que esos contenedores tengan conectividad** con el exterior, para que tengan conectividad entre ellos si pertenecen a la misma red docker, y para que sean accesibles desde el exterior si es que hemos hecho la redirección de puertos pertinente.
@@ -1081,6 +1108,31 @@ https://youtu.be/DLce5da2ge4?list=PL-8CyWabyNa85xowmOeBMCspbrn6qNWgl
 
 https://docs.docker.com/network/
 
+## 7.6. Ejercicio de clase.
+
++ Creamos dos redes red1 y red2.
+```bash
+# Crear una red. Al no poner nada más coge las opciones por defecto, red bridge local y el mismo docker elige la dirección de red y la máscara
+docker network create red1
+# Crear una red (la red2)  , una dirección y una máscara de red (--subnet) y una gateway (--gateway)
+docker network create --subnet 172.24.0.0./16 --gateway 172.24.0.1 red2
+```
++ La `red2` sabemos la dirección de la red por que se la hemos asignado, pero y la `red1`, ¿que direccion de red le ha asignado docker?.
++ Utilizando el comando `docker network inspect red1`. Nos mostrará la información de la red en formato Json, buscamos `Subnet`, y vemos que nos aparece `172.18.0.0/16`.
++ Vamos a crear un contenedor asignandole la red pero no le vamos asignar direccion Ip, Docker automaticamente le asigna una.
+```bash
+docker run -d --name Webred1 --network red1 -p 8084:80 httpd
+```
++ Para ver que ip asignado al contenedor ejecutamos `docker inspect Webred1`, y buscamos donde indique la dirección Ip del contenedor.
++ Vamoa acrear un segundo contenedor pero asignandole la red1 y además le vamos a indicar una dirección Ip.
+```bash
+docker run -d --name Webred1.2 --network red1 --ip 172.18.0.5 -p 8084:80 httpd
+```
++ Vamos a comprobar que hay comunicación entre ambos contnedores realizando un ping.
+  
+  + Ejecutamos un terminal en el contenedor Webred1, `docker exec -it Webred1 /bin/bash`.
+  + El comando ping no viene instalado asi que actualizamos los repositorios con `apt update` e instalamos el paquete que nos instala el ping, `apt install inetutils-ping`.
+  + Una vez instalado ejecutamos `ping 172.18.0.5`, y nos debe hacer ping.
 
 # 8. Imágenes propias.
 
