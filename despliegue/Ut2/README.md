@@ -1002,7 +1002,7 @@ Una descripción más detallada de lo todas las opciones la podemos ver en la [r
 # Crear una red. Al no poner nada más coge las opciones por defecto, red bridge local y el mismo docker elige la dirección de red y la máscara
 docker network create red1
 # Crear una red (la red2) dándole explícitamente el driver bridge (-d) , una dirección y una máscara de red (--subnet) y una gateway (--gateway)
-docker network create -d bridge --subnet 172.24.0.0./16 --gateway 172.24.0.1 red2
+docker network create -d bridge --subnet 172.24.0.0/16 --gateway 172.24.0.1 red2
 ```
 La orden **docker network create** tiene más opciones para las redes de tipo bridge y muchas más para redes de otro tipo. Pero como estamos en un curso de docker aplicado al desarrollo estas opciones son más que suficientes para poder montar nuestros entornos y los de nuestros alumnos.
 
@@ -1115,7 +1115,7 @@ https://docs.docker.com/network/
 # Crear una red. Al no poner nada más coge las opciones por defecto, red bridge local y el mismo docker elige la dirección de red y la máscara
 docker network create red1
 # Crear una red (la red2)  , una dirección y una máscara de red (--subnet) y una gateway (--gateway)
-docker network create --subnet 172.24.0.0./16 --gateway 172.24.0.1 red2
+docker network create --subnet 172.24.0.0/16 --gateway 172.24.0.1 red2
 ```
 + La `red2` sabemos la dirección de la red por que se la hemos asignado, pero y la `red1`, ¿que direccion de red le ha asignado docker?.
 + Utilizando el comando `docker network inspect red1`. Nos mostrará la información de la red en formato Json, buscamos `Subnet`, y vemos que nos aparece `172.18.0.0/16`.
@@ -1126,7 +1126,7 @@ docker run -d --name Webred1 --network red1 -p 8084:80 httpd
 + Para ver que ip asignado al contenedor ejecutamos `docker inspect Webred1`, y buscamos donde indique la dirección Ip del contenedor.
 + Vamoa acrear un segundo contenedor pero asignandole la red1 y además le vamos a indicar una dirección Ip.
 ```bash
-docker run -d --name Webred1.2 --network red1 --ip 172.18.0.5 -p 8084:80 httpd
+docker run -d --name Webred1.2 --network red1 --ip 172.18.0.5 -p 8085:80 httpd
 ```
 + Vamos a comprobar que hay comunicación entre ambos contnedores realizando un ping.
   

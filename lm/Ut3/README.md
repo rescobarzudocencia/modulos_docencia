@@ -563,7 +563,7 @@ p, h1, h2, h3, h4, h5, h6 {
 
 > **Selector de clase**
 
-Aplica los estilos a los elementos que pertenecen a la misma clase.
+Aplica los estilos a los elementos que pertenecen a la misma clase, se pueden usar tantas veces como la necesitemos.
 
 Delcaración CSS
 
