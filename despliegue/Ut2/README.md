@@ -1610,4 +1610,4 @@ Podemos utilizar la imagen oficial de Docker Hub.
 
 ## 12.3. Tienda Online.
 
-Con Wordpress montar una tienda OnLine es bastante fácil solo tenemos que instalar el plugin **Woocomerce**.
+Con Wordpress montar una tienda OnLine es bastante fácil solo tenemos que instalar el plugin **Woocommerce**.
