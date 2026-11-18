@@ -123,13 +123,21 @@ Utilizando un fichero externo donde vamos a codificar todas nuestras funciones J
   </body>
 </html>
 ```
-
+Pero esto nos puede ocasionar problemas, ya que  se carga antes de cargar todo el contenido de la página (esto se verá con mas detalla cuando manipulemos objtos DOM), existen dos opciones:
++ Añadir `defer` detras del fichero.
+  ```html
+  head>
+    <title>Título de la página</title>
+    <script src="js/index.js defer"></script>
+  </head>
+  ```
++ Colocar el sctipt al final justo antes de `</body>`.
 
 # 3. Entrada y salida de datos.
 
 ## 3.1. Entrada de datos.
 
-Para la entrada de datos por teclado tenemos el método **prompt**. Además de los textbox de los formularios.
+Para la entrada de datos por teclado tenemos el método **prompt**. Además de los **textbox e imputs**  de los formularios.
 
 ```html
 <!DOCTYPE html>
@@ -154,14 +162,17 @@ Para la entrada de datos por teclado tenemos el método **prompt**. Además de l
 </html>
 ```
 
+
 ## 3.2. Salida de datos.
 
-+ **Windows.alert** muestra una ventana con la información.
-+ **Document.write** escribe directamente en el documento Html.
-+ **Inner.html** escribe en  un elemento Htmal, usado con **.getElementById**
-+ **console.log** muestra mensajes por consola, para poder visualizarlos tenemos que entrar en las herramientas de desarrollo pulsando `F12` o `Ctrl + Shift + J`, en Windows/Linux y en Mac `Cmd + Option + J`. Una vez dentro buscamos **Console**.
++ **Windows.alert** muestra una ventana con la información. Ejemplo `window.alert("Operación completada con éxito.");`
++ **Document.write** escribe directamente en el documento Html.Ejemplo: `document.write(edad)`.
++ **Inner.html** escribe en  un elemento Html, usado con **.getElementById**. Se verá en DOM.
++ **console.log** muestra mensajes por consola, para poder visualizarlos tenemos que entrar en las herramientas de desarrollo pulsando `F12` o `Ctrl + Shift + J`, en Windows/Linux y en Mac `Cmd + Option + J`. Una vez dentro buscamos **Console**. Ejemplo `console.log('Hola'+ nombre)`.
 
+> Ejercicio de clase 1.
 
+Basandonos en el ejemplo anterior, abre el compilador online, copia y ejectua el código que está entre las marcas `<script>`. Cambiando los `document.write` por `console.log()`.
 
 
 # 4 Camelcase vs Pascalcase.
