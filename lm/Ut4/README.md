@@ -7,6 +7,7 @@
   - [2.2. Script externo.](#22-script-externo)
 - [3. Entrada y salida de datos.](#3-entrada-y-salida-de-datos)
   - [3.1. Entrada de datos.](#31-entrada-de-datos)
+    - [3.1.1. Funciones útiles para controlar las entradas de datos.](#311-funciones-útiles-para-controlar-las-entradas-de-datos)
   - [3.2. Salida de datos.](#32-salida-de-datos)
 - [4 Camelcase vs Pascalcase.](#4-camelcase-vs-pascalcase)
   - [4.1 Camelcase.](#41-camelcase)
@@ -69,10 +70,11 @@
 # 1. Introducción.
 JavaScript es un lenguaje con las siguientes características:
 
-+ Es un lenguaje interpretado
++ Es un lenguaje interpretado.
 + Lenguaje de lado del cliente.
 + Lenguaje con tipado dinámico.
 + Multiparadigma, funcional y orientado a objetos.
++ Todas las líneas deben terminar en `;`.
 
 JavaScript es utilizado para que el usuario interactue con el documento web, produciendo **eventos** que se asocian a código JavaScript. Por ejemplo el evento **onclick**.
 
@@ -126,7 +128,7 @@ Utilizando un fichero externo donde vamos a codificar todas nuestras funciones J
 Pero esto nos puede ocasionar problemas, ya que  se carga antes de cargar todo el contenido de la página (esto se verá con mas detalla cuando manipulemos objtos DOM), existen dos opciones:
 + Añadir `defer` detras del fichero.
   ```html
-  head>
+  <head>
     <title>Título de la página</title>
     <script src="js/index.js defer"></script>
   </head>
@@ -161,6 +163,18 @@ Para la entrada de datos por teclado tenemos el método **prompt**. Además de l
   </body>
 </html>
 ```
+### 3.1.1. Funciones útiles para controlar las entradas de datos.
+
++ `isNaN` para controlar que estamos introduciendo un número. Devuelve `True` si no se puede convertir por ejemplo al introducir texto. Devuelve `False` si el valor introducido es un numero.
+  > Ejemplo: isNaN(numero)
+
+[Uso de isNaN ](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/isNaN)
++ `trim` esta función elimina los espacios en blanco y los caracteres de nueva línea de ambos extremos de una cadena de texto.
+
+[Uso de trim()](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/String/trim)
++ `number()` función que nos sirver para pasar el parámetro a número, si lo que queremos convertir no es un número nos devuelve `NaN`(Not a Number).
+
+[Uso de number()](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
 
 ## 3.2. Salida de datos.
@@ -248,13 +262,12 @@ Los tipos de datos primitivos son:
 + Booleanos.
 
 ```js
-const  a = 10;
-a = 20;        // TypeError: Assignment to constant variable.
-const b = [1, 2, 3];
-b = [ 1, 4 ];  // Uncaught TypeError: Assignment to constant variable
-const pi=3.14;
+let  a = 10;
+let pi=3.14;
 // Un número muy grande (se añade n al final)
-const bignumber = 12345678901234567890n;
+let bignumber = 12345678901234567890n;
+// Un tipo de dato texto
+let saludo="Hola!!!"
 // Un valor de verdadero o falso
 let boolean = true;
 ```
@@ -275,7 +288,7 @@ console.log ( c + a );             // 5012
 console.log ( c + parseInt(a) );   // 62 
 console.log ( a + b );             // 1223.01
 console.log ( c + parseFloat(b) ); // 73.01 
-c.toString();                      // "50", es string
+console.log (c.toString());  // "50", es string
 ```
 ## 6.3. Tipos de datos compuestos.
 ### 6.3.1. Array.

@@ -391,6 +391,8 @@ docker pull ubuntu:18.04
 # Crear un contenedor de ubuntu:18.04 y tener acceso a un shell en él. Si no hemos descargado la imagen de manera previa se descargará.
 docker run -it ubuntu:18.04 /bin/bash
 root@ef2bea1d6cb1:/#
+# Creamos un contenedor y al salirnos de el se borra automaticamente, usaremos el ejemplo anterior
+docker run --rm -it ubuntu:18.04 /bin/bash
 ```
 Al crear el contenedor se nos da un acceso a un shell del mismo. Es importante destacar que **estamos accediendo como root**. Al salir del terminal el contenedor se para.
 
