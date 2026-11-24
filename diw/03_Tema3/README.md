@@ -59,6 +59,12 @@ Atributos  principales:
 |`title`|Añade un titulo que al pasar el raton por la imgen lo muestra|
 |`loading`|Tiene dos valores: `eager`, carga la imagen de inmediato, `lazy`, carga cuando se hace scroll y se acerca la imagen.|
 
+```html
+<img src="elephant-660-480.jpg" 
+     alt="Elephant at sunset" 
+     title="A elephant a sunset"
+     loading="lazy" />
+```
 > Etiqueta **figure**
 
 Con la etiqueta `figcaption`, añadimos un pie de imagen que nos puede servir para una descripción de la imagen.
@@ -71,22 +77,22 @@ Con la etiqueta `figcaption`, añadimos un pie de imagen que nos puede servir pa
    }
 ```
 [Ejeplo de centrado.](https://rescobarzudocencia.github.io/ejemplos/html/centradofigurefigcaption.html)
-> Etiqueta **picture**
 
-
-**Ejemplos**:
 
 ```html
-<img src="elephant-660-480.jpg" 
-     alt="Elephant at sunset" 
-     title="A elephant a sunset"
-     loading="lazy" />
-
 <figure>
   <img src="/media/cc0-images/elephant-660-480.jpg" alt="Elephant at sunset" />
   <figcaption>An elephant at sunset</figcaption>
 </figure>
+```
 
+
+> Etiqueta **picture**
+
+Contenedor que permite ofrecer múltiples versiones de una imagen para que el navegador elija la mas adecuada según el tamaño de la pantalla.
+
+
+```html
 <picture>
   <source srcset="photo.avif" type="image/avif" />
   <source srcset="photo.webp" type="image/webp" />
@@ -102,7 +108,14 @@ Con la etiqueta `figcaption`, añadimos un pie de imagen que nos puede servir pa
 
 ## 2.1. Imágenes de fondo
 
-También podemos poner imágenes como fondo de página y/o capas. Para ello podemos usar las propiedades de CSS `background` y `background-image`.
+También podemos poner imágenes como fondo de página y/o capas. 
+
+|Etiqueta|Descripcion|
+|-----|-----|
+|`bacground-image`| Define una imagen indicando la ruta o URL `url("...")`.|
+|`background-size`| Ajusta la imagen para cubrir todo el contenedor sin deformarla.|
+|`background-repeat`| Evita que la imagen se repita comno un mosaico.|
+|`background-position`| Alinear la imagen por ejemplo centrarla.|
 
 **Ejemplo**:
 
@@ -244,6 +257,17 @@ Características:
 ## 2.5. Ajuste
 
 - Propiedades **`object-fit`** y **`object-position`**
+
+Valores de `object-fit`.
+
+|Valor|Comportamiento|
+|---|---|
+|`cover`|Rellena todo el contenedor manteniendo la proporción original y recorta lo que sobra.|
+|`fill`|Escala la imagen para ocupar el ancho y alto exactos|
+|`contain`|Escala la imagen para que quepa entera sin recortarse puede dejar espacio vacio alrededor|
+
+[Ejemplos de object-fit](https://rescobarzudocencia.github.io/ejemplos/html/objectfit.html)
+
 
 Permite ajustar y posicionar una imagen en su área de visualización. Para obtener un ajuste agradable a la vista suele usarse **`object-fit: cover;`**.
 
