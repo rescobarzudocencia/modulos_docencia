@@ -21,6 +21,6 @@
 
    [3.5. Optativa: Python](python/README.md)
 
-   [3.3. Diseño Interfaces Web DAW](diw/README.md)
+   [3.6. Diseño Interfaces Web DAW](diw/README.md)
 ---
 
