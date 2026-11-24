@@ -277,6 +277,7 @@ Por defecto es 50% 50%. Acepta los siguientes valores:
 - **Unidades de longitud.** Desplazamientos exactos en píxeles, rem o em (ej. 20px 50px), admitiendo valores negativos para mover el contenido fuera de los bordes.
 - **Desplazamientos desde bordes**. Combinaciones como right 10px bottom 20px para separar el contenido desde un borde específico.
 
+[Ejemplo object-position](https://rescobarzudocencia.github.io/ejemplos/css/objectposition.html)
 Ejemplo:
 
 ```css
