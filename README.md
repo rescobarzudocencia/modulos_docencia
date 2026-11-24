@@ -9,7 +9,7 @@
    
     [2.2. Seguridad Informática](seguridad_inf/README.md)
 
-3. DAW
+3. DAW/DAM
    
     [3.1. Lenguajes de Marcas](lm/README.md)
 
@@ -17,6 +17,10 @@
 
     [3.3. Despliegue de aplicaciones web](despliegue/README.md)
 
-   [3.4. Optativa: Python](python/README.md)
+   [3.4. Bases de datos](bd/README.md)
+
+   [3.5. Optativa: Python](python/README.md)
+
+   [3.3. Diseño Interfaces Web DAW](diw/README.md)
 ---
 
