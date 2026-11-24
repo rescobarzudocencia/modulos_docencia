@@ -46,9 +46,33 @@ El uso de imágenes en la web está muy extendido, puesto que proporciona una fu
 
 Existen numerosas formas de añadir imágenes a una página web. Aquí tienes algunas etiquetas HTML para ello:
 
-- `img`
-- `figure`
-- `picture`
+> Etiqueta **img**
+
+Atributos  principales:
+
+|Etiqueta| Descripción|
+|:---:|:----:|
+|`src`|Ruta o URL de la imagen|
+|`alt`|Texto alternativo para accesibilidad y SEO|
+|`width`|Ancho en pixeles|
+|`height`|Alto en pixeles|
+|`title`|Añade un titulo que al pasar el raton por la imgen lo muestra|
+|`loading`|Tiene dos valores: `eager`, carga la imagen de inmediato, `lazy`, carga cuando se hace scroll y se acerca la imagen.|
+
+> Etiqueta **figure**
+
+Con la etiqueta `figcaption`, añadimos un pie de imagen que nos puede servir para una descripción de la imagen.
+```css
+/*Centrado de figure y figcaption dentro de un contenedor*/
+.centradofigurefigcaption {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+   }
+```
+[Ejeplo de centrado.](https://rescobarzudocencia.github.io/ejemplos/html/centradofigurefigcaption.html)
+> Etiqueta **picture**
+
 
 **Ejemplos**:
 
