@@ -76,7 +76,7 @@ Con la etiqueta `figcaption`, añadimos un pie de imagen que nos puede servir pa
        align-items: center;
    }
 ```
-[Ejeplo de centrado.](https://rescobarzudocencia.github.io/ejemplos/html/centradofigurefigcaption.html)
+[Ejeplo de centrado.](https://rescobarzudocencia.github.io/ejemplos/css/centradofigurefigcaption.html)
 
 
 ```html
@@ -266,10 +266,16 @@ Valores de `object-fit`.
 |`fill`|Escala la imagen para ocupar el ancho y alto exactos|
 |`contain`|Escala la imagen para que quepa entera sin recortarse puede dejar espacio vacio alrededor|
 
-[Ejemplos de object-fit](https://rescobarzudocencia.github.io/ejemplos/html/objectfit.html)
+[Ejemplos de object-fit](https://rescobarzudocencia.github.io/ejemplos/css/objectfit.html)
 
+La propiedad `object-position`, alinea el contenido de la imagen dentro de la caja contenedora, se usa junto a `objet-fit` que debe ser `cover`, `contain` o `none`.
 
-Permite ajustar y posicionar una imagen en su área de visualización. Para obtener un ajuste agradable a la vista suele usarse **`object-fit: cover;`**.
+Por defecto es 50% 50%. Acepta los siguientes valores:
+
+- **Palabras clave**. top, bottom, left, right y center.
+- **Porcentajes**. Valores como 0% 0% (arriba a la izquierda) o 80% 20%.
+- **Unidades de longitud.** Desplazamientos exactos en píxeles, rem o em (ej. 20px 50px), admitiendo valores negativos para mover el contenido fuera de los bordes.
+- **Desplazamientos desde bordes**. Combinaciones como right 10px bottom 20px para separar el contenido desde un borde específico.
 
 Ejemplo:
 
