@@ -15,7 +15,6 @@
   - [2.8. Optimización de imágenes para la Web](#28-optimización-de-imágenes-para-la-web)
 - [3. Audio](#3-audio)
   - [3.1. Formatos de codec y archivo](#31-formatos-de-codec-y-archivo)
-  - [3.2. Funcionalidades](#32-funcionalidades)
 - [4. Vídeo](#4-vídeo)
   - [4.1. Formatos de codec](#41-formatos-de-codec)
   - [4.2. Formatos de archivo](#42-formatos-de-archivo)
@@ -51,7 +50,7 @@ Existen numerosas formas de añadir imágenes a una página web. Aquí tienes al
 Atributos  principales:
 
 |Etiqueta| Descripción|
-|:---:|:----:|
+|:---|:----|
 |`src`|Ruta o URL de la imagen|
 |`alt`|Texto alternativo para accesibilidad y SEO|
 |`width`|Ancho en pixeles|
@@ -432,6 +431,25 @@ Ejemplo de imagenes responsive [Github](https://github.com/mdn/learning-area/tre
 
 Para añadir audio a una página web podemos usar la etiqueta HTML `audio`.
 
+Atributos principales.
+
+|Atributo|Funcionalidad|
+|---|---|
+|`src`|Indica la ruta o URL del archivo de audio.|
+|`controls`|Muestra los controles natvios del navegador.|
+|`autoplay`|Intenta iniciar la reproducción automáticamente, algunos navegadores lo bloquean.|
+|`loop`|Repite el audio automaticamente.|
+|`mute`|Inicia el audio silenciado(No le veo sentido).|
+|`preload`|Sugiere al navegador como cargar la página.|
+
+Opciones de `preload`.
+
+|Opcion|Funcionalidad|
+|---|---|
+|`none`|No descarga el archivo hasta que el usuario interactúa|
+|`metadata`|Carga solo metadatos básicos(duración o dimensiones)|
+|`auto`|Permite que el navegador decida.|
+
 **Ejemplo**:
 
 ```html
@@ -473,7 +491,7 @@ Formato de señal digital audio basado en un algoritmo de compresión con pérdi
 El formato AAC a diferencia del formato .ogg, permite incluir legalmente la protección de los derechos de autor, como la protección anticopia.
 
 
-## 3.2. Funcionalidades
+**Ejemplo.**
 
 ```html
 <!DOCTYPE html>
@@ -512,6 +530,25 @@ El formato AAC a diferencia del formato .ogg, permite incluir legalmente la prot
 
 Para añadir vídeo a una página web podemos usar la etiqueta HTML `video`.
 
+|Atributo|Funcionalidad|
+|---|---|
+|`src`|Indica la ruta o URL del archivo de audio.|
+|`controls`|Muestra los controles natvios del navegador.|
+|`width` y `height`|Definen el ancho y alto del reporoductor en píxeles.|
+|`poster`|Muestra una imagen previa antes de que comience el video.|
+|`autoplay`|Intenta iniciar la reproducción automáticamente, algunos navegadores lo bloquean.|
+|`loop`|Repite el audio automaticamente.|
+|`mute`|Inicia el audio silenciado.|
+|`preload`|Sugiere al navegador como cargar la página.|
+
+Opciones de `preload`.
+
+|Opcion|Funcionalidad|
+|---|---|
+|`none`|No descarga el archivo hasta que el usuario interactúa|
+|`metadata`|Carga solo metadatos básicos(duración o dimensiones)|
+|`auto`|Permite que el navegador decida.|
+
 **Ejemplos**:
 
 ```html
@@ -533,7 +570,7 @@ Para añadir vídeo a una página web podemos usar la etiqueta HTML `video`.
   poster="https://peach.blender.org/wp-content/uploads/title_anouncement.jpg?x11217"
   width="620">
   Lo sentimos, tu navegador no admite vídeos incrustados, pero no te preocupes, puedes
-  <a href="https://archive.org/details/BigBuckBunny_124">descargarlo</a>
+  <a href="https://archive.org/details/BigBuckBunny_124">Descargarlo</a>
   ¡Y verlo con tu reproductor de video favorito!
 </video>
 ```
@@ -678,6 +715,8 @@ Es un elemento HTML que permite insertar contenido externo, embebido dentro de l
 ## 5.2. Canvas
 
 Es un elemento HTML que permite dibujar gráficos y animaciones. Para ello es necesario hacer uso del lenguaje `Javascript`.
+
+[Para mas información sobre Canvas.](https://lenguajejs.com/javascript/canvas/etiqueta-html-canvas/)
 
 **Ejemplo**:
 
