@@ -278,6 +278,7 @@ Por defecto es 50% 50%. Acepta los siguientes valores:
 - **Desplazamientos desde bordes**. Combinaciones como right 10px bottom 20px para separar el contenido desde un borde específico.
 
 [Ejemplo object-position](https://rescobarzudocencia.github.io/ejemplos/css/objectposition.html)
+
 Ejemplo:
 
 ```css
@@ -317,7 +318,7 @@ div {
 Permite recortar la imagen según el contorno deseado. 
 Por ejemplo, para recortar la imagen en forma de triángulo podemos hacer **`clip-path: polygon(50% 0%, 0% 100%, 100% 100%);`**
 
-Existe un generador de recortes en https://bennettfeely.com/clippy/
+[Generador de recortes](https://www.cssportal.com/css-clip-path-generator/)
 
 ![Clip Path](assets/clip-path.png)
 
@@ -331,6 +332,8 @@ Por otro lado, también podemos emplear la propiedad `mask-image` para el mismo 
 - Propiedad **`filter`**
 
 Permite aplicar ciertos filtros a la imagen. Por ejemplo, para aplicar un desenfoque hacemos **`filter: blur(5px);`**, o para aplicar una sombra al contorno (especialmente atractivo con imágenes PNG con fondo transparente) hacemos **`filter: drop-shadow(2px 2px 10px gray);`**
+
+[Generador de filtros.](cssportal.com/css-image-filter-generator/)
 
 En el siguiente enlace tienes más información:
 
@@ -409,11 +412,20 @@ Consulta el siguiente enlace de MDN:
 
 - [Imágenes adaptables](https://developer.mozilla.org/es/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)
 
-Y realiza el siguiente proyecto propuesto por MDN:
+En este articulo nos explica como podemos tener la misma imagen pero adaptada a diferentes resoluciones de pantalla.
 
-- [Proyecto propuesto](https://developer.mozilla.org/es/docs/Learn/HTML/Multimedia_and_embedding/Mozilla_splash_page#assessment_or_further_help)
+```html
+<img
+  srcset="elva-fairy-480w.jpg 480w, elva-fairy-800w.jpg 800w"
+  sizes="(width <= 600px) 480px,
+         800px"
+  src="elva-fairy-800w.jpg"
+  alt="Elva dressed as a fairy" />
+```
+- **srcset** define el conjunto de imágenes entre las que permitiremos elegir al navegador, y el tamaño de cada imagen. Cada conjunto de información de imagen está separado del anterior por una coma.
+- **sizes** define un conjunto de condiciones de medios (por ejemplo, anchos de pantalla) e indica qué tamaño de imagen sería mejor elegir cuando se cumplen ciertas condiciones de medios — estas son las sugerencias de las que hablamos anteriormente. 
 
-El código fuente del proyecto puede obtenerse en [Github](https://github.com/mdn/learning-area/tree/main/html/multimedia-and-embedding/mdn-splash-page-start)
+Ejemplo de imagenes responsive [Github](https://github.com/mdn/learning-area/tree/main/html/multimedia-and-embedding/responsive-images)
 
 
 # 3. Audio
