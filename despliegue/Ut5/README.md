@@ -257,7 +257,6 @@ gitGraph
 commit id:"Agregar hola.py"
 ```
 
-
 > Eliminar archivos del área de Stage
 
 `git rm --cached <archivo>...`
