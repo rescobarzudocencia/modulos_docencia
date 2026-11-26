@@ -12,7 +12,9 @@
   - [4.1. Como crear un repositorio.](#41-como-crear-un-repositorio)
   - [4.2. Clonado de un repositoro.](#42-clonado-de-un-repositoro)
   - [4.3. Guardando datos en el repositorio.](#43-guardando-datos-en-el-repositorio)
-  - [4.4. Ignorando archivos](#44-ignorando-archivos)
+  - [4.4. Ignorando archivos.](#44-ignorando-archivos)
+- [5. Ramas.](#5-ramas)
+  - [5.1. Trabajando con Ramas.](#51-trabajando-con-ramas)
 
 
 
@@ -328,7 +330,14 @@ Así iremos añadiendo diferentes commit.
 
 > Volver a un commit
 
-## 4.4. Ignorando archivos 
+Cada cambio es etiquetado por un hash, para poder regresar a ese momento del estado del proyecto se usa la orden `git checkout`.
+
+Ejemplo:
+
+```bash
+git checkout e19f2c1
+```
+## 4.4. Ignorando archivos.
 
 Existe un fichero llamado `.gitignore`.
 
@@ -343,3 +352,97 @@ dir3/**/*.txt   # ignora todos los archivos txt que hay en el dir3 y sus subdire
 *.o             # ignora todos los archivos con extensión .o en todos los directorios
 ```
 
+# 5. Ramas.
+
+Una Rama es una bifurcación que se usa cuando se va ha trabajar con una nueva funcionalidad.
+
+La rama principal con la que trabaja Git es la `master`, pero si necesitamos resolvel Bugs o añadir nuevas funcionalidades podemos utilizar las ramas.
+
+Cada vez que creas una rama Git crea en paralelo un entorno donde puedes añadir, modificar o borrar archivos sin que deje de funcionar la rama principal desde la cual has creado la nuerva rama. Una vez realizados las modificaciones se fusiona con la rama principal, pasando a dicha rama las nuevas modificaciones.
+
+Ventajas:
+
++ Evita ducplicar carpetas.
++ Si deja de funcionar con volver a la Rama principal y borrar la creada que no funciona basta.
+
+## 5.1. Trabajando con Ramas.
+
+> Creando ramas.
+
+`git branch "nombre de la rama"`
+
+Si ejecutamos `git brach` sin nombre de la rama nos muestra las ramas de nuestro repositorio.
+
+> Cambiando de rama.
+
+`git checkout "nombre de la rama"`
+`git switch "nombre de la rama"` Recomendado.
+
+
+> Creando rama y cambiando de rama en el mismo comando.
+
+`git switch -c "nombre de la rama"`
+
+Si no existe la rama la crea.
+
+Vamos a crear una rama llamada **bugs**.
+
+```bash
+git switch -c bugs
+git branch
+```
+Nos muestra:
+
+```
+git switch -c bugs  
+Cambiado a nueva rama 'bugs'  
+git branch  
+* bugs  
+ master
+```
+El  **asterisco** nos indica en que rama estamos
+
+Ejecutamos los siguientes comandos:
+
+```bash
+touch holaUsuario.py
+git add .
+git commit -m "Agregar holaUsuario.py"
+git log
+```
+Este ultimo comando nos muestra la siguiente información.
+```
+git log  
+commit 952ac01764d6dad06a8d4c3fd5b7f849b95b10ef (HEAD -> bugs)  
+Author: Rafael Ernesto Escobar Zurita <rescobarzudocencia@gmail.com>  
+Date:   Thu Nov 26 20:24:19 2026 +0100  
+  
+   Agregar holaUsuario.py  
+  
+commit 1d038b45f8eb5d1df0f86446c5c16921a7f6c7ee (master)  
+Author: Rafael Ernesto Escobar Zurita <rescobarzudocencia@gmail.com>  
+Date:   Thu Nov 26 19:30:39 2026 +0100  
+  
+   Añadir codigo  
+  
+commit 13c16aa50445edd6718e532f2bbe965fec52e6a8  
+Author: Rafael Ernesto Escobar Zurita <rescobarzudocencia@gmail.com>  
+Date:   Thu Nov 26 18:43:49 2026 +0100  
+  
+   Agregar hola.py
+```
+
+Grafo del repositorio
+
+```mermaid
+gitGraph
+commit id:"Agregar hola.py"
+commit id:"Añadir codigo"
+branch bugs
+commit id:"Agregar holaUsuario.py"
+```
+Para ver como trabaja  el repositorio con las ramas vamos a realizar los siguientes comandos y mira el resultado:
+
+1. Mostramos el contenido del directorio con **"ls -al"**. Vemos que solo tiene lo ficheros **hola.py** y **holaUsuario.py**.
+2. Nos cambiamos de rama a la master `git switch master`o `git checkout master`.
+3. Mostramos el contenido con **"ls -al"**. Vemos que solo tiene el fichero **hola.py**.
