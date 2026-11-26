@@ -12,14 +12,17 @@
   - [4.1. Como crear un repositorio.](#41-como-crear-un-repositorio)
   - [4.2. Clonado de un repositoro.](#42-clonado-de-un-repositoro)
   - [4.3. Guardando datos en el repositorio.](#43-guardando-datos-en-el-repositorio)
+- [4.4. Ignorando archivos](#44-ignorando-archivos)
 
 
 
 # 1. Introducción.
 
-Esta documentación es un resumen de la documentación oficial de Git que podemos encontrarla en el siguiente enlace https://git-scm.com/book/es/v2.
+Esta documentación es un resumen de la documentación oficial de Git y un talled del Aula de Software Libre de la Universidad de Cordoba.
 
-Taller de Git del aula del software Libre de la Universidad de Cordoba : https://aulasoftwarelibre.github.io/taller-de-git/
+[Documentación oficial de Git](https://git-scm.com/book/es/v2)
+
+[Taller de Git del aula del software Libre de la Universidad de Cordoba](https://aulasoftwarelibre.github.io/taller-de-git/)
 
 
 ¿Qué es un control de versiones, y por qué debería importarte? Un control de versiones es un sistema que registra los cambios realizados en un archivo o conjunto de archivos a lo largo del tiempo, de modo que puedas recuperar versiones específicas más adelante. Aunque en los ejemplos  vamos a ver archivos de código fuente como aquellos cuya versión está siendo controlada, en realidad **puedes hacer lo mismo con casi cualquier tipo de archivo** que encuentres en una computadora.
@@ -128,6 +131,10 @@ git init
 ```
 Nos crea un directorio oculto llamado `.git`, donde va a almacenar todo el historial de acciones vamos a ir realizando.
 
+> Ejercicio 1
+
+Creamos un directorio en documentos y dentro de dicho directorio inicializamos el respositorio.
+
 > [!IMPORTANT] 
 > No eliminar por ningun motivo `.git`, ya que si se elimina se perderá el historial del repositorio quedando los ficheros a la última actualización.
 
@@ -156,16 +163,164 @@ En la siguiente imagen podemos ver donde obtenemos la URL del repositorio, pulsa
 
 > Estado de un repositorio.
 
-Otro comando muy útil, es el que nos permite saber el estado en el que está nuestro repositorio, el area de trabajo (donde están nuestros archivos) y el área de staging (donde git guarda cambios antes de almacenarlos en el repositorio). Si no te suena lo que es, repasa el lo que son los tres estados en el capitulo de introducción.
+Otro comando muy útil, es el que nos permite saber el estado en el que está nuestro repositorio, el area de trabajo (donde están nuestros archivos) y el área de staging (donde git guarda cambios antes de almacenarlos en el repositorio).
+
+![Estado del repositorio](../img/gitStatus.png)
+
+Aquí podemos ver que estamos en la rama master. Que aún no hemos hecho ningún commit, y que tenemos no tenemos ningún fichero para confirmar.
+
 
 ```bash
 git status
 ```
+> Ejercicio 2
+
+Ejecutamos el comando y vemos que no tenemos nada aún.
+
+> Crear nuestro primer commit
+
+Para crear los commit necesitamos ejecutar los siguientes comandos:
+
+1. `git add`, nos sirve para añadir los ficheros a la zona de Staging, podemos ir añadiendo ficheros con su nombre : `git add hola.py` o añadir todo con el comando `git add .`, utilizando el punto que añade todos los ficheros y directorios.
+2. `git commit `, para realizar el commit y añadirlos al repositorio. Se utiliza de dos formas.
+   
+    2\.1. Ejecutando `git commit` lo cual abrirá el editor por defecto configurado en Git, se vio en el apratado 3.2. Para indicar la descripción de nuestro commit.
+
+    2\.2. Ejecutando `git commit -m "Descripcion del commit"`, con este comando añadimos la descripción sin que se abra el editor.
 
 
+Vamos a crear un archivo, despues ejecutamos la orden para ver el estado del repositorio.
 
+```bash
+touch hola.py
+git status
+```
+Nos aparecerá, vemos que nos indica el proximo comando a ejecutar:
+
+```bash
+En la rama master
+
+No hay commits todavía
+
+Archivos sin seguimiento:
+  (usa "git add <archivo>..." para incluirlo a lo que será confirmado)
+        hola.py
+
+no hay nada agregado al commit pero hay archivos sin seguimiento presentes (usa "git add" para hacerles seguimiento)
+```
+Para añadir nuestro fichero a la zona de Stage y preararlo para el commit, podemos hacerlo de dos formas:
+
+```bash
+git add hola.py
+
+o
+git add .
+
+Hacemos un 
+
+git status
+```
+Nos mostrará:
+
+```bash
+git add hola.py
+git status
+En la rama master
+
+No hay commits todavía
+
+Cambios a ser confirmados:
+  (usa "git rm --cached <archivo>..." para sacar del área de stage)
+        nuevos archivos: hola.py
+```
+Donde nos indica que no hemos realizado el commit y que si queremos eliminar el fichero o ficheros el comando que debemos ejecutar.
+
+Ya solo nos queda realizar el commit
+
+```bash
+git commit -m "Agregar hola.py"
+git status
+```
+Añadimos al respositorio, mostrando lo siguiente:
+```bash
+git commit -m "Agregar hola.py"
+[master (commit-raíz) 13c16aa] Agregar hola.py
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 hola.py
+```
+Graficamente se veria como se muestra el siguiente esquema:
+
+Grafo del respositorio
 
 ```mermaid
 gitGraph
-commit
+commit id:"Agregar hola.py"
 ```
+
+
+> Eliminar archivos del área de Stage
+
+`git rm --cached <archivo>...`
+
+> Ver el Historial de commit
+
+`git log`
+
+Nos muestra:
+
+```bash
+git log
+commit 13c16aa50445edd6718e532f2bbe965fec52e6a8 (HEAD -> master)
+Author: Rafael Ernesto Escobar Zurita <rescobarzudocencia@gmail.com>
+Date:   Thu Nov 26 18:43:49 2026 +0100
+
+    Agregar hola.py
+
+```
+Vemos el ID del commit y al final el comentario que hemos añadido, con esta información podemos revertir un commit.
+
+Este es el proceso cada vez que añadamos o modifiquemos ficheros.
+
+1. Creamos o modificamos los ficheros en el repositorio. Zona Working.
+2. Los añadimos a la zona de Stage.Comando `git add`.
+3. Realizamos el Commit y pasa al repositorio. Comando `git commit`.
+
+Vamos a seguir con nuestro repositorio vamos añadir contenido a nuesto fichero `hola.py`.
+
+```python
+print(f"Hola Mundo")
+```
+Una vez ejecutamos los siguientes comandos, ralizalos uno a uno para ver el log que va dejando.
+
+```bash
+git status
+git add .
+git status
+git commit -m "Añadir codigo"
+git status
+git log
+```
+El ultimo comando mostrará los dos commit.
+
+Grafo del respositorio
+
+```mermaid
+gitGraph
+commit id:"Agregar hola.py"
+commit id:"Añadir codigo"
+```
+
+
+
+
+Así iremos añadiendo diferentes commit.
+
+> Volver a un commit
+
+# 4.4. Ignorando archivos 
+
+Existe un fichero llamado `.gitignore`.
+
+Ejemplo:
+
+

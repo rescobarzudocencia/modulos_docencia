@@ -25,9 +25,6 @@ A continuación puedes ver un ejemplo de cómo se redacta un texto con Markdown:
 Esto es un **texto en negrita** y esto un *texto en cursiva*
 
 A continuación vamos a [crear un enlace](https://tutorialmarkdown.com)
-
-Tal y como ves, no es tan complicado. No te preocupes si no comprendes esta sintaxis.
-Al final de este tutorial tendrás todo más claro que el agua.
 ```
 
 Todo documento Markdown debe tener la extensión `.md`.
@@ -198,6 +195,20 @@ Para agregar listas ordenadas en Markdown debes agregar un **número** seguido d
 2. Segundo elemento
 3. Tercer elemento
 
+Pero si queremos realizar sublistas:
+
+```markdown
+1. Primer elemento
+
+    2\.1. Sub elemento
+
+```
+
+1. Primer elemento
+   
+    2\.1. Sub elemento
+
+
 + **Listas no ordenadas**.
 
 Para agregar listas no ordenadas en Markdown debes agregar un guion `-`, un signo más `+` o un asterisco `*` delante de los elementos de la lista:
@@ -210,6 +221,17 @@ Para agregar listas no ordenadas en Markdown debes agregar un guion `-`, un sign
 * Primer elemento
 * Segundo elemento
 * Tercer elemento
+
+Para realizar sublistas:
+
+```markdown
+* Primer elemento
+    * Primer subelemento
+        * Otro subelemento
+```
+* Primer elemento
+    * Primer subelemento
+      * Otro subelemento
 
 # 3. Sintaxis extendida de Markdown.
 
