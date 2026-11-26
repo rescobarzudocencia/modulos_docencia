@@ -166,7 +166,6 @@ git status
 
 
 ```mermaid
-%%{init: { 'mermaid': {'interaction': false}}}%%
 gitGraph
 commit
 ```
