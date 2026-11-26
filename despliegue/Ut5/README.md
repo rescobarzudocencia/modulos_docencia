@@ -12,7 +12,7 @@
   - [4.1. Como crear un repositorio.](#41-como-crear-un-repositorio)
   - [4.2. Clonado de un repositoro.](#42-clonado-de-un-repositoro)
   - [4.3. Guardando datos en el repositorio.](#43-guardando-datos-en-el-repositorio)
-- [4.4. Ignorando archivos](#44-ignorando-archivos)
+  - [4.4. Ignorando archivos](#44-ignorando-archivos)
 
 
 
@@ -257,6 +257,7 @@ gitGraph
 commit id:"Agregar hola.py"
 ```
 
+
 > Eliminar archivos del área de Stage
 
 `git rm --cached <archivo>...`
@@ -281,7 +282,7 @@ Vemos el ID del commit y al final el comentario que hemos añadido, con esta inf
 Este es el proceso cada vez que añadamos o modifiquemos ficheros.
 
 1. Creamos o modificamos los ficheros en el repositorio. Zona Working.
-2. Los añadimos a la zona de Stage.Comando `git add`.
+2. Los añadimos a la zona de Stage. Comando `git add`.
 3. Realizamos el Commit y pasa al repositorio. Comando `git commit`.
 
 Vamos a seguir con nuestro repositorio vamos añadir contenido a nuesto fichero `hola.py`.
@@ -289,7 +290,7 @@ Vamos a seguir con nuestro repositorio vamos añadir contenido a nuesto fichero 
 ```python
 print(f"Hola Mundo")
 ```
-Una vez ejecutamos los siguientes comandos, ralizalos uno a uno para ver el log que va dejando.
+Una vez ejecutamos los siguientes comandos, realizados uno a uno para ver el log que va dejando.
 
 ```bash
 git status
@@ -300,6 +301,20 @@ git status
 git log
 ```
 El ultimo comando mostrará los dos commit.
+```bash 
+git log
+commit 1d038b45f8eb5d1df0f86446c5c16921a7f6c7ee (HEAD -> master)
+Author: Rafael Ernesto Escobar Zurita <rescobarzudocencia@gmail.com>
+Date:   Thu Nov 26 19:30:39 2026 +0100
+
+    Añadir codigo
+
+commit 13c16aa50445edd6718e532f2bbe965fec52e6a8
+Author: Rafael Ernesto Escobar Zurita <rescobarzudocencia@gmail.com>
+Date:   Thu Nov 26 18:43:49 2026 +0100
+
+    Agregar hola.py
+```
 
 Grafo del respositorio
 
@@ -309,17 +324,22 @@ commit id:"Agregar hola.py"
 commit id:"Añadir codigo"
 ```
 
-
-
-
 Así iremos añadiendo diferentes commit.
 
 > Volver a un commit
 
-# 4.4. Ignorando archivos 
+## 4.4. Ignorando archivos 
 
 Existe un fichero llamado `.gitignore`.
 
 Ejemplo:
 
+```
+.gitignore
+dir1/           # ignora todo lo que contenga el directorio dir1
+!dir1/info.txt  # El operador ! excluye del ignore a dir1/info.txt (sí se guardaría)
+dir2/*.txt      # ignora todos los archivos txt que hay en el directorio dir2
+dir3/**/*.txt   # ignora todos los archivos txt que hay en el dir3 y sus subdirectorios
+*.o             # ignora todos los archivos con extensión .o en todos los directorios
+```
 
