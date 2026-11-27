@@ -149,9 +149,9 @@ El siguiente texto [está subrayado](#)
 ```
 El siguiente texto [está subrayado](#)
 
-> **Enlaces**
+> **Enlaces Externos**
 
-Para crear un enlace en Markdown debes situar **entre corchetes** el texto que quieres enlazar, también conocido como anchor. Seguidamente, debes usar parénte**sis para definir la URL a la que debe enlazar en texto del enlace:
+Para crear un enlace en Markdown debes situar **entre corchetes** el texto que quieres enlazar, también conocido como anchor. Seguidamente, debes usar paréntesis para definir la URL a la que debe enlazar en texto del enlace:
 
 ```markdown
 Me gusta el editor [Editor Markdown](https://editormarkdown.com)
@@ -161,6 +161,24 @@ Me gusta el editor [Editor Markdown](https://editormarkdown.com)
 
 > [!important]
 > Es importante que no existan espacios entre el corchete de cierre `]` del texto del enlace y el paréntesis de apertura `(` del enlace.
+
+> Enlaces Internos
+
+Para enlazar a un encabezado, usa la sintaxis de enlace habitual apuntando a `#` seguido del identificador.
+
+El identificador se genera convirtiendo el texto del encabezado a minúsculas y reemplazando los espacios por guiones `-`.
+
+```
+## Mi sección importante
+
+Contenido de la sección...
+
+Vuelve a [Mi sección importante](#mi-sección-importante)
+```
+
+Si quisiera enlazar con la Sección `#2. Sintaxis básica de Markdown`, mi enlace sería `#2Sintaxis-básica-de-Marckdow`.
+
+[Enlazar Seccion 2](#2-sintaxis-básica-de-markdown)
 
 > **Imágenes**
 
@@ -206,7 +224,7 @@ Pero si queremos realizar sublistas:
 
 1. Primer elemento
    
-    2\.1. Sub elemento
+    1\.1. Sub elemento
 
 
 + **Listas no ordenadas**.

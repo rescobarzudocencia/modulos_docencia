@@ -470,3 +470,5 @@ commit id:"Agregar holaUsuario.py"
 checkout main
 merge bugs
 ```
+
+Si mostramos el contenido de la rama `master`, vemos que se ha añadido los cambios de la rama `bugs`.
