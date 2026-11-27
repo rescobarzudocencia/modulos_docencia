@@ -183,7 +183,7 @@ Ejecutamos el comando y vemos que no tenemos nada aún.
 
 Para crear los commit necesitamos ejecutar los siguientes comandos:
 
-1. `git add`, nos sirve para añadir los ficheros a la zona de Staging, podemos ir añadiendo ficheros con su nombre : `git add hola.py` o añadir todo con el comando `git add .`, utilizando el punto que añade todos los ficheros y directorios.
+1. `git add`, nos sirve para añadir los ficheros a la zona de Staging, podemos ir añadiendo ficheros con su nombre : `git add hola.py` o añadir todo con el comando `git add .`, utilizando el punto añade todos los ficheros y directorios.
 2. `git commit `, para realizar el commit y añadirlos al repositorio. Se utiliza de dos formas.
    
     2\.1. Ejecutando `git commit` lo cual abrirá el editor por defecto configurado en Git, se vio en el apratado 3.2. Para indicar la descripción de nuestro commit.
@@ -375,8 +375,8 @@ Si ejecutamos `git brach` sin nombre de la rama nos muestra las ramas de nuestro
 
 > Cambiando de rama.
 
-`git checkout "nombre de la rama"`
-`git switch "nombre de la rama"` Recomendado.
++ `git checkout "nombre de la rama"` 
++ `git switch "nombre de la rama"` Recomendado este segundo comando.
 
 
 > Creando rama y cambiando de rama en el mismo comando.
@@ -446,4 +446,27 @@ Para ver como trabaja  el repositorio con las ramas vamos a realizar los siguien
 1. Mostramos el contenido del directorio con **"ls -al"**. Vemos que solo tiene lo ficheros **hola.py** y **holaUsuario.py**.
 2. Nos cambiamos de rama a la master `git switch master`o `git checkout master`.
 3. Mostramos el contenido con **"ls -al"**. Vemos que solo tiene el fichero **hola.py**.
-4. Vol
+4. Volvemos a la rama `bugs`.
+
+> Fusionando ramas
+
+El comando `git merge` se utiliza para fusionar los cambios de una rama en otra. Cuando ejecutas `git merge`, Git combina los cambios realizados en la rama especificada con la rama actual y crea un nuevo commit de fusión. Esto significa que se crea un nuevo commit que integra los cambios de ambas ramas.
+
+Por ejemplo, si estás en la rama `master` y quieres fusionar los cambios de la rama `bugs`, puedes hacerlo así:
+
+```bash
+git checkout master
+git merge bugs
+```
+
+Grafo del repositorio
+
+```mermaid
+gitGraph
+commit id:"Agregar hola.py"
+commit id:"Añadir codigo"
+branch bugs
+commit id:"Agregar holaUsuario.py"
+checkout main
+merge bugs
+```
