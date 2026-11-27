@@ -446,3 +446,4 @@ Para ver como trabaja  el repositorio con las ramas vamos a realizar los siguien
 1. Mostramos el contenido del directorio con **"ls -al"**. Vemos que solo tiene lo ficheros **hola.py** y **holaUsuario.py**.
 2. Nos cambiamos de rama a la master `git switch master`o `git checkout master`.
 3. Mostramos el contenido con **"ls -al"**. Vemos que solo tiene el fichero **hola.py**.
+4. Vol
